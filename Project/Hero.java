@@ -69,7 +69,7 @@ public class Hero extends Character{
 	}
 	public void attackWithAbility(Enemy	enemy, int index){	//Don't know how to do this yet
 	}
-	public boolean scapeAttempt(){							//Won'r do this yet until enemies are programmed
+	public boolean scapeAttempt(){							//Won't do this yet until enemies are programmed and probabilities table is defined
 		Random rand = new Random();
 	}
 }

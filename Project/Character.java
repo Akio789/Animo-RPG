@@ -4,6 +4,7 @@ public class Character{
 	private double attack;
 	private double defense;
 	private double ether;		
+	private int level;
 	private boolean statusParalysis; //Both the hero and the enemies can get paralized
 
 	//Getters and setters
@@ -30,6 +31,12 @@ public class Character{
 	}
 	public void setEther(double ether){
 		this.ether = ether;
+	}
+	public int getLevel(){
+		return level;
+	}
+	public void setLevel(){
+		this.level = level;
 	}
 	public boolean getStatusParalysis(){
 		return statusParalysis;
