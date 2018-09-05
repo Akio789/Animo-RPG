@@ -4,8 +4,8 @@ public class Hero extends Character{
 	//Attributes
 	private String name;
 	private int xp;
-	private Item[] backpack;		//Class Item still not created
-	private Ability[] abilities;	//Class Ability still not created
+	private Item[] backpack //= new Item[2];		//Class Item still not created
+	//private Ability[] abilities;	//Class Ability still not created
 	private Item[] equipment;		//Class Item still not created
 
 	//Getters and setters
@@ -27,12 +27,12 @@ public class Hero extends Character{
 	public void setBackpack(Item[] backpack){
 		this.backpack = backpack;
 	}
-	public Ability[] getAbilities(){
+	/*public Ability[] getAbilities(){
 		return abilities;
 	}
 	public void setAbilities(Ability[] abilities){
 		this.abilities = abilities;
-	}
+	}*/
 	public Item[] getEquipment(){
 		return equipment;
 	}
@@ -41,35 +41,37 @@ public class Hero extends Character{
 	}
 
 	//Methods
-	public void attack(Enemy enemy){
+	/*public void attack(Enemy enemy){
 		enemy.setHp(enemy.getHp() - getAttack());
-	}
-	public void addItemToBackpack(Item item, int index){	//MAKE SURE IT WORKS
-		backpack[index] = item;
+	}*/
+	public void addItemToBackpack(Item item, int index){	//Adds item to desired slot
+		if (backpack[index] == null) {							//Only can place item in backpack if slot is empty
+			backpack[index] = item;	
+		}
+		else {
+			System.out.println("Slot is full.");				//If slot is not free, let user know
+		}
 	}	
-	public void removeItemFromBackpack(int index){ 			//MAKE SURE IT WORKS
-		backpack[index] = null;									//Deletes the object in derised index
+	public void removeItemFromBackpack(int index){ 			//Deletes the object in derised slot
+		backpack[index] = null;									
 	}
-	public void equipItem(Item item, int index){
+	public void equipItem(Item item, int index){			//MAKE SURE IT WORKS
 		equipment[index] = item;
 	}
-	public void unequipItem(int index){						//MAKE SURE IT WORKS
-		//Only if backpack isn't full
-		for (int i = 0; i > backpack.length; i++) {			//Go through every slot in the backpack
-			if (backpack[i] == null) { 							//If it finds an empty slot
-				backpack[i] = equipment[i];							//Copy the item from equipment to backback
-				equipment[i] = null;								//Delete item from equipment
-			}
-			if (i == (equipment.length - 1)) {					//If it checks the last slot and is still doesn't find a space to unequip, then show message
-				System.out.println("Backpack is full.");
-			}
+	public void unequipItem(int index, Item item){			//MAKE SURE IT WORKS
+		if (backpack[index] == null) {							//Only can place item in backpack if slot is empty
+			backpack[index] = item;	
+		}
+		else {
+			System.out.println("Slot is full.");				//If slot is not free, let user know
 		}
 	}
 	public void useItem(){									//Don't know how to do this yet
 	}
-	public void attackWithAbility(Enemy	enemy, int index){	//Don't know how to do this yet
-	}
-	public boolean scapeAttempt(){							//Won't do this yet until enemies are programmed and probabilities table is defined
+	/*public void attackWithAbility(Enemy enemy, int index){	//Don't know how to do this yet
+	}*/
+	public boolean scapeAttempt(){							//Won't do this yet until probabilities table is defined
 		Random rand = new Random();
+		return false;
 	}
 }
