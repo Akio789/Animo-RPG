@@ -35,7 +35,7 @@ public class Character{
 	public int getLevel(){
 		return level;
 	}
-	public void setLevel(){
+	public void setLevel(int level){
 		this.level = level;
 	}
 	public boolean getStatusParalysis(){
