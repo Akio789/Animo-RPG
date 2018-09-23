@@ -1,10 +1,19 @@
+package items;
+
 public class Item{
-	//Attributes
+	//ATTRIBUTES
 	private String name;
 	private double points;
 	private String description;
 
-	//Getters and setters
+	//CONSTRUCTOR
+	public Item(String name, double points, String description){
+		this.name = name;
+		this.points = points;
+		this.description = description;
+	}
+
+	//GETTERS AND SETTERS
 	public String getName(){
 		return name;
 	}
