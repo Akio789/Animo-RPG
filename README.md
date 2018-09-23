@@ -6,7 +6,7 @@ Hope you enjoy!
 
 v1.1
 - Created packages for characters and items.
-- From Hero, added and tested methods:
+- From Hero, added and implemented methods:
 	. addItemToBackpack
 	. removeItemFromBackpack
 	. equipItem
@@ -14,7 +14,7 @@ v1.1
 	. printBackpack
 	. printEquipment
 	. printStats
-- Created classes and implemented:
+- Created and implemented:
 	. AttackItem
 	. DefenseItem
 - NEXT VERSION OBJECTIVES:
