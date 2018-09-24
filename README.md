@@ -9,7 +9,7 @@ v1.1
 - From Hero, added and implemented methods:
 	. addItemToBackpack
 	. removeItemFromBackpack
-	. equipItem
+	. equipItem (using instanceof to know which stat to increase)
 	. unequipItem
 	. printBackpack
 	. printEquipment
