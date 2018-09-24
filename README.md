@@ -9,7 +9,7 @@ v1.1
 - From Hero, added and implemented methods:
 	. addItemToBackpack
 	. removeItemFromBackpack
-	. equipItem (using instanceof to know which stat to increase)
+	. equipItem,using instanceof to know which stat to increase and Arrays.asList(arr).indexOf(elem) to get the index of an element
 	. unequipItem
 	. printBackpack
 	. printEquipment
