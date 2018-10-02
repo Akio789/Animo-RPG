@@ -159,7 +159,7 @@ public class Hero extends Character{
 					System.out.println((i + 1) + ".- " + equipment[i].getName() + ", " + equipment[i].getPoints() 
 					+ " attack points, " + equipment[i].getDescription());	
 				}
-				if (backpack[i] instanceof DefenseItem) {
+				if (equipment[i] instanceof DefenseItem) {
 					System.out.println((i + 1) + ".- " + equipment[i].getName() + ", attack: " + equipment[i].getPoints() 
 					+ " defense points, " + equipment[i].getDescription());
 				}

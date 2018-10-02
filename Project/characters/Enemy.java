@@ -10,7 +10,7 @@ public class Enemy extends Character{
     
     //METHODS
     public void regularAttack(Hero hero){
-        System.out.println(hero.getName() + " was attacked and lost " + ((hero.getHp() + hero.getDefense()) - getAttack()) + " health points.");
+        System.out.println(hero.getName() + " was attacked and lost " + (getAttack() - hero.getDefense()) + " health points.");
         if (hero.getDefense() < getAttack()){
             hero.setHp((hero.getHp() + hero.getDefense()) - getAttack());   
         }
