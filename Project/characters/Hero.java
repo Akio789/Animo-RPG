@@ -1,8 +1,6 @@
 package characters;
 import items.*;
-
 import java.util.Arrays;
-
 import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
 public class Hero extends Character{
@@ -11,18 +9,24 @@ public class Hero extends Character{
 	private int xp;
 	private double maxHp;
 	private double maxEther;
-	private Item[] backpack = new Item[3];		
-	private Item[] equipment = new Item[3];	
+	private HpFlask hpFlask;
+	private EtherFlask etherFlask;
+	private Item[] backpack;		
+	private Item[] equipment;	
 	
 	//CONSTRUCTOR
-	public Hero(String name, int level, int xp, double hp, double ether, double attack, double defense, boolean statusParalysis){
+	public Hero(String name, int level, int xp, double hp, double ether, double attack, double defense, boolean statusParalysis, HpFlask hpFlask, EtherFlask etherFlask){
 		super(level, hp, ether, attack, defense, statusParalysis);
 		this.name = name;
 		this.xp = xp;
 		this.maxHp = hp;
 		this.maxEther = ether;
-		backpack[0] = HpFlask;
-		backpack[1] = EtherFlask;
+		this.hpFlask = hpFlask;
+		this.etherFlask = etherFlask;
+		backpack = new Item[4];
+		equipment = new Item[4];
+		backpack[0] = hpFlask;
+		backpack[1] = etherFlask;
 	}
 	
 	//GETTERS AND SETTERS
@@ -49,6 +53,18 @@ public class Hero extends Character{
 	}
 	public void setMaxEther(double maxEther){
 		this.maxEther = maxEther;
+	}
+	public EtherFlask getEtherFlask(){
+		return etherFlask;
+	}
+	public void setEtherFlask(EtherFlask etherFlask){
+		this.etherFlask = etherFlask;
+	}
+	public HpFlask hpFlask(){
+		return hpFlask;
+	}
+	public void setHpFlast(HpFlask hpFlask){
+		this.hpFlask = hpFlask;
 	}
 	public Item[] getBackpack(){
 		return backpack;
@@ -113,15 +129,21 @@ public class Hero extends Character{
 	///Shows backpack contents.
 	public void printBackpack(){
 		System.out.println("BACKPACK: ");
-		System.out.println("Hp flask charges: " + backpack[0].getCharges());
-		System.out.println("Ether flask charges: " + backpack[1].getCharges());
+		System.out.println("1.- Hp flask, charges: " + hpFlask.getCharges());
+		System.out.println("2.- Ether flask, charges: " + etherFlask.getCharges());
 		for (int i = 2; i < backpack.length; i++) {
 			if (backpack[i] == null) {
 				System.out.println((i + 1) + ".- Empty.");
 			}
 			else{
-				System.out.println((i + 1) + ".- " + backpack[i].getName() + ", " + backpack[i].getPoints() 
-				+ ", " + backpack[i].getDescription());
+				if (backpack[i] instanceof AttackItem) {
+					System.out.println((i + 1) + ".- " + backpack[i].getName() + ", " + backpack[i].getPoints() 
+					+ " attack points, " + backpack[i].getDescription());	
+				}
+				if (backpack[i] instanceof DefenseItem) {
+					System.out.println((i + 1) + ".- " + backpack[i].getName() + ", attack: " + backpack[i].getPoints() 
+					+ " defense points, " + backpack[i].getDescription());
+				}
 			}
 		}
 	}
@@ -133,8 +155,14 @@ public class Hero extends Character{
 				System.out.println((i + 1) + ".- Empty.");
 			}
 			else{
-				System.out.println((i + 1) + ".- " + equipment[i].getName() + ", " + equipment[i].getPoints() 
-				+ ", " + equipment[i].getDescription());
+				if (equipment[i] instanceof AttackItem) {
+					System.out.println((i + 1) + ".- " + equipment[i].getName() + ", " + equipment[i].getPoints() 
+					+ " attack points, " + equipment[i].getDescription());	
+				}
+				if (backpack[i] instanceof DefenseItem) {
+					System.out.println((i + 1) + ".- " + equipment[i].getName() + ", attack: " + equipment[i].getPoints() 
+					+ " defense points, " + equipment[i].getDescription());
+				}
 			}
 		}
 	}
@@ -151,25 +179,25 @@ public class Hero extends Character{
 	}
 	///Use item
 	public void useItem(int index){
-		if (backpack[index] instanceof HpFlask && (backpack[index].getCharges() > 0)){
-			backpack[index].setCharges(backpack[index].getCharges() - 1);
-			if (getMaxHp() >= getHp() + backpack[index].getPoints()) {
-				setHp(getHp() + backpack[index].getPoints());  
-				System.out.println(getName() + " healed " + backpack[index].getPoints() + " hp.");          
+		if ((index == 0) && (hpFlask.getCharges() > 0)){
+			hpFlask.setCharges(hpFlask.getCharges() - 1);
+			if (getMaxHp() >= (getHp() + hpFlask.getPoints())) {
+				setHp(getHp() + hpFlask.getPoints());  
+				System.out.println(getName() + " drunk an hp flask and healed " + hpFlask.getPoints() + " hp.");          
 			}
-			else if (getMaxHp() < getHp() + backpack[index].getPoints()) {
-				System.out.println(getName() + " healed " + (getMaxHp() - getHp()) + " hp.");
+			else if (getMaxHp() < getHp() + hpFlask.getPoints()) {
+				System.out.println(getName() + " drunk an ether flask and healed " + (getMaxHp() - getHp()) + " hp.");
 				setHp(getMaxHp());
 			}
 		}
-		if (backpack[index] instanceof EtherFlask && (backpack[index].getCharges() > 0)){
-			backpack[index].setCharges(backpack[index].getCharges() - 1);
-			if (getMaxEther() >= getEther() + backpack[index].getPoints()) {
-				setEther(getEther() + backpack[index].getPoints());            
-				System.out.println(getName() + " healed " + backpack[index].getPoints() + " ether.");          
+		if ((index == 1) && (etherFlask.getCharges() > 0)){
+			etherFlask.setCharges(etherFlask.getCharges() - 1);
+			if (getMaxEther() >= (getEther() + etherFlask.getPoints())) {
+				setEther(getEther() + etherFlask.getPoints());            
+				System.out.println(getName() + " healed " + etherFlask.getPoints() + " ether.");          
 				
 			}
-			else if (getMaxEther() < getEther() + backpack[index].getPoints()) {
+			else if (getMaxEther() < (getEther() + etherFlask.getPoints())) {
 				System.out.println(getName() + " healed " + (getMaxEther() - getEther()) + " ether.");				
 				setEther(getMaxEther());
 			}

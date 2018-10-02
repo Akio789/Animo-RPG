@@ -3,19 +3,19 @@ import characters.Hero;
 
 public class HpFlask extends Item{
   //ATTRIBUTES
-  private static int charges;
+  private int charges;
   
   //CONSTRUCTOR
   public HpFlask(String name, double points, String description){
     super(name, points, description);
-    charges = 2;
+    this.charges = 2;
   }
-
+  
   //GETTERS AND SETTERS 
-  public static int getCharges(){
+  public int getCharges(){
     return charges;
   }
-  public static void setCharges(int charges){
-    HpFlask.charges = charges;
+  public void setCharges(int charges){
+    this.charges = charges;
   }
 }

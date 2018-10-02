@@ -29,7 +29,10 @@ v1.2
 - Class Hero, added:
 	. attribute maxHp (so that max hp is not exceded when using hpFlask.
 	. attribute maxEther (so that max ether is not exceded when using etherFlask.
+	. attribute hpFlask.
+	. attribute etherFlask.
 	. method useItem to use an HpFlask or EtherFlask.
+	. method regularAttack.
 - Created and implemented:
 	. HpFlask.
 	. EtherFlask.
