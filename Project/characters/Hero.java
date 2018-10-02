@@ -1,7 +1,5 @@
 package characters;
-import items.Item;
-import items.AttackItem;
-import items.DefenseItem;
+import items.*;
 
 import java.util.Arrays;
 
@@ -11,14 +9,20 @@ public class Hero extends Character{
 	//ATTRIBUTES
 	private String name;
 	private int xp;
-	private Item[] backpack = new Item[2];		
-	private Item[] equipment = new Item[2];	
+	private double maxHp;
+	private double maxEther;
+	private Item[] backpack = new Item[3];		
+	private Item[] equipment = new Item[3];	
 	
 	//CONSTRUCTOR
 	public Hero(String name, int level, int xp, double hp, double ether, double attack, double defense, boolean statusParalysis){
 		super(level, hp, ether, attack, defense, statusParalysis);
 		this.name = name;
 		this.xp = xp;
+		this.maxHp = hp;
+		this.maxEther = ether;
+		backpack[0] = HpFlask;
+		backpack[1] = EtherFlask;
 	}
 	
 	//GETTERS AND SETTERS
@@ -33,6 +37,18 @@ public class Hero extends Character{
 	}
 	public void setXp(int xp){
 		this.xp = xp;
+	}
+	public double getMaxHp(){
+		return maxHp;
+	}
+	public void setMaxHp(double maxHp){
+		this.maxHp = maxHp;
+	}
+	public double getMaxEther(){
+		return maxEther;
+	}
+	public void setMaxEther(double maxEther){
+		this.maxEther = maxEther;
 	}
 	public Item[] getBackpack(){
 		return backpack;
@@ -97,13 +113,15 @@ public class Hero extends Character{
 	///Shows backpack contents.
 	public void printBackpack(){
 		System.out.println("BACKPACK: ");
-		for (int i = 0; i < backpack.length; i++) {
+		System.out.println("Hp flask charges: " + backpack[0].getCharges());
+		System.out.println("Ether flask charges: " + backpack[1].getCharges());
+		for (int i = 2; i < backpack.length; i++) {
 			if (backpack[i] == null) {
 				System.out.println((i + 1) + ".- Empty.");
 			}
 			else{
 				System.out.println((i + 1) + ".- " + backpack[i].getName() + ", " + backpack[i].getPoints() 
-				+ ", " + backpack[i].getDescription() + ".");
+				+ ", " + backpack[i].getDescription());
 			}
 		}
 	}
@@ -116,7 +134,7 @@ public class Hero extends Character{
 			}
 			else{
 				System.out.println((i + 1) + ".- " + equipment[i].getName() + ", " + equipment[i].getPoints() 
-				+ ", " + equipment[i].getDescription() + ".");
+				+ ", " + equipment[i].getDescription());
 			}
 		}
 	}
@@ -130,5 +148,31 @@ public class Hero extends Character{
 		+ "\nAttack: " + getAttack()
 		+ "\nDefense: " + getDefense()
 		);
+	}
+	///Use item
+	public void useItem(int index){
+		if (backpack[index] instanceof HpFlask && (backpack[index].getCharges() > 0)){
+			backpack[index].setCharges(backpack[index].getCharges() - 1);
+			if (getMaxHp() >= getHp() + backpack[index].getPoints()) {
+				setHp(getHp() + backpack[index].getPoints());  
+				System.out.println(getName() + " healed " + backpack[index].getPoints() + " hp.");          
+			}
+			else if (getMaxHp() < getHp() + backpack[index].getPoints()) {
+				System.out.println(getName() + " healed " + (getMaxHp() - getHp()) + " hp.");
+				setHp(getMaxHp());
+			}
+		}
+		if (backpack[index] instanceof EtherFlask && (backpack[index].getCharges() > 0)){
+			backpack[index].setCharges(backpack[index].getCharges() - 1);
+			if (getMaxEther() >= getEther() + backpack[index].getPoints()) {
+				setEther(getEther() + backpack[index].getPoints());            
+				System.out.println(getName() + " healed " + backpack[index].getPoints() + " ether.");          
+				
+			}
+			else if (getMaxEther() < getEther() + backpack[index].getPoints()) {
+				System.out.println(getName() + " healed " + (getMaxEther() - getEther()) + " ether.");				
+				setEther(getMaxEther());
+			}
+		}
 	}
 }
