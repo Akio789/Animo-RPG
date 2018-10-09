@@ -56,5 +56,4 @@ public abstract class Character {
 	public void setStatusParalysis(boolean statusParalysis){
 		this.statusParalysis = statusParalysis;
     }
-    public abstract void atacar(Enemigo enemigo);
 }

@@ -202,4 +202,8 @@ public abstract class Hero extends Character{
 			}
 		}
 	}
+	///Attack enemy
+	public void attackEnemy(Enemy enemy){
+		enemy.setHp(enemy.getHp - getAttack());
+	}
 }
