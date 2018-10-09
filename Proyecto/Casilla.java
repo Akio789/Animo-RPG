@@ -1,8 +1,10 @@
-
+import items;
 
 public class Casilla{
 
-
+private Item item;
+private Heroe heroe;
+private Enemigo enemigo;
 
 
 public void setHeroe(Heroe heroe){
