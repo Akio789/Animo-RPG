@@ -9,24 +9,21 @@ public class Hero extends Character{
 	private int xp;
 	private double maxHp;
 	private double maxEther;
-	private HpFlask hpFlask;
-	private EtherFlask etherFlask;
+	private HealingFlask healingFlask;
 	private Item[] backpack;		
 	private Item[] equipment;	
 	
 	//CONSTRUCTOR
-	public Hero(String name, int level, int xp, double hp, double ether, double attack, double defense, boolean statusParalysis, HpFlask hpFlask, EtherFlask etherFlask){
+	public Hero(String name, int level, int xp, double hp, double ether, double attack, double defense, boolean statusParalysis, HealingFlask healingFlask){
 		super(level, hp, ether, attack, defense, statusParalysis);
 		this.name = name;
 		this.xp = xp;
 		this.maxHp = hp;
 		this.maxEther = ether;
-		this.hpFlask = hpFlask;
-		this.etherFlask = etherFlask;
+		this.healingFlask = healingFlask;
 		backpack = new Item[4];
 		equipment = new Item[4];
-		backpack[0] = hpFlask;
-		backpack[1] = etherFlask;
+		backpack[0] = healingFlask;
 	}
 	
 	//GETTERS AND SETTERS
@@ -54,17 +51,11 @@ public class Hero extends Character{
 	public void setMaxEther(double maxEther){
 		this.maxEther = maxEther;
 	}
-	public EtherFlask getEtherFlask(){
-		return etherFlask;
+	public HealingFlask healingFlask(){
+		return healingFlask;
 	}
-	public void setEtherFlask(EtherFlask etherFlask){
-		this.etherFlask = etherFlask;
-	}
-	public HpFlask hpFlask(){
-		return hpFlask;
-	}
-	public void setHpFlast(HpFlask hpFlask){
-		this.hpFlask = hpFlask;
+	public void setHpFlask(HealingFlask healingFlask){
+		this.healingFlask = healingFlask;
 	}
 	public Item[] getBackpack(){
 		return backpack;
@@ -80,34 +71,46 @@ public class Hero extends Character{
 	}
 	
 	//METHODS
-	///Adds item to slot, only if it's empty.
-	public void addItemToBackpack(int index, Item item){
+	///Adds item to slot, only if it's empty. NEED TO OVERLOAD FOR EVERY TYPE OF ITEM
+	public void addItemToBackpack(int index, AttackItem attackItem){
 		if (backpack[index] == null) {						
-			backpack[index] = item;	
+			backpack[index] = attackItem;	
 		}
 		else {
 			System.out.println("Slot in backpack is full.");
 		}
-	}	
+	}
+	public void addItemToBackpack(int index, DefenseItem defenseItem){
+		if (backpack[index] == null) {						
+			backpack[index] = defenseItem;	
+		}
+		else {
+			System.out.println("Slot in backpack is full.");
+		}
+	}
 	///Removes item in desired slot.
 	public void removeItemFromBackpack(int index){ 
 		backpack[index] = null;									
 	}
-	///Moves item from backpack to equipment.
-	public void equipItem(int index, Item item){
+	///Moves item from backpack to equipment. NEED TO OVERLOAD FOR EVERY TYPE OF ITEM
+	public void equipItem(int index, AttackItem attackItem){
 		if (equipment[index] != null) {
 			System.out.println("Slot in equipment is full");
 		}
 		else {
-			equipment[index] = item;
-			removeItemFromBackpack(Arrays.asList(getBackpack()).indexOf(item)); //Arrays.asList() finds out the index of a certain element in an array
-			//Find out what type of item it is (attack, defense, etc)
-			if (equipment[index] instanceof AttackItem) { //If its an attack item, increase attack
-				setAttack(getAttack() + equipment[index].getPoints());
-			}
-			else if(equipment[index] instanceof DefenseItem) { //If its a defense item, increase defense
-				setDefense(getDefense() + equipment[index].getPoints());
-			}
+			equipment[index] = attackItem;
+			removeItemFromBackpack(Arrays.asList(getBackpack()).indexOf(attackItem));
+			this.setAttack(this.getAttack() + attackItem.getPoints());
+		}
+	}
+	public void equipItem(int index, DefenseItem defenseItem){
+		if (equipment[index] != null) {
+			System.out.println("Slot in equipment is full");
+		}
+		else {
+			equipment[index] = defenseItem;
+			removeItemFromBackpack(Arrays.asList(getBackpack()).indexOf(defenseItem));
+			this.setDefense(this.getDefense() + defenseItem.getPoints());
 		}
 	}
 	///Moves item from equipment to backpack.
@@ -129,9 +132,8 @@ public class Hero extends Character{
 	///Shows backpack contents.
 	public void printBackpack(){
 		System.out.println("BACKPACK: ");
-		System.out.println("1.- Hp flask, charges: " + hpFlask.getCharges());
-		System.out.println("2.- Ether flask, charges: " + etherFlask.getCharges());
-		for (int i = 2; i < backpack.length; i++) {
+		System.out.println("1.- Healing flask, charges: " + healingFlask.getCharges());
+		for (int i = 1; i < backpack.length; i++) {
 			if (backpack[i] == null) {
 				System.out.println((i + 1) + ".- Empty.");
 			}
@@ -179,27 +181,25 @@ public class Hero extends Character{
 	}
 	///Use item
 	public void useItem(int index){
-		if ((index == 0) && (hpFlask.getCharges() > 0)){
-			hpFlask.setCharges(hpFlask.getCharges() - 1);
-			if (getMaxHp() >= (getHp() + hpFlask.getPoints())) {
-				setHp(getHp() + hpFlask.getPoints());  
-				System.out.println(getName() + " drunk an hp flask and healed " + hpFlask.getPoints() + " hp.");          
+		if (index != 0) {
+			System.out.println("Not an usable item.");
+		}
+		if ((index == 0) && (healingFlask.getCharges() > 0)){
+			healingFlask.setCharges(healingFlask.getCharges() - 1);
+			if (getMaxHp() >= (getHp() + healingFlask.getPoints())) {
+				setHp(getHp() + healingFlask.getPoints());  
+				System.out.print(getName() + " healed " + healingFlask.getPoints() + " hp and ");          
 			}
-			else if (getMaxHp() < getHp() + hpFlask.getPoints()) {
-				System.out.println(getName() + " drunk an ether flask and healed " + (getMaxHp() - getHp()) + " hp.");
+			else if (getMaxHp() < (getHp() + healingFlask.getPoints())) {
+				System.out.print(getName() + " healed " + (getMaxHp() - getHp()) + " hp and ");     
 				setHp(getMaxHp());
 			}
-		}
-		if ((index == 1) && (etherFlask.getCharges() > 0)){
-			etherFlask.setCharges(etherFlask.getCharges() - 1);
-			if (getMaxEther() >= (getEther() + etherFlask.getPoints())) {
-				setEther(getEther() + etherFlask.getPoints());            
-				System.out.println(getName() + " healed " + etherFlask.getPoints() + " ether.");          
-				
+			if (getMaxEther() >= (getEther() + healingFlask.getPoints())) {
+				setEther(getEther() + healingFlask.getPoints());
+				System.out.println(healingFlask.getPoints() + " ether.");
 			}
-			else if (getMaxEther() < (getEther() + etherFlask.getPoints())) {
-				System.out.println(getName() + " healed " + (getMaxEther() - getEther()) + " ether.");				
-				setEther(getMaxEther());
+			else if (getMaxEther()  < (getEther() + healingFlask.getPoints())) {
+				System.out.println((getMaxEther() - getEther()) + " ether");
 			}
 		}
 	}

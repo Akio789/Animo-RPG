@@ -1,12 +1,12 @@
 package items;
-import characters.Hero;
+import characters.*;
 
-public class EtherFlask extends Item{
-  //ATTRIBUTES   
+public class HealingFlask extends Item{
+  //ATTRIBUTES
   private int charges;
   
   //CONSTRUCTOR
-  public EtherFlask(String name, double points, String description){
+  public HealingFlask(String name, double points, String description){
     super(name, points, description);
     this.charges = 2;
   }

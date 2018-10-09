@@ -36,3 +36,8 @@ v1.2
 - Created and implemented:
 	. HpFlask.
 	. EtherFlask.
+
+v1.3
+- Class Hero:
+	. Created overloaded methods to addItemToBackpack and equipItem for attackItem and 	  defenseItem.
+- Combined classes EtherFlask and HpFlask, now class HealingFlask heals both hp and ether.
