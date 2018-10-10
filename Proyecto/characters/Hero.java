@@ -204,6 +204,9 @@ public abstract class Hero extends Character{
 	}
 	///Attack enemy
 	public void attackEnemy(Enemy enemy){
-		System.out.println();
+		System.out.println(hero.getName() + " dealed " + (getAttack() - enemy.getDefense()) + " damage.");
+        if (enemy.getDefense() < getAttack()){
+            enemy.setHp((enemy.getHp() + enemy.getDefense()) - getAttack());   
+        }
 	}
 }

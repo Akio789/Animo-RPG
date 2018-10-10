@@ -5,12 +5,23 @@ public class Main{
 	public static void main(String[] args){
 		WildMinion foe = new WildMinion(1, 5, 5, 15, 3, false);
 		HealingFlask healingFlask = new HealingFlask("Healing Flask", 5, "Heals hp and ether.");
-		AttackItem sword = new AttackItem("Sword", 5, "Normal sword.");
-		DefenseItem shield = new DefenseItem("Shield", 5, "Normal shield.");
-		Hero hero = new Hero("Akio", 1, 0, 10, 10, 5, 5, false, healingFlask);
-		hero.addItemToBackpack(2, sword);
-		hero.addItemToBackpack(3, shield);
+		Item sword = new AttackItem("Sword", 5, "Normal sword.");
+		Item shield = new DefenseItem("Shield", 5, "Normal shield.");
+		Hero hero = new Bestia("Akio", 1, 0, 15, 10, 10, 5, false, healingFlask);
+		Enemy enemy = new OrderMinion(1, 100, 100, 10, 10, false);
+		enemy.displayHp();
+		hero.addItemToBackpack(1, sword);
+		hero.addItemToBackpack(2, shield);
+		hero.equipItem(0, sword);
+		hero.equipItem(1, shield);
+		hero.printStats();
+		hero.attackEnemy(enemy);
+		enemy.displayHp();
+		enemy.regularAttack(hero);
+		hero.printStats();
 
+
+		/*
 		hero.printStats();
 		System.out.println();
 		hero.printBackpack();
@@ -40,7 +51,7 @@ public class Main{
 		hero.printStats();
 		hero.printEquipment();
 		hero.printBackpack();
-
+		*/
 
 	}
 }

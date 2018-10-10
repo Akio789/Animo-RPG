@@ -1,13 +1,13 @@
 package characters;
 
-public class Character{
-	//ATTRIBUTES
+public abstract class Character{
 	private int level;
 	private double hp;
 	private double ether;	
 	private double attack;
 	private double defense;	
-	private boolean statusParalysis; //Both the hero and the enemies can get paralized
+	private boolean statusParalysis; //Both the hero and the enemies can get paralized	//ATTRIBUTES
+
 
 	//CONSTRUCTOR
 	public Character(int level, double hp, double ether, double attack, double defense, boolean statusParalysis){

@@ -1,6 +1,7 @@
 package items;
+import characters.*;
 
-public class Item{
+public abstract class Item{
 	//ATTRIBUTES
 	private String name;
 	private double points;
@@ -32,4 +33,5 @@ public class Item{
 	public void setDescription(String description){
 		this.description = description;
 	}
+	public abstract double modifyStat(double stat);
 }

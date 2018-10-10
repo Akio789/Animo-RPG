@@ -3,7 +3,7 @@ import items.*;
 import java.util.Arrays;
 import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
-public class Hero extends Character{
+public abstract class Hero extends Character{
 	//ATTRIBUTES
 	private String name;
 	private int xp;
@@ -71,48 +71,36 @@ public class Hero extends Character{
 	}
 	
 	//METHODS
-	///Adds item to slot, only if it's empty. NEED TO OVERLOAD FOR EVERY TYPE OF ITEM
-	public void addItemToBackpack(int index, AttackItem attackItem){
+	public void addItemToBackpack(int index, Item item){
 		if (backpack[index] == null) {						
-			backpack[index] = attackItem;	
+			backpack[index] = item;	
 		}
 		else {
 			System.out.println("Slot in backpack is full.");
 		}
 	}
-	public void addItemToBackpack(int index, DefenseItem defenseItem){
-		if (backpack[index] == null) {						
-			backpack[index] = defenseItem;	
-		}
-		else {
-			System.out.println("Slot in backpack is full.");
-		}
-	}
+
 	///Removes item in desired slot.
 	public void removeItemFromBackpack(int index){ 
 		backpack[index] = null;									
 	}
 	///Moves item from backpack to equipment. NEED TO OVERLOAD FOR EVERY TYPE OF ITEM
-	public void equipItem(int index, AttackItem attackItem){
+	public void equipItem(int index, Item item){
 		if (equipment[index] != null) {
 			System.out.println("Slot in equipment is full");
 		}
 		else {
-			equipment[index] = attackItem;
-			removeItemFromBackpack(Arrays.asList(getBackpack()).indexOf(attackItem));
-			this.setAttack(this.getAttack() + attackItem.getPoints());
+			equipment[index] = item;
+			removeItemFromBackpack(Arrays.asList(getBackpack()).indexOf(item));
+			if (item instanceof AttackItem) {
+				setAttack(item.modifyStat(getAttack()));
+			}
+			if (item instanceof DefenseItem) {
+				setDefense(item.modifyStat(getDefense()));
+			}
 		}
 	}
-	public void equipItem(int index, DefenseItem defenseItem){
-		if (equipment[index] != null) {
-			System.out.println("Slot in equipment is full");
-		}
-		else {
-			equipment[index] = defenseItem;
-			removeItemFromBackpack(Arrays.asList(getBackpack()).indexOf(defenseItem));
-			this.setDefense(this.getDefense() + defenseItem.getPoints());
-		}
-	}
+
 	///Moves item from equipment to backpack.
 	public void unequipItem(int equipmentIndex, int backpackIndex){
 		if (backpack[backpackIndex] != null) {
@@ -203,4 +191,6 @@ public class Hero extends Character{
 			}
 		}
 	}
+	///Attack enemy
+	public abstract void attackEnemy(Enemy enemy);
 }
