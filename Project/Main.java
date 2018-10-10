@@ -9,6 +9,7 @@ public class Main{
 		Item shield = new DefenseItem("Shield", 5, "Normal shield.");
 		Hero hero = new Bestia("Akio", 1, 0, 15, 10, 10, 5, false, healingFlask);
 		Enemy enemy = new OrderMinion(1, 100, 100, 10, 10, false);
+		/*
 		enemy.displayHp();
 		hero.addItemToBackpack(1, sword);
 		hero.addItemToBackpack(2, shield);
@@ -19,9 +20,11 @@ public class Main{
 		enemy.displayHp();
 		enemy.regularAttack(hero);
 		hero.printStats();
+		*/
 
 
-		/*
+		hero.addItemToBackpack(1, sword);
+		hero.addItemToBackpack(2, shield);
 		hero.printStats();
 		System.out.println();
 		hero.printBackpack();
@@ -51,7 +54,7 @@ public class Main{
 		hero.printStats();
 		hero.printEquipment();
 		hero.printBackpack();
-		*/
+		
 
 	}
 }
