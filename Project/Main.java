@@ -8,21 +8,22 @@ public class Main{
 		Item sword = new AttackItem("Sword", 5, "Normal sword.");
 		Item shield = new DefenseItem("Shield", 5, "Normal shield.");
 		Hero hero = new Bestia("Akio", 1, 0, 15, 10, 10, 5, false, healingFlask);
-		Enemy enemy = new OrderMinion(1, 100, 100, 10, 10, false);
-		/*
-		enemy.displayHp();
+		Boss antiBestia = new AntiBestia(1, 100, 100, 5, 10, false);
+		
+		antiBestia.displayHp();
 		hero.addItemToBackpack(1, sword);
 		hero.addItemToBackpack(2, shield);
 		hero.equipItem(0, sword);
 		hero.equipItem(1, shield);
 		hero.printStats();
-		hero.attackEnemy(enemy);
-		enemy.displayHp();
-		enemy.regularAttack(hero);
+		hero.attackEnemy(antiBestia);
+		antiBestia.displayHp();
+		antiBestia.regularAttack(hero);
+		antiBestia.criticAttack(hero);
 		hero.printStats();
-		*/
+		
 
-
+		/*
 		hero.addItemToBackpack(1, sword);
 		hero.addItemToBackpack(2, shield);
 		hero.printStats();
@@ -54,7 +55,7 @@ public class Main{
 		hero.printStats();
 		hero.printEquipment();
 		hero.printBackpack();
-		
+		*/
 
 	}
 }
