@@ -1,5 +1,6 @@
 import characters.*;
 import items.*;
+import map.*;
 
 public class Main{
 	public static void main(String[] args){
@@ -10,6 +11,7 @@ public class Main{
 		Hero hero = new Bestia("Akio", 1, 0, 15, 10, 10, 5, false, healingFlask);
 		Boss antiBestia = new AntiBestia(1, 100, 100, 5, 10, false);
 		
+		/*
 		antiBestia.displayHp();
 		hero.addItemToBackpack(1, sword);
 		hero.addItemToBackpack(2, shield);
@@ -21,9 +23,8 @@ public class Main{
 		antiBestia.regularAttack(hero);
 		antiBestia.criticAttack(hero);
 		hero.printStats();
-		
+		*/
 
-		/*
 		hero.addItemToBackpack(1, sword);
 		hero.addItemToBackpack(2, shield);
 		hero.printStats();
@@ -55,7 +56,8 @@ public class Main{
 		hero.printStats();
 		hero.printEquipment();
 		hero.printBackpack();
-		*/
 
+
+		new Map();
 	}
 }

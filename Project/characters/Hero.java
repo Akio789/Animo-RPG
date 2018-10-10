@@ -51,10 +51,10 @@ public abstract class Hero extends Character{
 	public void setMaxEther(double maxEther){
 		this.maxEther = maxEther;
 	}
-	public HealingFlask healingFlask(){
+	public HealingFlask getHealingFlask(){
 		return healingFlask;
 	}
-	public void setHpFlask(HealingFlask healingFlask){
+	public void setHealingFlask(HealingFlask healingFlask){
 		this.healingFlask = healingFlask;
 	}
 	public Item[] getBackpack(){
