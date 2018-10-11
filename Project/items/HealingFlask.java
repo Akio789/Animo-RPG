@@ -25,4 +25,7 @@ public class HealingFlask extends Item{
   public void setMaxCharges(int maxCharges) {
     this.maxCharges = maxCharges;
   }
+  public double modifyStat(double stat){
+    return 1.5;
+  }
 }
