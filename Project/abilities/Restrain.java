@@ -1,13 +1,16 @@
 package abilities;
 
-public class Restrain extends Habilidad{
+import characters.*;
+import items.*;
+import map.*;
+
+public class Restrain extends Hability{
 
 
-public boolean paralizar(Enemy enemy){
+public boolean paralize(Enemy enemy){
 
-
-return paralizar;
-
+boolean taco=false;
+return taco;
 }//fin paralizar
 
 

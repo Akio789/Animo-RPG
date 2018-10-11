@@ -61,5 +61,16 @@ public class Main{
 
 
 		new Map();
+
+			//Pruebas Oscar
+/*
+		Burst b= new Burst();
+		Drive a= new Drive ();
+		Naturae c= new Naturae();
+		Reason d= new Reason();
+		Restrain e= new Restrain();
+		Vindication f= new Vindication();	
+
+		*/	
 	}
 }

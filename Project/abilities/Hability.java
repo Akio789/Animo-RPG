@@ -5,7 +5,7 @@ import items.*;
 import map.*;
 
 
-public abstract class Habilidad{
+public abstract class Hability{
 
 
 

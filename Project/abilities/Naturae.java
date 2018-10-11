@@ -1,9 +1,13 @@
 package abilities;
 
-public class Naturae extends HabilidadBuffDeffub{
+import characters.*;
+import items.*;
+import map.*;
+
+public class Naturae extends HabilityBuffDeffub{
 
 
-public void reducirDefensa(Enemy enemy){
+public void reduceDefensa(Enemy enemy){
 
 
 }//fin reducir defensa

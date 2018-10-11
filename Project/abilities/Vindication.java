@@ -1,8 +1,12 @@
 package abilities;
 
-public class Vindication extends HabilidadBuffDebuff{
+import characters.*;
+import items.*;
+import map.*;
 
-public void reducirStats(Enemy enemy){
+public class Vindication extends HabilityBuffDeffub{
+
+public void reduceStats(Enemy enemy){
 
 
 
