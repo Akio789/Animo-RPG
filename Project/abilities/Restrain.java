@@ -1,3 +1,5 @@
+package abilities;
+
 public class Restrain extends Habilidad{
 
 

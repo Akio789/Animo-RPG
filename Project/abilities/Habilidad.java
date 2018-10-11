@@ -1,6 +1,8 @@
-import characters .*;
-import items .*;
-import map .*;
+package abilities;
+
+import characters.*;
+import items.*;
+import map.*;
 
 
 public abstract class Habilidad{

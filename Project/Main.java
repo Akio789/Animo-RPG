@@ -1,6 +1,7 @@
 import characters.*;
 import items.*;
 import map.*;
+import abilities.*;
 
 public class Main{
 	public static void main(String[] args){
@@ -10,7 +11,8 @@ public class Main{
 		Item shield = new DefenseItem("Shield", 5, "Normal shield.");
 		Hero hero = new Bestia("Akio", 1, 0, 15, 10, 10, 5, false, healingFlask);
 		Boss antiBestia = new AntiBestia(1, 100, 100, 5, 10, false);
-		
+		Pulsion p = new Pulsion();
+
 		/*
 		antiBestia.displayHp();
 		hero.addItemToBackpack(1, sword);

@@ -1,3 +1,5 @@
+package abilities;
+
 public abstract class HabilidadDanio extends Habilidad{
 
 private double danio;

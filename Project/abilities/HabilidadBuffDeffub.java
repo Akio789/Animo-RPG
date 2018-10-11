@@ -1,3 +1,5 @@
+package abilities;
+
 public abstract class HabilidadBuffDeffub extends Habilidad{
 
 private double porcentaje;
