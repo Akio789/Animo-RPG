@@ -9,8 +9,8 @@ public class Main{
 	public static void main(String[] args){
 		WildMinion foe = new WildMinion(1, 5, 5, 15, 3, false);
 		HealingFlask healingFlask = new HealingFlask("Healing Flask", 5, "Heals hp and ether.");
-		Item sword = new AttackItem("Sword", 5, "Normal sword.");
-		Item shield = new DefenseItem("Shield", 5, "Normal shield.");
+		EquipmentItem sword = new AttackItem("Sword", 5, "Normal sword.");
+		EquipmentItem shield = new DefenseItem("Shield", 5, "Normal shield.");
 		Hero hero = new Bestia("Akio", 100, 100, 100, 100, 100, 100, false, healingFlask);
 		Boss antiBestia = new AntiBestia(100, 100, 100, 100, 100, false);
 		
@@ -28,7 +28,7 @@ public class Main{
 		antiBestia.criticAttack(hero);
 		hero.printStats();
 		*/
-		/*
+		
 		hero.addItemToBackpack(1, sword);
 		hero.addItemToBackpack(2, shield);
 		hero.printStats();
@@ -60,11 +60,12 @@ public class Main{
 		hero.printStats();
 		hero.printEquipment();
 		hero.printBackpack();
+		/*
 		
 		
 
 		new Map();
-		*/
+		
 		
 		/*
 		//Pruebas Oscar
@@ -133,6 +134,5 @@ public class Main{
 
    		
 		//hero.printStats();
-		hero.attackEnemyWithAbility(foe, 0);
 	}
 }

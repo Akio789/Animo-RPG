@@ -100,7 +100,7 @@ public abstract class Hero extends Character{
 		backpack[index] = null;									
 	}
 	///Moves item from backpack to equipment. NEED TO OVERLOAD FOR EVERY TYPE OF ITEM
-	public void equipItem(int index, Item item){
+	public void equipItem(int index, EquipmentItem item){
 		if (equipment[index] != null) {
 			System.out.println("Slot in equipment is full");
 		}
@@ -223,6 +223,4 @@ public abstract class Hero extends Character{
 	public abstract void levelUp();
 	///Attack enemy with a regular attack
 	public abstract void attackEnemy(Enemy enemy);
-	///Attack enemy with ability
-	public abstract void attackEnemyWithAbility(Enemy enemy, int index);
 }

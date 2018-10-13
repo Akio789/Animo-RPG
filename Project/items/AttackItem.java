@@ -1,7 +1,7 @@
 package items;
 import characters.*;
 
-public class AttackItem extends Item{
+public class AttackItem extends EquipmentItem{
 	//CONSTRUCTOR
 	public AttackItem(String name, double points, String description){
 		super(name, points, description);

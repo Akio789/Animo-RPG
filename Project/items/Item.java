@@ -33,5 +33,4 @@ public abstract class Item{
 	public void setDescription(String description){
 		this.description = description;
 	}
-	public abstract double modifyStat(double stat);
 }
