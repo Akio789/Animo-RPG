@@ -8,7 +8,7 @@ import java.awt.event.*;
 
 public class Cell extends JPanel{
     //ATTRIBUTES
-    private Item item;
+    private EquipmentItem item;
     private Enemy enemy;
     private boolean restore;
     
@@ -42,7 +42,7 @@ public class Cell extends JPanel{
     public Item getItem() {
         return item;
     }
-    public void setItem(Item item) {
+    public void setItem(EqupmentItem item) {
         this.item = item;
     }
     public Enemy getEnemy() {

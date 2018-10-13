@@ -60,7 +60,7 @@ public class Main{
 		hero.printStats();
 		hero.printEquipment();
 		hero.printBackpack();
-		/*
+		
 		
 		
 
