@@ -28,7 +28,7 @@ public class Main{
 		antiBestia.criticAttack(hero);
 		hero.printStats();
 		*/
-
+		/*
 		hero.addItemToBackpack(1, sword);
 		hero.addItemToBackpack(2, shield);
 		hero.printStats();
@@ -60,11 +60,11 @@ public class Main{
 		hero.printStats();
 		hero.printEquipment();
 		hero.printBackpack();
-
+		
 		
 
 		new Map();
-		
+		*/
 		
 		/*
 		//Pruebas Oscar
@@ -132,6 +132,7 @@ public class Main{
    		*/
 
    		
-		hero.printStats();
+		//hero.printStats();
+		hero.attackEnemyWithAbility(foe, 0);
 	}
 }

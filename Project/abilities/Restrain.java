@@ -6,7 +6,7 @@ import map.*;
 public class Restrain extends Ability{
 
 
-	public  void  paralize(Enemy enemy, Hero hero){
+	public void paralize(Enemy enemy, Hero hero){
 
 	System.out.println("");
 

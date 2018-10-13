@@ -1,6 +1,7 @@
 package characters;
 import items.*;
-import java.util.Arrays;
+import abilities.*;
+import java.util.*;
 import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
 public abstract class Hero extends Character{
@@ -12,6 +13,8 @@ public abstract class Hero extends Character{
 	private HealingFlask healingFlask;
 	private Item[] backpack;		
 	private Item[] equipment;	
+	private Ability[] abilities;
+	private int level;
 	
 	//CONSTRUCTOR
 	public Hero(String name, int level, int xp, double hp, double ether, double attack, double defense, boolean statusParalysis, HealingFlask healingFlask){
@@ -23,6 +26,7 @@ public abstract class Hero extends Character{
 		this.healingFlask = healingFlask;
 		backpack = new Item[4];
 		equipment = new Item[4];
+		abilities = new Ability[2];
 		backpack[0] = healingFlask;
 	}
 	
@@ -69,6 +73,18 @@ public abstract class Hero extends Character{
 	public void setEquipment(Item[] equipment){
 		this.equipment = equipment;
 	}
+	public Ability[] getAbilities() {
+		return abilities;
+	}
+	public void setAbilities(Ability[] abilities) {
+		this.abilities = abilities;
+	}
+	public int getLevel(){
+		return level;
+	}
+	public void setLevel(int level){
+		this.level = level;
+	}
 	
 	//METHODS
 	public void addItemToBackpack(int index, Item item){
@@ -79,7 +95,6 @@ public abstract class Hero extends Character{
 			System.out.println("Slot in backpack is full.");
 		}
 	}
-
 	///Removes item in desired slot.
 	public void removeItemFromBackpack(int index){ 
 		backpack[index] = null;									
@@ -100,7 +115,6 @@ public abstract class Hero extends Character{
 			}
 		}
 	}
-
 	///Moves item from equipment to backpack.
 	public void unequipItem(int equipmentIndex, int backpackIndex){
 		if (backpack[backpackIndex] != null) {
@@ -191,6 +205,24 @@ public abstract class Hero extends Character{
 			}
 		}
 	}
-	///Attack enemy
+	///Die
+	public void die(){
+		System.out.println("You died.");
+	}
+	///Escape from battle
+	public boolean escapeFromBattle(){
+		Random rand = new Random();
+		if (rand.nextDouble() > 0.8) {
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	///Level up
+	public abstract void levelUp();
+	///Attack enemy with a regular attack
 	public abstract void attackEnemy(Enemy enemy);
+	///Attack enemy with ability
+	public abstract void attackEnemyWithAbility(Enemy enemy, int index);
 }

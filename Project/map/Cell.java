@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Cell extends JLabel{
+public class Cell extends JPanel{
     //ATTRIBUTES
     private Item item;
     private Enemy enemy;
