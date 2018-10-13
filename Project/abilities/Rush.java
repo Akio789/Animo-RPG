@@ -23,6 +23,7 @@ public class Rush extends AbilityHurt{
 		hero.setEther(hero.getEther()-10);
 		//valor temporal
 		enemy.setDefense(enemy.getDefense()-10);
+		hero.setAttack(hero.getAttack()*8);
 		System.out.println("");
 		
 			

@@ -19,11 +19,11 @@ public class AntiRush extends AntiAbilityHurt{
 		hero.setHp(hero.getHp()-enemy.getAttack() );
 		System.out.println("The enemy dealed "+enemy.getAttack() );
 		hero.setHp(hero.getHp()-enemy.getAttack() );
-
 		enemy.setEther(enemy.getEther()-10);
 		//valor temporal
 		hero.setDefense(hero.getDefense()-10);
 		System.out.println("");
+		enemy.setAttack(enemy.setAttack()*8);
 			
 			}//fin stacking
 

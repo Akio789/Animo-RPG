@@ -16,7 +16,7 @@ public class Thump extends AbilityHurt{
 		System.out.println(hero.getName()+" consumed 10 of ether");
 		hero.setEther(hero.getEther()-10);
 		System.out.println("");
-
+		hero.setAttack(hero.getAttack()/2);
 			}//fin ataque fuerte
 
 

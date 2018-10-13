@@ -127,8 +127,11 @@ public class Main{
 		antiRestrain.paralize( hero);
 
 		hero.printStats();
-		
+		Thump thump= new Thump();
+		thump.strongAtack(antiBestia, hero);
    		*/
 
+   		
+		hero.printStats();
 	}
 }

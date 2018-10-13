@@ -19,7 +19,7 @@ public class Restrain extends Ability{
 
 		else {
 			
-			System.out.println("The enemy was already froze,");
+			System.out.println("The enemy was already frozen");
 				
 				}//fin else
 
