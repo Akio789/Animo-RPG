@@ -5,7 +5,7 @@ import items.*;
 import map.*;
 
 
-public abstract class HabilityBuffDeffub extends Hability{
+public abstract class AbilityBuffDeffub extends Ability{
 
 private double percentage;
 

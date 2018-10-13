@@ -2,6 +2,8 @@ import characters.*;
 import items.*;
 import map.*;
 import abilities.*;
+import abilitiesboss.*;
+
 
 public class Main{
 	public static void main(String[] args){
@@ -9,9 +11,9 @@ public class Main{
 		HealingFlask healingFlask = new HealingFlask("Healing Flask", 5, "Heals hp and ether.");
 		Item sword = new AttackItem("Sword", 5, "Normal sword.");
 		Item shield = new DefenseItem("Shield", 5, "Normal shield.");
-		Hero hero = new Bestia("Akio", 1, 0, 15, 10, 10, 5, false, healingFlask);
-		Boss antiBestia = new AntiBestia(1, 100, 100, 5, 10, false);
-		Pulsion p = new Pulsion();
+		Hero hero = new Bestia("Akio", 100, 100, 100, 100, 100, 100, false, healingFlask);
+		Boss antiBestia = new AntiBestia(100, 100, 100, 100, 100, false);
+		
 
 		/*
 		antiBestia.displayHp();
@@ -59,18 +61,74 @@ public class Main{
 		hero.printEquipment();
 		hero.printBackpack();
 
+		
 
 		new Map();
+		
+		
+		/*
+		//Pruebas Oscar
 
-			//Pruebas Oscar
-/*
-		Burst b= new Burst();
-		Drive a= new Drive ();
-		Naturae c= new Naturae();
-		Reason d= new Reason();
-		Restrain e= new Restrain();
-		Vindication f= new Vindication();	
+		
+		//positivas
+		//Rush
+		Rush rush= new Rush();
+		rush.stacking(antiBestia, hero);
+		//hero.ataque(antiBestia, hero);
+		
+		//Thump
+		Thump thump= new Thump();
+		thump.strongAtack(antiBestia, hero);
 
-		*/	
+		//Naturae
+		Naturae naturae= new Naturae();
+		naturae.reduceDefense(antiBestia,hero);
+
+		//Reason
+		Reason reason= new Reason();
+		reason.reduceDamage(antiBestia, hero);
+
+
+		//Vindication
+		Vindication vindication= new Vindication();
+		vindication.reduceStats(antiBestia, hero);
+
+		//Restrain
+		Restrain restrain= new Restrain();
+		restrain.paralize(antiBestia, hero);
+
+		//negativas
+
+
+		
+		//Rush
+		AntiRush antiRush= new AntiRush();
+		antiRush.stacking(antiBestia, hero);
+		
+		//Thump
+		AntiThump antiThump= new AntiThump();
+		antiThump.strongAtack(antiBestia, hero);
+
+		//Naturae
+		AntiNaturae antiNaturae= new AntiNaturae();
+		antiNaturae.reduceDefense( hero);
+
+		//Reason
+		AntiReason antiReason= new AntiReason();
+		antiReason.reduceDamage(antiBestia, hero);
+
+
+		//Vindication
+		AntiVindication antiVindication= new AntiVindication();
+		antiVindication.reduceStats(antiBestia, hero);
+
+		//Restrain
+		AntiRestrain antiRestrain= new AntiRestrain();
+		antiRestrain.paralize( hero);
+
+		hero.printStats();
+		
+   		*/
+
 	}
 }

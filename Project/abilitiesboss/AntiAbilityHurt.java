@@ -1,10 +1,9 @@
-package abilities;
-
+package abilitiesboss;
 import characters.*;
 import items.*;
 import map.*;
 
-public abstract class HabilityHurt extends Hability{
+public abstract class AntiAbilityHurt extends AntiAbility{
 
 private double hurt;
 

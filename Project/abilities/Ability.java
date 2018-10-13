@@ -1,11 +1,11 @@
 package abilities;
 
 import characters.*;
-import items.*;
 import map.*;
+import items.*;
 
 
-public abstract class Hability{
+public abstract class Ability{
 
 
 
