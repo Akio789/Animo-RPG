@@ -42,7 +42,7 @@ public class Cell extends JPanel{
     public Item getItem() {
         return item;
     }
-    public void setItem(EqupmentItem item) {
+    public void setItem(EquipmentItem item) {
         this.item = item;
     }
     public Enemy getEnemy() {

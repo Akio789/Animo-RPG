@@ -9,8 +9,8 @@ public class Vindication extends AbilityBuffDeffub{
 	public void reduceStats(Enemy enemy, Hero hero){
 		
 		System.out.println("");
-		enemy.setAttack(enemy.getAttack()-10);
-		enemy.setDefense(enemy.getDefense()-10);
+		enemy.setAttack(enemy.getAttack()-(enemy.getAttack()*.10));
+		enemy.setDefense(enemy.getDefense()-(enemy.getDefense()*.10 ));
 		enemy.setEther(enemy.getEther()-10);
 		System.out.println("You activated the special abilitie Vindication");
 		System.out.println("All the stats of the enemy are lowered");

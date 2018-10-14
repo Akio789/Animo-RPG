@@ -10,7 +10,7 @@ public class Rush extends AbilityHurt{
 	public void stacking(Enemy enemy, Hero hero){
 
 		System.out.println("");
-		hero.setAttack(hero.getAttack()/8);
+		hero.setAttack(hero.getAttack()*.12);
 		System.out.println("The special abilitie rush was activated");
 		enemy.setHp(enemy.getHp()-hero.getAttack() );
 		System.out.println("You dealed "+ hero.getAttack() +" of damage");
@@ -22,8 +22,8 @@ public class Rush extends AbilityHurt{
 		System.out.println(hero.getName()+" consumed 10 of ether");
 		hero.setEther(hero.getEther()-10);
 		//valor temporal
-		enemy.setDefense(enemy.getDefense()-10);
-		hero.setAttack(hero.getAttack()*8);
+		enemy.setDefense(enemy.getDefense()-(enemy.getDefense()*.10));
+		hero.setAttack(hero.getAttack()*8.3);
 		System.out.println("");
 		
 			

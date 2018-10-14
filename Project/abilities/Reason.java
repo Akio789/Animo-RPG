@@ -12,7 +12,7 @@ public class Reason extends AbilityBuffDeffub{
 
 		System.out.println("");
 		//puede cambiar el valor
-		enemy.setAttack(enemy.getAttack()-(enemy.getAttack()/2));
+		enemy.setAttack(enemy.getAttack()-(enemy.getAttack()*.50));
 		System.out.println("You activated the special abilitie Reason");
 		System.out.println("You reduced de damage of the enemy to "+  enemy.getAttack() );
 		System.out.println(hero.getName()+" consumed 10 of ether");

@@ -12,7 +12,7 @@ public class AntiReason extends AntiAbilityBuffDeffub{
 
 		System.out.println("");
 		//puede cambiar el valor
-		hero.setAttack(hero.getAttack()-(hero.getAttack()/2));
+		hero.setAttack(hero.getAttack()-(hero.getAttack()*.50));
 		System.out.println("The enemie activated the special abilitie Reason");
 		System.out.println("The enemy reduced your damage to"+  hero.getAttack() );
 		System.out.println("");

@@ -9,6 +9,7 @@ public class Restrain extends Ability{
 	public void paralize(Enemy enemy, Hero hero){
 
 	System.out.println("");
+	System.out.println("You activated the special ability restrain")
 
 		if (enemy.getStatusParalysis()==false ) {
 	
