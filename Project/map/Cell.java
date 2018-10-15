@@ -20,7 +20,7 @@ public class Cell extends JPanel{
         this.restore = false;
     }
     //Cell with an item
-    public Cell(Item item){
+    public Cell(EquipmentItem item){
         this.item = item;
         this.enemy = null;
         this.restore = false;

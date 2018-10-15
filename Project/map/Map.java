@@ -31,11 +31,12 @@ public class Map extends JFrame{
         }
         
         //Cells with Items
-        cells[18][1].setItem(new AttackItem("Long Sword", 7, "A sword crafted for war"));
-        cells[1][3].setItem(new AttackItem("Long Sword", 7, "A sword crafted for war"));
-        cells[8][7].setItem(new AttackItem("Long Sword", 7, "A sword crafted for war"));
-        cells[5][15].setItem(new AttackItem("Long Sword", 7, "A sword crafted for war"));
-        cells[13][17].setItem(new AttackItem("Long Sword", 7, "A sword crafted for war"));
+        EquipmentItem longSword = new AttackItem("Long Sword", 7, "A sword crafted for war");
+        cells[18][1].setItem(longSword);
+        cells[1][3].setItem(longSword);
+        cells[8][7].setItem(longSword);
+        cells[5][15].setItem(longSword);
+        cells[13][17].setItem(longSword);
     
         //Cells with Enemies
         cells[1][3].setEnemy(new WildMinion(1, 10, 10, 10, 10, false));
