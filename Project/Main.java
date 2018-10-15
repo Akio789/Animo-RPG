@@ -7,12 +7,12 @@ import abilitiesboss.*;
 
 public class Main{
 	public static void main(String[] args){
-		WildMinion foe = new WildMinion(1, 5, 5, 15, 3, false);
-		HealingFlask healingFlask = new HealingFlask("Healing Flask", 5, "Heals hp and ether.");
+		WildMinion foe = new WildMinion(5, 5, 100, 3, false);
+		HealingFlask healingFlask = new HealingFlask("Healing Flask", 10, "Heals hp and ether.");
 		EquipmentItem sword = new AttackItem("Sword", 5, "Normal sword.");
 		EquipmentItem shield = new DefenseItem("Shield", 5, "Normal shield.");
 		Hero hero = new Bestia("Akio", 100, 100, 100, 100, 100, 100, false, healingFlask);
-		Boss antiBestia = new AntiBestia(100, 100, 100, 100, 100, false);
+		Boss antiBestia = new AntiBestia(100, 100, 100, 100, false);
 		
 
 		/*

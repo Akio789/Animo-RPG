@@ -5,10 +5,10 @@ import items.*;
 import map.*;
 
 public class Rush extends AbilityHurt{
-//Rafaga
-
+	//Rafaga
+	
 	public void stacking(Enemy enemy, Hero hero){
-
+		
 		System.out.println("");
 		hero.setAttack(hero.getAttack()*.12);
 		System.out.println("The special abilitie rush was activated");
@@ -26,9 +26,9 @@ public class Rush extends AbilityHurt{
 		hero.setAttack(hero.getAttack()*8.3);
 		System.out.println("");
 		
-			
-			}//fin stacking
-
-
-
+		
+	}//fin stacking
+	
+	
+	
 }//fin rafaga

@@ -5,11 +5,11 @@ import items.*;
 import map.*;
 
 public class Reason extends AbilityBuffDeffub{
-//Razon
-
-
+	//Razon
+	
+	
 	public void reduceDamage(Enemy enemy,  Hero hero){
-
+		
 		System.out.println("");
 		//puede cambiar el valor
 		enemy.setAttack(enemy.getAttack()-(enemy.getAttack()*.50));
@@ -18,7 +18,7 @@ public class Reason extends AbilityBuffDeffub{
 		System.out.println(hero.getName()+" consumed 10 of ether");
 		hero.setEther(hero.getEther()-10);
 		System.out.println("");
-			}//fin reducir danio
-
-
+	}//fin reducir danio
+	
+	
 }//fin razon

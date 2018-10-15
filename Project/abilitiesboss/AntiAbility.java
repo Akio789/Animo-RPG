@@ -6,9 +6,9 @@ import items.*;
 
 
 public abstract class AntiAbility{
-
-
-
-
-
+    
+    
+    
+    
+    
 }//fin antihabilidad

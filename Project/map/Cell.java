@@ -37,7 +37,7 @@ public class Cell extends JPanel{
         this.item = null;
         this.enemy = null;
     }
-
+    
     //GETTERS AND SETTERS
     public Item getItem() {
         return item;
@@ -57,12 +57,11 @@ public class Cell extends JPanel{
     public void setRestore(boolean restore){
         this.restore = restore;
     }
-
+    
     //METHODS
     public void restore(Hero hero){
         hero.getHealingFlask().setCharges(hero.getHealingFlask().getMaxCharges());
         hero.setHp(hero.getMaxHp());
         hero.setEther(hero.getMaxEther());
     }
-    public void startFight(Hero hero){}
 }

@@ -5,7 +5,7 @@ import items.*;
 import map.*;
 
 public class Vindication extends AbilityBuffDeffub{
-
+	
 	public void reduceStats(Enemy enemy, Hero hero){
 		
 		System.out.println("");
@@ -17,9 +17,9 @@ public class Vindication extends AbilityBuffDeffub{
 		System.out.println(hero.getName()+" consumed 10 of ether");
 		hero.setEther(hero.getEther()-15);
 		System.out.println("");
-			
-			}//fin reducir stats
-
-
-
+		
+	}//fin reducir stats
+	
+	
+	
 }//fin Vindication

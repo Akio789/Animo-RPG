@@ -30,4 +30,7 @@ public class SuperYo extends Hero{
         setAttack(getAttack() + 2);
         setDefense(getDefense() +2);
     }
+    public void attackEnemyWithAbility(Enemy enemy, int index){
+
+    }
 }

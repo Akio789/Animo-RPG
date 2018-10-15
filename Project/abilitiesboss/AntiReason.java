@@ -5,11 +5,11 @@ import items.*;
 import map.*;
 
 public class AntiReason extends AntiAbilityBuffDeffub{
-//Razon
-
-
+	//Razon
+	
+	
 	public void reduceDamage(Enemy enemy,  Hero hero){
-
+		
 		System.out.println("");
 		//puede cambiar el valor
 		hero.setAttack(hero.getAttack()-(hero.getAttack()*.50));
@@ -17,7 +17,7 @@ public class AntiReason extends AntiAbilityBuffDeffub{
 		System.out.println("The enemy reduced your damage to"+  hero.getAttack() );
 		System.out.println("");
 		
-			}//fin reducir danio
-
-
+	}//fin reducir danio
+	
+	
 }//fin razon

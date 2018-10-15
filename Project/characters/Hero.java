@@ -18,7 +18,8 @@ public abstract class Hero extends Character{
 	
 	//CONSTRUCTOR
 	public Hero(String name, int level, int xp, double hp, double ether, double attack, double defense, boolean statusParalysis, HealingFlask healingFlask){
-		super(level, hp, ether, attack, defense, statusParalysis);
+		super(hp, ether, attack, defense, statusParalysis);
+		this.level = level;
 		this.name = name;
 		this.xp = xp;
 		this.maxHp = hp;
@@ -87,7 +88,8 @@ public abstract class Hero extends Character{
 	}
 	
 	//METHODS
-	public void addItemToBackpack(int index, Item item){
+	///Adds item to desired slot
+	public void addItemToBackpack(int index, EquipmentItem item){
 		if (backpack[index] == null) {						
 			backpack[index] = item;	
 		}
@@ -99,7 +101,7 @@ public abstract class Hero extends Character{
 	public void removeItemFromBackpack(int index){ 
 		backpack[index] = null;									
 	}
-	///Moves item from backpack to equipment. NEED TO OVERLOAD FOR EVERY TYPE OF ITEM
+	///Moves item from backpack to equipment.
 	public void equipItem(int index, EquipmentItem item){
 		if (equipment[index] != null) {
 			System.out.println("Slot in equipment is full");
@@ -181,7 +183,7 @@ public abstract class Hero extends Character{
 		+ "\nDefense: " + getDefense()
 		);
 	}
-	///Use item
+	///Use item.
 	public void useItem(int index){
 		if (index != 0) {
 			System.out.println("Not an usable item.");
@@ -205,11 +207,16 @@ public abstract class Hero extends Character{
 			}
 		}
 	}
-	///Die
-	public void die(){
-		System.out.println("You died.");
+	///Die.
+	public boolean die(){
+		if (getHp() <= 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
-	///Escape from battle
+	///Escape from battle.
 	public boolean escapeFromBattle(){
 		Random rand = new Random();
 		if (rand.nextDouble() > 0.8) {
@@ -219,8 +226,10 @@ public abstract class Hero extends Character{
 			return false;
 		}
 	}
-	///Level up
+	///Level up.
 	public abstract void levelUp();
-	///Attack enemy with a regular attack
+	///Attack enemy with a regular attack.
 	public abstract void attackEnemy(Enemy enemy);
+	///Attack enemy with ability.
+	public abstract void attackEnemyWithAbility(Enemy enemy, int index);
 }

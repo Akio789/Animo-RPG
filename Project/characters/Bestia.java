@@ -23,4 +23,7 @@ public class Bestia extends Hero{
         setAttack(getAttack() + 4);
         setDefense(getDefense() +2);
     }
+    public void attackEnemyWithAbility(Enemy enemy, int index){
+
+    }
 }

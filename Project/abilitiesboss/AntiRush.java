@@ -5,8 +5,8 @@ import items.*;
 import map.*;
 
 public class AntiRush extends AntiAbilityHurt{
-//Rafaga
-
+	//Rafaga
+	
 	public void stacking(Enemy enemy, Hero hero){
 		
 		System.out.println("");
@@ -24,9 +24,9 @@ public class AntiRush extends AntiAbilityHurt{
 		hero.setDefense(hero.getDefense()-(hero.getDefense()*.10));
 		System.out.println("");
 		enemy.setAttack(enemy.getAttack()*8.3);
-			
-			}//fin stacking
-
-
-
+		
+	}//fin stacking
+	
+	
+	
 }//fin rafaga

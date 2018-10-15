@@ -6,11 +6,9 @@ public abstract class Character{
 	private double defense;
 	private boolean statusParalysis; //Both the hero and the enemies can get paralized	//ATTRIBUTES
 	private double ether;	
-	private int level;
 
 	//CONSTRUCTOR
-	public Character(int level, double hp, double ether, double attack, double defense, boolean statusParalysis){
-		this.level = level;
+	public Character(double hp, double ether, double attack, double defense, boolean statusParalysis){
 		this.hp = hp;
 		this.ether = ether;
 		this.attack = attack;

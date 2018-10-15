@@ -23,4 +23,7 @@ public class Yo extends Hero{
         setAttack(getAttack() + 2);
         setDefense(getDefense() +3);
     }
+    public void attackEnemyWithAbility(Enemy enemy, int index){
+
+    }
 }

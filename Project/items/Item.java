@@ -6,14 +6,14 @@ public abstract class Item{
 	private String name;
 	private double points;
 	private String description;
-
+	
 	//CONSTRUCTOR
 	public Item(String name, double points, String description){
 		this.name = name;
 		this.points = points;
 		this.description = description;
 	}
-
+	
 	//GETTERS AND SETTERS
 	public String getName(){
 		return name;

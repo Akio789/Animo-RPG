@@ -8,9 +8,12 @@ import java.awt.event.*;
 import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
 public class Map extends JFrame{
+    //ATTRIBUTES
     private Cell[][] cells;
+    private Hero hero;
     private JPanel mapPanel;
     
+    //CONSTRUCTOR
     public Map(){
         setSize(500,500);
         setLayout(new FlowLayout());
@@ -18,7 +21,28 @@ public class Map extends JFrame{
         initComponents();
         setVisible(true);
     }
-    
+
+    //GETTERS AND SETTERS
+    public Cell[][] getCells() {
+        return cells;
+    }
+    public void setCells(Cell[][] cells) {
+        this.cells = cells;
+    }
+    public Hero getHero() {
+        return hero;
+    }
+    public void setHero(Hero hero) {
+        this.hero = hero;
+    }
+    public JPanel getMapPanel() {
+        return mapPanel;
+    }
+    public void setMapPanel(JPanel mapPanel) {
+        this.mapPanel = mapPanel;
+    }
+
+    //METHODS
     public void initComponents() {
         cells = new Cell[20][20];
         
@@ -39,11 +63,11 @@ public class Map extends JFrame{
         cells[13][17].setItem(longSword);
     
         //Cells with Enemies
-        cells[1][3].setEnemy(new WildMinion(1, 10, 10, 10, 10, false));
+        cells[1][3].setEnemy(new WildMinion(10, 10, 10, 10, false));
         
         //Cells with Bosses
-        cells[2][5].setEnemy(new AntiBestia(1, 10, 10, 10, 10, false));
-        cells[17][17].setEnemy(new AntiSuperYo(1, 10, 10, 10, 10, false));
+        cells[2][5].setEnemy(new AntiBestia(10, 10, 10, 10, false));
+        cells[17][17].setEnemy(new AntiSuperYo(10, 10, 10, 10, false));
 
         //Cells that restore
         cells[19][4].setRestore(true);

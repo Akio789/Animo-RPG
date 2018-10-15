@@ -2,8 +2,8 @@ package characters;
 
 public class AntiBestia extends Boss{
     //CONSTRUCTOR
-    public AntiBestia(int level, double hp, double ether, double attack, double defense, boolean statusParalysis){
-        super(level, hp, ether, attack, defense, statusParalysis);
+    public AntiBestia(double hp, double ether, double attack, double defense, boolean statusParalysis){
+        super(hp, ether, attack, defense, statusParalysis);
         setCritic(1.5);
     }
     
@@ -25,5 +25,8 @@ public class AntiBestia extends Boss{
         else{
             System.out.println("Anti Bestia is too weak, he dealed no damage!");
         }
+    }
+    public void attackHeroWithAbility(Hero hero){
+        
     }
 }
