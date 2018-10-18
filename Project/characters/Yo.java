@@ -1,5 +1,6 @@
 package characters;
 import items.*;
+import abilities.*;
 
 public class Yo extends Hero{
     //CONSTRUCTOR
@@ -23,7 +24,14 @@ public class Yo extends Hero{
         setAttack(getAttack() + 2);
         setDefense(getDefense() +3);
     }
-    public void attackEnemyWithAbility(Enemy enemy, int index){
+    public void attackEnemyWithAbility(Enemy enemy, Hero hero){
 
+         if (hero.getMaxEther()>10) {
+            
+                }//fin if
+
+        else {
+            System.out.println("There's not enough ether to use any abilitie");
+                }//fin else
     }
 }

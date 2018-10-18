@@ -231,5 +231,5 @@ public abstract class Hero extends Character{
 	///Attack enemy with a regular attack.
 	public abstract void attackEnemy(Enemy enemy);
 	///Attack enemy with ability.
-	public abstract void attackEnemyWithAbility(Enemy enemy, int index);
+	public abstract void attackEnemyWithAbility(Enemy enemy, Hero hero);
 }

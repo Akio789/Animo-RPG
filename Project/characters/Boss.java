@@ -4,7 +4,7 @@ import abilitiesboss.*;
 public abstract class Boss extends Enemy{
     //ATTRIBUTES
     private double critic;
-    private AnitAbility[] bossAbilities;
+    private AntiAbility[] bossAbilities;
     
     //CONSTRUCTOR
     public Boss(double hp, double ether, double attack, double defense, boolean statusParalysis){
@@ -18,10 +18,10 @@ public abstract class Boss extends Enemy{
     public void setCritic(double critic) {
         this.critic = critic;
     }
-    public AnitAbility[] getBossAbilities() {
+    public AntiAbility[] getBossAbilities() {
         return bossAbilities;
     }
-    public void setBossAbilities(AnitAbility[] bossAbilities) {
+    public void setBossAbilities(AntiAbility[] bossAbilities) {
         this.bossAbilities = bossAbilities;
     }
     

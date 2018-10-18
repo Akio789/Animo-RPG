@@ -1,16 +1,15 @@
 package characters;
 import items.*;
-import abilities;
-import abilities.Vindication;
+import abilities.*;
+
 
 public class SuperYo extends Hero{
     //CONSTRUCTOR
     public SuperYo(String name, int level, int xp, double hp, double ether, double attack, double defense, boolean statusParalysis, HealingFlask healingFlask){
         super(name, level, xp, hp, ether, attack, defense, statusParalysis, healingFlask);
-        Ability vindication = new Vindication();
-        Ability restrain = new Restrain();
-        Ability[] abilities = {vindication, restrain};
-        this.setAbilities(abilities);
+        
+       
+       
     }
 
     //METHODS
@@ -30,7 +29,13 @@ public class SuperYo extends Hero{
         setAttack(getAttack() + 2);
         setDefense(getDefense() +2);
     }
-    public void attackEnemyWithAbility(Enemy enemy, int index){
+    public void attackEnemyWithAbility(Enemy enemy, Hero hero){
+        if (hero.getMaxEther()>10) {
+            
+                }//fin if
 
+        else {
+            System.out.println("There's not enough ether to use any abilitie");
+                }//fin else
     }
 }

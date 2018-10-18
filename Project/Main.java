@@ -13,7 +13,8 @@ public class Main{
 		EquipmentItem shield = new DefenseItem("Shield", 5, "Normal shield.");
 		Hero hero = new Bestia("Akio", 100, 100, 100, 100, 100, 100, false, healingFlask);
 		Boss antiBestia = new AntiBestia(100, 100, 100, 100, false);
-		
+		Hero hero2= new Yo("Oscar",100,100,100,100,100,100,false,healingFlask);
+		Hero hero3= new SuperYo("Itztani",100,100,100,100,100,100,false,healingFlask);
 
 		/*
 		antiBestia.displayHp();
