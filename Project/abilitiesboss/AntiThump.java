@@ -7,7 +7,7 @@ import map.*;
 public class AntiThump extends AntiAbilityHurt{
 	//golpe fuerte 
 	
-	public void strongAtack(Enemy enemy,  Hero hero ){
+	public void strongAttack(Enemy enemy,  Hero hero ){
 		
 		System.out.println("");
 		

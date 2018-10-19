@@ -13,7 +13,6 @@ public abstract class Hero extends Character{
 	private HealingFlask healingFlask;
 	private Item[] backpack;		
 	private Item[] equipment;	
-	private Ability[] abilities;
 	private int level;
 	
 	//CONSTRUCTOR
@@ -27,7 +26,6 @@ public abstract class Hero extends Character{
 		this.healingFlask = healingFlask;
 		backpack = new Item[20];
 		equipment = new Item[10];
-		abilities = new Ability[2];
 		backpack[0] = healingFlask;
 	}
 	
@@ -73,12 +71,6 @@ public abstract class Hero extends Character{
 	}
 	public void setEquipment(Item[] equipment){
 		this.equipment = equipment;
-	}
-	public Ability[] getAbilities() {
-		return abilities;
-	}
-	public void setAbilities(Ability[] abilities) {
-		this.abilities = abilities;
 	}
 	public int getLevel(){
 		return level;
@@ -231,5 +223,5 @@ public abstract class Hero extends Character{
 	///Attack enemy with a regular attack.
 	public abstract void attackEnemy(Enemy enemy);
 	///Attack enemy with ability.
-	public abstract void attackEnemyWithAbility(Enemy enemy, Hero hero);
+	public abstract void attackEnemyWithAbility(Enemy enemy, Hero hero, int index);
 }

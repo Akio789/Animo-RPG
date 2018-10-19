@@ -12,9 +12,11 @@ public class Main{
 		EquipmentItem sword = new AttackItem("Sword", 5, "Normal sword.");
 		EquipmentItem shield = new DefenseItem("Shield", 5, "Normal shield.");
 		Hero hero = new Bestia("Akio", 100, 100, 100, 100, 100, 100, false, healingFlask);
-		Boss antiBestia = new AntiBestia(100, 100, 100, 100, false);
 		Hero hero2= new Yo("Oscar",100,100,100,100,100,100,false,healingFlask);
 		Hero hero3= new SuperYo("Itztani",100,100,100,100,100,100,false,healingFlask);
+		Boss antiBestia = new AntiBestia(100, 100, 100, 100, false);
+		Boss antiYo = new AntiYo(100, 100, 100, 100, false);
+		Boss antiSuperYo = new AntiSuperYo(100, 100, 100, 100, false);
 
 		/*
 		antiBestia.displayHp();
@@ -30,42 +32,42 @@ public class Main{
 		hero.printStats();
 		*/
 		
-		hero.addItemToBackpack(1, sword);
-		hero.addItemToBackpack(2, shield);
-		hero.printStats();
-		System.out.println();
-		hero.printBackpack();
-		hero.equipItem(0, sword);
-		hero.equipItem(1, shield);
-		System.out.println();
-		hero.printStats();
-		System.out.println();
-		hero.printBackpack();
-		System.out.println();
-		hero.printEquipment();
-		System.out.println();
-		foe.regularAttack(hero);
-		System.out.println();
-		hero.printStats();
-		System.out.println();
-		hero.printBackpack();
-		System.out.println();
-		hero.useItem(0);
-		System.out.println();
-		hero.printBackpack();
-		System.out.println();
-		hero.printStats();
-		hero.unequipItem(0, 2);
-		hero.unequipItem(1, 3);
-		System.out.println();
-		hero.printStats();
-		hero.printEquipment();
-		hero.printBackpack();
+		// hero.addItemToBackpack(1, sword);
+		// hero.addItemToBackpack(2, shield);
+		// hero.printStats();
+		// System.out.println();
+		// hero.printBackpack();
+		// hero.equipItem(0, sword);
+		// hero.equipItem(1, shield);
+		// System.out.println();
+		// hero.printStats();
+		// System.out.println();
+		// hero.printBackpack();
+		// System.out.println();
+		// hero.printEquipment();
+		// System.out.println();
+		// foe.regularAttack(hero);
+		// System.out.println();
+		// hero.printStats();
+		// System.out.println();
+		// hero.printBackpack();
+		// System.out.println();
+		// hero.useItem(0);
+		// System.out.println();
+		// hero.printBackpack();
+		// System.out.println();
+		// hero.printStats();
+		// hero.unequipItem(0, 2);
+		// hero.unequipItem(1, 3);
+		// System.out.println();
+		// hero.printStats();
+		// hero.printEquipment();
+		// hero.printBackpack();
 		
 		
 		
 
-		new Map();
+		// new Map();
 		
 		
 		/*
@@ -135,5 +137,17 @@ public class Main{
 
    		
 		//hero.printStats();
+
+		// hero.attackEnemyWithAbility(foe, hero, 0);
+		// hero.attackEnemyWithAbility(foe, hero, 1);
+		// hero2.attackEnemyWithAbility(foe, hero2, 0);
+		// hero2.attackEnemyWithAbility(foe, hero2, 1);
+		// hero3.attackEnemyWithAbility(foe, hero3, 0);
+		// hero3.attackEnemyWithAbility(foe, hero3, 1);
+
+		antiBestia.attackHeroWithAbility(antiBestia, hero);
+		antiSuperYo.attackHeroWithAbility(antiSuperYo, hero);
+		antiYo.attackHeroWithAbility(antiYo, hero);
+
 	}
 }

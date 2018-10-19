@@ -11,7 +11,7 @@ public class Rush extends AbilityHurt{
 		
 		System.out.println("");
 		hero.setAttack(hero.getAttack()*.12);
-		System.out.println("The special abilitie rush was activated");
+		System.out.println("The special ability rush was activated");
 		enemy.setHp(enemy.getHp()-hero.getAttack() );
 		System.out.println("You dealed "+ hero.getAttack() +" of damage");
 		enemy.setHp(enemy.getHp()-hero.getAttack() );

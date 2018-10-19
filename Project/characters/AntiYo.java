@@ -1,12 +1,35 @@
 package characters;
 
+import abilitiesboss.*;
+import java.util.*;
+
 public class AntiYo extends Boss{
+    //ATTRIBUTES
+    private AntiReason reason;
+    private AntiNaturae naturae;
+
     //CONSTRUCTOR
     public AntiYo(double hp, double ether, double attack, double defense, boolean statusParalysis){
         super(hp, ether, attack, defense, statusParalysis);
         setCritic(1.2);
+        reason = new AntiReason();
+        naturae = new AntiNaturae();
     }
     
+    //GETTERS AND SETTERS
+    public AntiReason getReason() {
+        return reason;
+    }
+    public void setReason(AntiReason reason) {
+        this.reason = reason;
+    }
+    public AntiNaturae getNaturae() {
+        return naturae;
+    }
+    public void setNaturae(AntiNaturae naturae) {
+        this.naturae = naturae;
+    }
+
     //METHODS
     public void criticAttack(Hero hero){
         if (hero.getDefense() < (1 * getAttack() * getCritic())){
@@ -26,7 +49,20 @@ public class AntiYo extends Boss{
             System.out.println("Anti Yo is too weak, he dealed no damage!");
         }
     }
-    public void attackHeroWithAbility(Hero hero){
+    public void attackHeroWithAbility(Enemy enemy, Hero hero){
+        Random r = new Random();
+        double rand = r.nextDouble();
+        if (hero.getMaxEther()>10) {
+            if (rand < 0.5) {
+                naturae.reduceDefense(hero);
+            }
+            if (rand >= 0.5) {
+                reason.reduceDamage(enemy, hero);
+            }
+        }//fin if
         
+        else {
+            System.out.println("There's not enough ether to use any abilitie");
+        }//fin else
     }
 }
