@@ -211,7 +211,8 @@ public abstract class Hero extends Character{
 	///Escape from battle.
 	public boolean escapeFromBattle(){
 		Random rand = new Random();
-		if (rand.nextDouble() > 0.8) {
+		double escape = rand.nextDouble();
+		if (escape > 0.8) {
 			return true;
 		}
 		else{
