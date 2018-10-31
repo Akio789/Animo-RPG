@@ -7,69 +7,75 @@ import java.awt.*;
 import java.awt.event.*;
 import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
-public class Map extends JFrame{
-    //ATTRIBUTES
+public class Window extends JFrame {
+    // ATTRIBUTES
     private Cell[][] cells;
     private Hero hero;
     private JPanel mapPanel;
-    
-    //CONSTRUCTOR
-    public Map(){
-        setSize(500,500);
+
+    // CONSTRUCTOR
+    public Window() {
+        setSize(700, 700);
         setLayout(new FlowLayout());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         initComponents();
         setVisible(true);
+        setLocationRelativeTo(null);
+        setTitle("Animo RPG");
     }
 
-    //GETTERS AND SETTERS
+    // GETTERS AND SETTERS
     public Cell[][] getCells() {
         return cells;
     }
+
     public void setCells(Cell[][] cells) {
         this.cells = cells;
     }
+
     public Hero getHero() {
         return hero;
     }
+
     public void setHero(Hero hero) {
         this.hero = hero;
     }
+
     public JPanel getMapPanel() {
         return mapPanel;
     }
+
     public void setMapPanel(JPanel mapPanel) {
         this.mapPanel = mapPanel;
     }
 
-    //METHODS
+    // METHODS
     public void initComponents() {
         cells = new Cell[20][20];
-        
-        //Empty cells
+        // Empty cells
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 cells[i][j] = new Cell();
                 cells[i][j].setBackground(Color.lightGray);
-            }   
+            }
         }
-        
-        //Cells with Items
+
+        // Cells with Items
         EquipmentItem longSword = new AttackItem("Long Sword", 7, "A sword crafted for war");
         cells[18][1].setItem(longSword);
         cells[1][3].setItem(longSword);
         cells[8][7].setItem(longSword);
         cells[5][15].setItem(longSword);
         cells[13][17].setItem(longSword);
-    
-        //Cells with Enemies
+
+        // Cells with Enemies
         cells[1][3].setEnemy(new WildMinion(10, 10, 10, 10, false));
-        
-        //Cells with Bosses
+
+        // Cells with Bosses
         cells[2][5].setEnemy(new AntiBestia(10, 10, 10, 10, false));
         cells[17][17].setEnemy(new AntiSuperYo(10, 10, 10, 10, false));
 
-        //Cells that restore
+        // Cells that restore
         cells[19][4].setRestore(true);
         cells[19][5].setRestore(true);
         cells[18][4].setRestore(true);
@@ -119,7 +125,7 @@ public class Map extends JFrame{
         cells[0][14].setRestore(true);
         cells[0][15].setRestore(true);
         cells[0][16].setRestore(true);
-        
+
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 if (cells[i][j].getRestore() == true) {
@@ -131,14 +137,13 @@ public class Map extends JFrame{
                 if (cells[i][j].getEnemy() instanceof Boss) {
                     cells[i][j].setBackground(Color.black);
                 }
-                if (cells[i][j].getEnemy() instanceof WildMinion ||
-                cells[i][j].getEnemy() instanceof OrderMinion) {
+                if (cells[i][j].getEnemy() instanceof WildMinion || cells[i][j].getEnemy() instanceof OrderMinion) {
                     cells[i][j].setBackground(Color.red);
                 }
             }
         }
-        
-        mapPanel = new JPanel(new GridLayout(20,20));
+
+        mapPanel = new JPanel(new GridLayout(20, 20));
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 mapPanel.add(cells[i][j]);
