@@ -3,6 +3,8 @@ package map;
 import characters.*;
 import items.*;
 import javax.swing.*;
+import javax.swing.border.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
@@ -11,12 +13,14 @@ public class Window extends JFrame {
     // ATTRIBUTES
     private Cell[][] cells;
     private Hero hero;
-    private JPanel mapPanel;
+    private JPanel topPanel, bottomPanel, mapPanel, equipmentPanel, statsPanel, menuPanel;
+    private JLabel[] stats;
+    private JButton drinkFlaskButton, saveButton, exitButton, fightButton, pickUpItemButton;
 
     // CONSTRUCTOR
     public Window() {
-        setSize(700, 700);
-        setLayout(new FlowLayout());
+        setSize(650, 700);
+        setLayout(new GridLayout(2, 1));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         initComponents();
         setVisible(true);
@@ -51,6 +55,42 @@ public class Window extends JFrame {
 
     // METHODS
     public void initComponents() {
+        hero = new Yo("Akio", 1, 0, 50, 50, 10, 10, false,
+                new HealingFlask("Healing Flask", 10, "This potion heals hp and ether."));
+        hero.setPosX(0);
+        hero.setPosX(0);
+
+        // MAIN PANELS
+        topPanel = new JPanel();
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+        bottomPanel = new JPanel();
+
+        // MENU PANEL
+        menuPanel = new JPanel();
+        menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
+        menuPanel.setBorder(new TitledBorder("Menu"));
+        drinkFlaskButton = new JButton("Heal");
+        drinkFlaskButton.setFont(new Font("Arial", Font.BOLD, 24));
+        fightButton = new JButton("Fight");
+        fightButton.setFont(new Font("Arial", Font.BOLD, 24));
+        pickUpItemButton = new JButton("Pick up");
+        pickUpItemButton.setFont(new Font("Arial", Font.BOLD, 24));
+        saveButton = new JButton("Save");
+        saveButton.setFont(new Font("Arial", Font.BOLD, 24));
+        exitButton = new JButton("Exit");
+        exitButton.setFont(new Font("Arial", Font.BOLD, 24));
+        menuPanel.add(drinkFlaskButton);
+        menuPanel.add(new JLabel(" "));
+        menuPanel.add(fightButton);
+        menuPanel.add(new JLabel(" "));
+        menuPanel.add(pickUpItemButton);
+        menuPanel.add(new JLabel(" "));
+        menuPanel.add(saveButton);
+        menuPanel.add(new JLabel(" "));
+        menuPanel.add(exitButton);
+        topPanel.add(menuPanel);
+
+        // MAP PANEL
         cells = new Cell[20][20];
         // Empty cells
         for (int i = 0; i < cells.length; i++) {
@@ -59,7 +99,6 @@ public class Window extends JFrame {
                 cells[i][j].setBackground(Color.lightGray);
             }
         }
-
         // Cells with Items
         EquipmentItem longSword = new AttackItem("Long Sword", 7, "A sword crafted for war");
         cells[18][1].setItem(longSword);
@@ -67,14 +106,11 @@ public class Window extends JFrame {
         cells[8][7].setItem(longSword);
         cells[5][15].setItem(longSword);
         cells[13][17].setItem(longSword);
-
         // Cells with Enemies
         cells[1][3].setEnemy(new WildMinion(10, 10, 10, 10, false));
-
         // Cells with Bosses
         cells[2][5].setEnemy(new AntiBestia(10, 10, 10, 10, false));
         cells[17][17].setEnemy(new AntiSuperYo(10, 10, 10, 10, false));
-
         // Cells that restore
         cells[19][4].setRestore(true);
         cells[19][5].setRestore(true);
@@ -125,7 +161,6 @@ public class Window extends JFrame {
         cells[0][14].setRestore(true);
         cells[0][15].setRestore(true);
         cells[0][16].setRestore(true);
-
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 if (cells[i][j].getRestore() == true) {
@@ -142,13 +177,37 @@ public class Window extends JFrame {
                 }
             }
         }
-
-        mapPanel = new JPanel(new GridLayout(20, 20));
+        cells[hero.getPosY()][hero.getPosX()].setBackground(Color.blue);
+        mapPanel = new JPanel();
+        mapPanel.setLayout(new GridLayout(20, 20));
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 mapPanel.add(cells[i][j]);
             }
         }
-        add(mapPanel);
+        topPanel.add(mapPanel);
+
+        // STATS PANEL
+        statsPanel = new JPanel();
+        statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
+        statsPanel.setBorder(new TitledBorder("Stats"));
+        statsPanel.add(new JLabel(" "));
+        stats = new JLabel[hero.printStats().length];
+        for (int i = 0; i < stats.length; i++) {
+            stats[i] = new JLabel("  " + hero.printStats()[i]);
+            if (i == 0) {
+                stats[i].setFont(new Font("Arial", Font.BOLD, 26));
+
+            } else {
+                stats[i].setFont(new Font("Arial", Font.BOLD, 23));
+            }
+            statsPanel.add(stats[i]);
+            statsPanel.add(new JLabel(" "));
+        }
+        topPanel.add(statsPanel);
+
+        // ADD MAIN PANELS TO WINDOW
+        add(topPanel);
+        add(bottomPanel);
     }
 }
