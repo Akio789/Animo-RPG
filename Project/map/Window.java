@@ -16,6 +16,7 @@ public class Window extends JFrame {
     private JPanel topPanel, bottomPanel, mapPanel, equipmentPanel, statsPanel, menuPanel, fightPanel, backpackPanel;
     private JPanel[] equipPanels, backpackPanels;
     private JLabel[] stats;
+    private JLabel flaskChargesL;
     private JButton drinkFlaskButton, saveButton, loadButton, exitButton, fightButton, pickUpItemButton;
 
     // CONSTRUCTOR
@@ -54,10 +55,32 @@ public class Window extends JFrame {
         this.mapPanel = mapPanel;
     }
 
+    public JPanel getTopPanel() {
+        return topPanel;
+    }
+
+    public void setTopPanel(JPanel topPanel) {
+        this.topPanel = topPanel;
+    }
+
+    public JPanel getBottomPanel() {
+        return bottomPanel;
+    }
+
+    public void setBottomPanel(JPanel bottomPanel) {
+        this.bottomPanel = bottomPanel;
+    }
+
+    public Window getWindow() {
+        return Window.this;
+    }
+
     // METHODS
     public void initComponents() {
-        hero = new Yo("Akio", 1, 0, 50, 50, 10, 10, false,
-                new HealingFlask("Flask", 10, "This potion heals hp and ether."));
+        hero = new Yo("Akio", 1, 0, 50, 50, 5, 5, false,
+                new HealingFlask("Flask", 5, "This potion heals hp and ether."));
+        hero.setHp(10);
+        hero.setEther(10);
         hero.setPosX(0);
         hero.setPosX(0);
 
@@ -73,16 +96,22 @@ public class Window extends JFrame {
         menuPanel.setBorder(new TitledBorder("Menu"));
         drinkFlaskButton = new JButton("Heal");
         drinkFlaskButton.setFont(new Font("Arial", Font.BOLD, 24));
+        drinkFlaskButton.addActionListener(new DrinkFlaskButtonListener());
         fightButton = new JButton("Fight");
         fightButton.setFont(new Font("Arial", Font.BOLD, 24));
+        fightButton.addActionListener(new FightButtonListener());
         pickUpItemButton = new JButton("Pick up");
         pickUpItemButton.setFont(new Font("Arial", Font.BOLD, 24));
+        pickUpItemButton.addActionListener(new PickUpItemButtonListener());
         saveButton = new JButton("Save");
         saveButton.setFont(new Font("Arial", Font.BOLD, 24));
+        saveButton.addActionListener(new SaveButtonListener());
         loadButton = new JButton("Load");
         loadButton.setFont(new Font("Arial", Font.BOLD, 24));
+        loadButton.addActionListener(new LoadButtonListener());
         exitButton = new JButton("Exit");
         exitButton.setFont(new Font("Arial", Font.BOLD, 24));
+        exitButton.addActionListener(new ExitButtonListener());
         menuPanel.add(drinkFlaskButton);
         menuPanel.add(new JLabel(" "));
         menuPanel.add(fightButton);
@@ -220,7 +249,10 @@ public class Window extends JFrame {
         equipmentPanel = new JPanel(new GridLayout(4, 1));
         equipmentPanel.setBorder(new TitledBorder("Equipment"));
         equipPanels = new ItemJPanel[4];
-        for (int i = 0; i < hero.getEquipment().length; i++) {
+        flaskChargesL = new JLabel("Charges: " + hero.getHealingFlask().getCharges());
+        equipPanels[0] = new ItemJPanel(hero.getEquipment()[0], flaskChargesL);
+        equipmentPanel.add(equipPanels[0]);
+        for (int i = 1; i < hero.getEquipment().length; i++) {
             try {
                 equipPanels[i] = new ItemJPanel(hero.getEquipment()[i], new JLabel(hero.getEquipment()[i].getName()));
             } catch (NullPointerException e) {
@@ -253,5 +285,54 @@ public class Window extends JFrame {
         // ADD MAIN PANELS TO WINDOW
         add(topPanel);
         add(bottomPanel);
+    }
+
+    // ACTION LISTENERS
+    public class DrinkFlaskButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            try {
+                getWindow().getHero().drinkFlask();
+                flaskChargesL.setText("Charges: " + getWindow().getHero().getHealingFlask().getCharges());
+                for (int i = 1; i < getWindow().getHero().printStats().length; i++) {
+                    stats[i].setText("  " + hero.printStats()[i]);
+                }
+                getWindow().revalidate();
+                getWindow().repaint();
+            } catch (EmptyFlaskException exception) {
+                JOptionPane.showMessageDialog(null, "Flask is empty, it needs to be recharged.", "Empty flask",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }
+
+    public class SaveButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    public class LoadButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    public class ExitButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit game",
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            }
+        }
+    }
+
+    public class FightButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
+
+    public class PickUpItemButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+
+        }
     }
 }
