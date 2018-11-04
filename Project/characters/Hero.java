@@ -27,9 +27,9 @@ public abstract class Hero extends Character {
 		this.maxHp = hp;
 		this.maxEther = ether;
 		this.healingFlask = healingFlask;
-		backpack = new Item[6];
+		backpack = new Item[4];
 		equipment = new Item[4];
-		backpack[0] = healingFlask;
+		equipment[0] = healingFlask;
 	}
 
 	// GETTERS AND SETTERS

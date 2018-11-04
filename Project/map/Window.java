@@ -13,9 +13,10 @@ public class Window extends JFrame {
     // ATTRIBUTES
     private Cell[][] cells;
     private Hero hero;
-    private JPanel topPanel, bottomPanel, mapPanel, equipmentPanel, statsPanel, menuPanel;
+    private JPanel topPanel, bottomPanel, mapPanel, equipmentPanel, statsPanel, menuPanel, fightPanel, backpackPanel;
+    private JPanel[] equipPanels, backpackPanels;
     private JLabel[] stats;
-    private JButton drinkFlaskButton, saveButton, exitButton, fightButton, pickUpItemButton;
+    private JButton drinkFlaskButton, saveButton, loadButton, exitButton, fightButton, pickUpItemButton;
 
     // CONSTRUCTOR
     public Window() {
@@ -56,7 +57,7 @@ public class Window extends JFrame {
     // METHODS
     public void initComponents() {
         hero = new Yo("Akio", 1, 0, 50, 50, 10, 10, false,
-                new HealingFlask("Healing Flask", 10, "This potion heals hp and ether."));
+                new HealingFlask("Flask", 10, "This potion heals hp and ether."));
         hero.setPosX(0);
         hero.setPosX(0);
 
@@ -64,6 +65,7 @@ public class Window extends JFrame {
         topPanel = new JPanel();
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
         bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
 
         // MENU PANEL
         menuPanel = new JPanel();
@@ -77,6 +79,8 @@ public class Window extends JFrame {
         pickUpItemButton.setFont(new Font("Arial", Font.BOLD, 24));
         saveButton = new JButton("Save");
         saveButton.setFont(new Font("Arial", Font.BOLD, 24));
+        loadButton = new JButton("Load");
+        loadButton.setFont(new Font("Arial", Font.BOLD, 24));
         exitButton = new JButton("Exit");
         exitButton.setFont(new Font("Arial", Font.BOLD, 24));
         menuPanel.add(drinkFlaskButton);
@@ -86,6 +90,8 @@ public class Window extends JFrame {
         menuPanel.add(pickUpItemButton);
         menuPanel.add(new JLabel(" "));
         menuPanel.add(saveButton);
+        menuPanel.add(new JLabel(" "));
+        menuPanel.add(loadButton);
         menuPanel.add(new JLabel(" "));
         menuPanel.add(exitButton);
         topPanel.add(menuPanel);
@@ -100,7 +106,7 @@ public class Window extends JFrame {
             }
         }
         // Cells with Items
-        EquipmentItem longSword = new AttackItem("Long Sword", 7, "A sword crafted for war");
+        EquipmentItem longSword = new AttackItem("Sword", 7, "A sword crafted for war");
         cells[18][1].setItem(longSword);
         cells[1][3].setItem(longSword);
         cells[8][7].setItem(longSword);
@@ -187,24 +193,62 @@ public class Window extends JFrame {
         }
         topPanel.add(mapPanel);
 
+        // TEST
+        hero.addItemToBackpack(1, longSword);
+        hero.equipItem(1, longSword);
+        hero.unequipItem(1, 1);
+
         // STATS PANEL
         statsPanel = new JPanel();
         statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
         statsPanel.setBorder(new TitledBorder("Stats"));
-        statsPanel.add(new JLabel(" "));
         stats = new JLabel[hero.printStats().length];
         for (int i = 0; i < stats.length; i++) {
             stats[i] = new JLabel("  " + hero.printStats()[i]);
             if (i == 0) {
-                stats[i].setFont(new Font("Arial", Font.BOLD, 26));
+                stats[i].setFont(new Font("Arial", Font.BOLD, 24));
 
             } else {
-                stats[i].setFont(new Font("Arial", Font.BOLD, 23));
+                stats[i].setFont(new Font("Arial", Font.BOLD, 22));
             }
             statsPanel.add(stats[i]);
             statsPanel.add(new JLabel(" "));
         }
         topPanel.add(statsPanel);
+
+        // EQUIPMENT PANEL
+        equipmentPanel = new JPanel(new GridLayout(4, 1));
+        equipmentPanel.setBorder(new TitledBorder("Equipment"));
+        equipPanels = new ItemJPanel[4];
+        for (int i = 0; i < hero.getEquipment().length; i++) {
+            try {
+                equipPanels[i] = new ItemJPanel(hero.getEquipment()[i], new JLabel(hero.getEquipment()[i].getName()));
+            } catch (NullPointerException e) {
+                equipPanels[i] = new ItemJPanel(null, new JLabel("Empty"));
+            }
+            equipmentPanel.add(equipPanels[i]);
+        }
+        bottomPanel.add(equipmentPanel);
+
+        // FIGHTS PANEL
+        fightPanel = new JPanel();
+        fightPanel.setBorder(new TitledBorder("Battle"));
+        fightPanel.add(new JLabel("                                                           "));
+        bottomPanel.add(fightPanel);
+
+        // BACKPACK PANEL
+        backpackPanel = new JPanel(new GridLayout(4, 1));
+        backpackPanel.setBorder(new TitledBorder("Backpack"));
+        backpackPanels = new ItemJPanel[4];
+        for (int i = 0; i < hero.getBackpack().length; i++) {
+            try {
+                backpackPanels[i] = new ItemJPanel(hero.getBackpack()[i], new JLabel(hero.getBackpack()[i].getName()));
+            } catch (NullPointerException e) {
+                backpackPanels[i] = new ItemJPanel(null, new JLabel("Empty"));
+            }
+            backpackPanel.add(backpackPanels[i]);
+        }
+        bottomPanel.add(backpackPanel);
 
         // ADD MAIN PANELS TO WINDOW
         add(topPanel);
