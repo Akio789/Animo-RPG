@@ -3,6 +3,9 @@ package characters;
 import items.*;
 import abilities.*;
 import java.util.*;
+
+import javax.swing.JOptionPane;
+
 import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
 public abstract class Hero extends Character {
@@ -12,8 +15,8 @@ public abstract class Hero extends Character {
 	private double maxHp;
 	private double maxEther;
 	private HealingFlask healingFlask;
-	private Item[] backpack;
-	private Item[] equipment;
+	private EquipmentItem[] backpack;
+	private EquipmentItem[] equipment;
 	private int level;
 	private int posX, posY;
 
@@ -27,9 +30,8 @@ public abstract class Hero extends Character {
 		this.maxHp = hp;
 		this.maxEther = ether;
 		this.healingFlask = healingFlask;
-		backpack = new Item[4];
-		equipment = new Item[4];
-		equipment[0] = healingFlask;
+		backpack = new EquipmentItem[4];
+		equipment = new EquipmentItem[3];
 	}
 
 	// GETTERS AND SETTERS
@@ -73,19 +75,19 @@ public abstract class Hero extends Character {
 		this.healingFlask = healingFlask;
 	}
 
-	public Item[] getBackpack() {
+	public EquipmentItem[] getBackpack() {
 		return backpack;
 	}
 
-	public void setBackpack(Item[] backpack) {
+	public void setBackpack(EquipmentItem[] backpack) {
 		this.backpack = backpack;
 	}
 
-	public Item[] getEquipment() {
+	public EquipmentItem[] getEquipment() {
 		return equipment;
 	}
 
-	public void setEquipment(Item[] equipment) {
+	public void setEquipment(EquipmentItem[] equipment) {
 		this.equipment = equipment;
 	}
 
@@ -129,31 +131,22 @@ public abstract class Hero extends Character {
 	}
 
 	/// Moves item from backpack to equipment.
-	public void equipItem(int index, EquipmentItem item) {
-		if (equipment[index] != null) {
-			System.out.println("Slot in equipment is full");
+	public void equipItem(int equipmentIndex, int backpackIndex) throws SlotFullException {
+		if (equipment[equipmentIndex] != null) {
+			throw new SlotFullException();
 		} else {
-			equipment[index] = item;
-			removeItemFromBackpack(Arrays.asList(getBackpack()).indexOf(item));
-			if (item instanceof AttackItem) {
-				setAttack(item.modifyStat(getAttack()));
-			}
-			if (item instanceof DefenseItem) {
-				setDefense(item.modifyStat(getDefense()));
-			}
+			equipment[equipmentIndex] = backpack[backpackIndex];
+			removeItemFromBackpack(backpackIndex);
+			equipment[equipmentIndex].modifyStatEquip(this);
 		}
 	}
 
 	/// Moves item from equipment to backpack.
-	public void unequipItem(int equipmentIndex, int backpackIndex) {
+	public void unequipItem(int equipmentIndex, int backpackIndex) throws SlotFullException {
 		if (backpack[backpackIndex] != null) {
-			System.out.println("Slot in backpack is full.");
+			throw new SlotFullException();
 		} else {
-			if (equipment[equipmentIndex] instanceof AttackItem) { // If its an attack item, decrease attack
-				setAttack(getAttack() - equipment[equipmentIndex].getPoints());
-			} else if (equipment[equipmentIndex] instanceof DefenseItem) { // If its a defense item, decrease defense
-				setDefense(getDefense() - equipment[equipmentIndex].getPoints());
-			}
+			equipment[equipmentIndex].modifyStatUnequip(this);
 			backpack[backpackIndex] = equipment[equipmentIndex];
 			equipment[equipmentIndex] = null;
 		}

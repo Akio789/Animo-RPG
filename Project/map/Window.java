@@ -15,9 +15,11 @@ public class Window extends JFrame {
     private Hero hero;
     private JPanel topPanel, bottomPanel, mapPanel, equipmentPanel, statsPanel, menuPanel, fightPanel, backpackPanel;
     private JPanel[] equipPanels, backpackPanels;
-    private JLabel[] stats;
-    private JLabel flaskChargesL;
-    private JButton drinkFlaskButton, saveButton, loadButton, exitButton, fightButton, pickUpItemButton;
+    private JLabel[] stats, equipPanelsL, backpackPanelsL;
+    private JButton drinkFlaskButton, fightButton, pickUpItemButton, equipItemButton, unEquipItemButton;
+    private JMenuBar menuBar;
+    private JMenu menu;
+    private JMenuItem saveMenuItem, loadMenuItem, exitMenuItem;
 
     // CONSTRUCTOR
     public Window() {
@@ -77,12 +79,25 @@ public class Window extends JFrame {
 
     // METHODS
     public void initComponents() {
-        hero = new Yo("Akio", 1, 0, 50, 50, 5, 5, false,
+        hero = new Yo("Akio", 2, 0, 50, 50, 5, 5, false,
                 new HealingFlask("Flask", 5, "This potion heals hp and ether."));
         hero.setHp(10);
         hero.setEther(10);
         hero.setPosX(0);
         hero.setPosX(0);
+
+        // MENU BAR
+        menuBar = new JMenuBar();
+        this.setJMenuBar(menuBar);
+        menu = new JMenu("Menu");
+        menuBar.add(menu);
+        saveMenuItem = new JMenuItem("Save");
+        loadMenuItem = new JMenuItem("Load");
+        exitMenuItem = new JMenuItem("Exit");
+        exitMenuItem.addActionListener(new ExitMenuItemListener());
+        menu.add(saveMenuItem);
+        menu.add(loadMenuItem);
+        menu.add(exitMenuItem);
 
         // MAIN PANELS
         topPanel = new JPanel();
@@ -93,36 +108,31 @@ public class Window extends JFrame {
         // MENU PANEL
         menuPanel = new JPanel();
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
-        menuPanel.setBorder(new TitledBorder("Menu"));
-        drinkFlaskButton = new JButton("Heal");
-        drinkFlaskButton.setFont(new Font("Arial", Font.BOLD, 24));
+        menuPanel.setBorder(new TitledBorder("Actions"));
+        drinkFlaskButton = new JButton("Drink flask");
+        drinkFlaskButton.setFont(new Font("Arial", Font.BOLD, 20));
         drinkFlaskButton.addActionListener(new DrinkFlaskButtonListener());
         fightButton = new JButton("Fight");
-        fightButton.setFont(new Font("Arial", Font.BOLD, 24));
+        fightButton.setFont(new Font("Arial", Font.BOLD, 20));
         fightButton.addActionListener(new FightButtonListener());
         pickUpItemButton = new JButton("Pick up");
-        pickUpItemButton.setFont(new Font("Arial", Font.BOLD, 24));
+        pickUpItemButton.setFont(new Font("Arial", Font.BOLD, 20));
         pickUpItemButton.addActionListener(new PickUpItemButtonListener());
-        saveButton = new JButton("Save");
-        saveButton.setFont(new Font("Arial", Font.BOLD, 24));
-        saveButton.addActionListener(new SaveButtonListener());
-        loadButton = new JButton("Load");
-        loadButton.setFont(new Font("Arial", Font.BOLD, 24));
-        loadButton.addActionListener(new LoadButtonListener());
-        exitButton = new JButton("Exit");
-        exitButton.setFont(new Font("Arial", Font.BOLD, 24));
-        exitButton.addActionListener(new ExitButtonListener());
+        equipItemButton = new JButton("Equip");
+        equipItemButton.setFont(new Font("Arial", Font.BOLD, 20));
+        equipItemButton.addActionListener(new EquipItemButtonListener());
+        unEquipItemButton = new JButton("Unequip");
+        unEquipItemButton.setFont(new Font("Arial", Font.BOLD, 20));
+        unEquipItemButton.addActionListener(new UnEquipItemButtonListener());
         menuPanel.add(drinkFlaskButton);
         menuPanel.add(new JLabel(" "));
         menuPanel.add(fightButton);
         menuPanel.add(new JLabel(" "));
         menuPanel.add(pickUpItemButton);
         menuPanel.add(new JLabel(" "));
-        menuPanel.add(saveButton);
+        menuPanel.add(equipItemButton);
         menuPanel.add(new JLabel(" "));
-        menuPanel.add(loadButton);
-        menuPanel.add(new JLabel(" "));
-        menuPanel.add(exitButton);
+        menuPanel.add(unEquipItemButton);
         topPanel.add(menuPanel);
 
         // MAP PANEL
@@ -136,6 +146,7 @@ public class Window extends JFrame {
         }
         // Cells with Items
         EquipmentItem longSword = new AttackItem("Sword", 7, "A sword crafted for war");
+        cells[0][0].setItem(new DefenseItem("Shield", 7, "A wooden shield"));
         cells[18][1].setItem(longSword);
         cells[1][3].setItem(longSword);
         cells[8][7].setItem(longSword);
@@ -222,11 +233,6 @@ public class Window extends JFrame {
         }
         topPanel.add(mapPanel);
 
-        // TEST
-        hero.addItemToBackpack(1, longSword);
-        hero.equipItem(1, longSword);
-        hero.unequipItem(1, 1);
-
         // STATS PANEL
         statsPanel = new JPanel();
         statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
@@ -249,16 +255,19 @@ public class Window extends JFrame {
         equipmentPanel = new JPanel(new GridLayout(4, 1));
         equipmentPanel.setBorder(new TitledBorder("Equipment"));
         equipPanels = new ItemJPanel[4];
-        flaskChargesL = new JLabel("Charges: " + hero.getHealingFlask().getCharges());
-        equipPanels[0] = new ItemJPanel(hero.getEquipment()[0], flaskChargesL);
+        equipPanelsL = new JLabel[4];
+        equipPanelsL[0] = new JLabel("Charges: " + hero.getHealingFlask().getCharges());
+        equipPanels[0] = new ItemJPanel(hero.getHealingFlask(), equipPanelsL[0]);
         equipmentPanel.add(equipPanels[0]);
-        for (int i = 1; i < hero.getEquipment().length; i++) {
+        for (int i = 0; i < hero.getEquipment().length; i++) {
             try {
-                equipPanels[i] = new ItemJPanel(hero.getEquipment()[i], new JLabel(hero.getEquipment()[i].getName()));
+                equipPanelsL[i + 1] = new JLabel(hero.getEquipment()[i].getName());
+                equipPanels[i + 1] = new ItemJPanel(hero.getEquipment()[i], equipPanelsL[i + 1]);
             } catch (NullPointerException e) {
-                equipPanels[i] = new ItemJPanel(null, new JLabel("Empty"));
+                equipPanelsL[i + 1] = new JLabel("Empty");
+                equipPanels[i + 1] = new ItemJPanel(null, equipPanelsL[i + 1]);
             }
-            equipmentPanel.add(equipPanels[i]);
+            equipmentPanel.add(equipPanels[i + 1]);
         }
         bottomPanel.add(equipmentPanel);
 
@@ -272,11 +281,16 @@ public class Window extends JFrame {
         backpackPanel = new JPanel(new GridLayout(4, 1));
         backpackPanel.setBorder(new TitledBorder("Backpack"));
         backpackPanels = new ItemJPanel[4];
-        for (int i = 0; i < hero.getBackpack().length; i++) {
+        backpackPanelsL = new JLabel[backpackPanels.length];
+        for (
+
+                int i = 0; i < hero.getBackpack().length; i++) {
             try {
-                backpackPanels[i] = new ItemJPanel(hero.getBackpack()[i], new JLabel(hero.getBackpack()[i].getName()));
+                backpackPanelsL[i] = new JLabel(hero.getBackpack()[i].getName());
+                backpackPanels[i] = new ItemJPanel(hero.getBackpack()[i], backpackPanelsL[i]);
             } catch (NullPointerException e) {
-                backpackPanels[i] = new ItemJPanel(null, new JLabel("Empty"));
+                backpackPanelsL[i] = new JLabel("Empty");
+                backpackPanels[i] = new ItemJPanel(null, backpackPanelsL[i]);
             }
             backpackPanel.add(backpackPanels[i]);
         }
@@ -290,14 +304,11 @@ public class Window extends JFrame {
     // ACTION LISTENERS
     public class DrinkFlaskButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            Repainter repainter = new Repainter();
             try {
                 getWindow().getHero().drinkFlask();
-                flaskChargesL.setText("Charges: " + getWindow().getHero().getHealingFlask().getCharges());
-                for (int i = 1; i < getWindow().getHero().printStats().length; i++) {
-                    stats[i].setText("  " + hero.printStats()[i]);
-                }
-                getWindow().revalidate();
-                getWindow().repaint();
+                equipPanelsL[0].setText("Charges: " + getWindow().getHero().getHealingFlask().getCharges());
+                repainter.repaintStats();
             } catch (EmptyFlaskException exception) {
                 JOptionPane.showMessageDialog(null, "Flask is empty, it needs to be recharged.", "Empty flask",
                         JOptionPane.WARNING_MESSAGE);
@@ -305,17 +316,17 @@ public class Window extends JFrame {
         }
     }
 
-    public class SaveButtonListener implements ActionListener {
+    public class SaveMenuItemListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
         }
     }
 
-    public class LoadButtonListener implements ActionListener {
+    public class LoadMenuItemListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
         }
     }
 
-    public class ExitButtonListener implements ActionListener {
+    public class ExitMenuItemListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit game",
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -332,7 +343,114 @@ public class Window extends JFrame {
 
     public class PickUpItemButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            int posX = getWindow().getHero().getPosX();
+            int posY = getWindow().getHero().getPosY();
+            try {
+                if (getWindow().getCells()[posY][posX].getItem() != null) {
+                    int backpackIndex = Integer.parseInt(JOptionPane.showInputDialog(null, "Backpack slot: ")) - 1;
+                    getWindow().getHero().addItemToBackpack(backpackIndex,
+                            getWindow().getCells()[posX][posY].getItem());
+                    getWindow().getCells()[posX][posY].setItem(null);
+                } else {
+                    JOptionPane.showMessageDialog(null, "There's no item there.", "Item", JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (ArrayIndexOutOfBoundsException exception) {
+                JOptionPane.showMessageDialog(null, "Please enter a valid slot.", "Item", JOptionPane.WARNING_MESSAGE);
 
+            } catch (NumberFormatException exception2) {
+                JOptionPane.showMessageDialog(null, "Please enter a number.", "Item", JOptionPane.WARNING_MESSAGE);
+            }
+            Repainter repainter = new Repainter();
+            repainter.RepaintBackPack();
+        }
+    }
+
+    public class EquipItemButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            try {
+                int backpackIndex = Integer.parseInt(JOptionPane.showInputDialog(null, "Backpack slot: ")) - 1;
+                int equipmentIndex = Integer.parseInt(JOptionPane.showInputDialog(null, "Equipment slot: ")) - 2;
+                getWindow().getHero().equipItem(equipmentIndex, backpackIndex);
+            } catch (SlotFullException exception) {
+                JOptionPane.showMessageDialog(null, "Slot is full.", "Equipment", JOptionPane.WARNING_MESSAGE);
+            } catch (ArrayIndexOutOfBoundsException exception2) {
+                JOptionPane.showMessageDialog(null, "Please enter valid slots.", "Equipment",
+                        JOptionPane.WARNING_MESSAGE);
+            } catch (NullPointerException exception3) {
+                JOptionPane.showMessageDialog(null, "That backpack slot is empty.", "Equipment",
+                        JOptionPane.WARNING_MESSAGE);
+            } catch (NumberFormatException exception4) {
+                JOptionPane.showMessageDialog(null, "Please enter a number.", "Equipment", JOptionPane.WARNING_MESSAGE);
+            }
+            Repainter repainter = new Repainter();
+            repainter.repaintStats();
+            repainter.repaintBackpackAndEquipment();
+        }
+    }
+
+    public class UnEquipItemButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            try {
+                int equipmentIndex = Integer.parseInt(JOptionPane.showInputDialog(null, "Equipment slot: ")) - 2;
+                int backpackIndex = Integer.parseInt(JOptionPane.showInputDialog(null, "Backpack slot: ")) - 1;
+                getWindow().getHero().unequipItem(equipmentIndex, backpackIndex);
+            } catch (SlotFullException exception) {
+                JOptionPane.showMessageDialog(null, "Slot is full.", "Equipment", JOptionPane.WARNING_MESSAGE);
+            } catch (ArrayIndexOutOfBoundsException exception2) {
+                JOptionPane.showMessageDialog(null, "Please enter valid slots.", "Equipment",
+                        JOptionPane.WARNING_MESSAGE);
+            } catch (NullPointerException exception3) {
+                JOptionPane.showMessageDialog(null, "That equipment slot is empty.", "Equipment",
+                        JOptionPane.WARNING_MESSAGE);
+            } catch (NumberFormatException exception4) {
+                JOptionPane.showMessageDialog(null, "Please enter a number.", "Equipment", JOptionPane.WARNING_MESSAGE);
+            }
+            Repainter repainter = new Repainter();
+            repainter.repaintStats();
+            repainter.repaintBackpackAndEquipment();
+        }
+    }
+
+    public class Repainter {
+        public void repaintStats() {
+            for (int i = 1; i < getWindow().getHero().printStats().length; i++) {
+                stats[i].setText("  " + hero.printStats()[i]);
+            }
+            getWindow().revalidate();
+            getWindow().repaint();
+        }
+
+        public void RepaintBackPack() {
+            for (int i = 0; i < backpackPanels.length; i++) {
+                try {
+                    backpackPanelsL[i].setText(getWindow().getHero().getBackpack()[i].getName());
+                } catch (NullPointerException exception) {
+                    backpackPanelsL[i].setText("Empty");
+                }
+            }
+            getWindow().revalidate();
+            getWindow().repaint();
+        }
+
+        public void repaintBackpackAndEquipment() {
+            // Repaint equipment
+            for (int i = 0; i < getWindow().getHero().getEquipment().length; i++) {
+                try {
+                    equipPanelsL[i + 1].setText(getWindow().getHero().getEquipment()[i].getName());
+                } catch (NullPointerException exception) {
+                    equipPanelsL[i + 1].setText("Empty");
+                }
+            }
+            // Repaint backpack
+            for (int i = 0; i < backpackPanels.length; i++) {
+                try {
+                    backpackPanelsL[i].setText(getWindow().getHero().getBackpack()[i].getName());
+                } catch (NullPointerException exception) {
+                    backpackPanelsL[i].setText("Empty");
+                }
+            }
+            getWindow().revalidate();
+            getWindow().repaint();
         }
     }
 }

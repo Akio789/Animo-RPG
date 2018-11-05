@@ -42,7 +42,7 @@ public class Cell extends JPanel {
     }
 
     // GETTERS AND SETTERS
-    public Item getItem() {
+    public EquipmentItem getItem() {
         return item;
     }
 
