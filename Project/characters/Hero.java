@@ -247,7 +247,7 @@ public abstract class Hero extends Character {
 	public abstract void levelUp();
 
 	/// Attack enemy with a regular attack.
-	public abstract void attackEnemy(Enemy enemy);
+	public abstract void attackEnemy(Enemy enemy) throws NoDamageException;
 
 	/// Attack enemy with ability.
 	public abstract void attackEnemyWithAbility(Enemy enemy, Hero hero, int index);
