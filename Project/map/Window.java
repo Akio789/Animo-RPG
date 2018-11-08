@@ -106,10 +106,10 @@ public class Window extends JFrame {
 
     // METHODS
     public void initComponents() {
-        hero = new Yo("Akio", 2, 0, 50, 50, 5, 5, false,
+        hero = new Bestia("Akio", 2, 0, 50, 50, 5, 5, false,
                 new HealingFlask("Flask", 5, "This potion heals hp and ether."));
         hero.setHp(15);
-        hero.setEther(10);
+        hero.setEther(25);
         hero.setPosX(0);
         hero.setPosX(0);
 
@@ -173,7 +173,7 @@ public class Window extends JFrame {
         // Cells with Items
         EquipmentItem longSword = new AttackItem("Sword", 7, "A sword crafted for war");
         cells[0][0].setItem(longSword);
-        cells[0][0].setEnemy(new WildMinion(10, 10, 10, 10, false));
+        cells[0][0].setEnemy(new WildMinion(100, 10, 10, 10, false));
         cells[18][1].setItem(longSword);
         cells[1][3].setItem(longSword);
         cells[8][7].setItem(longSword);
@@ -340,8 +340,10 @@ public class Window extends JFrame {
         attackB.addActionListener(new NormalAttackListener());
         battleAttacksPanel.add(attackB);
         specialAttackB1 = new JButton("Special Attack1");
+        specialAttackB1.addActionListener(new AbilityAttack1Listener());
         battleAttacksPanel.add(specialAttackB1);
         specialAttackB2 = new JButton("Special Attack2");
+        specialAttackB2.addActionListener(new AbilityAttack2Listener());
         battleAttacksPanel.add(specialAttackB2);
         escapeB = new JButton("Escape");
         battleAttacksPanel.add(escapeB);
@@ -415,6 +417,8 @@ public class Window extends JFrame {
             Repainter repainter = new Repainter();
             battleCharactersPanel.setVisible(true);
             battleAttacksPanel.setVisible(true);
+            getWindow().specialAttackB1.setText(hero.getAbilities()[0].getClass().getSimpleName());
+            getWindow().specialAttackB2.setText(hero.getAbilities()[1].getClass().getSimpleName());
             repainter.repaintFightPanel();
         }
     }
@@ -422,18 +426,37 @@ public class Window extends JFrame {
     public class NormalAttackListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             Repainter repainter = new Repainter();
+            Enemy enemy = getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy();
             try {
-                hero.attackEnemy(getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy());
+                hero.attackEnemy(enemy);
                 repainter.repaintFightPanel();
             } catch (NoDamageException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage());
             }
-            if ((int) hero.getHp() == 0) {
-                JOptionPane.showMessageDialog(null, "YOU DIED!");
-            }
-            if ((int) getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy().getHp() == 0) {
-                JOptionPane.showMessageDialog(null, "You won the fight!");
-            }
+            repainter.checkIfEnemyIsDead(enemy);
+            repainter.checkIfHeroIsDead(hero);
+        }
+    }
+
+    public class AbilityAttack1Listener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            Repainter repainter = new Repainter();
+            Enemy enemy = getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy();
+            hero.attackEnemyWithAbility(enemy, hero, 0);
+            repainter.repaintFightPanel();
+            repainter.checkIfEnemyIsDead(enemy);
+            repainter.checkIfHeroIsDead(hero);
+        }
+    }
+
+    public class AbilityAttack2Listener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            Repainter repainter = new Repainter();
+            Enemy enemy = getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy();
+            hero.attackEnemyWithAbility(enemy, hero, 1);
+            repainter.repaintFightPanel();
+            repainter.checkIfEnemyIsDead(enemy);
+            repainter.checkIfHeroIsDead(hero);
         }
     }
 
@@ -560,6 +583,24 @@ public class Window extends JFrame {
             }
             getWindow().revalidate();
             getWindow().repaint();
+        }
+
+        public boolean checkIfHeroIsDead(Hero hero) {
+            if ((int) hero.getHp() == 0) {
+                JOptionPane.showMessageDialog(null, "YOU DIED!");
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public boolean checkIfEnemyIsDead(Enemy enemy) {
+            if ((int) enemy.getHp() == 0) {
+                JOptionPane.showMessageDialog(null, "You won the fight!");
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 }

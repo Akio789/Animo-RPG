@@ -4,33 +4,12 @@ import items.*;
 import abilities.*;
 
 public class Yo extends Hero {
-    // ATTRIBUTES
-    private Reason reason;
-    private Naturae naturae;
-
     // CONSTRUCTOR
     public Yo(String name, int level, int xp, double hp, double ether, double attack, double defense,
             boolean statusParalysis, HealingFlask healingFlask) {
         super(name, level, xp, hp, ether, attack, defense, statusParalysis, healingFlask);
-        reason = new Reason();
-        naturae = new Naturae();
-    }
-
-    // GETTERS AND SETTERS
-    public Reason getReason() {
-        return reason;
-    }
-
-    public void setReason(Reason reason) {
-        this.reason = reason;
-    }
-
-    public Naturae getNaturae() {
-        return naturae;
-    }
-
-    public void setNaturae(Naturae naturae) {
-        this.naturae = naturae;
+        getAbilities()[0] = new Naturae();
+        getAbilities()[1] = new Reason();
     }
 
     // METHODS
@@ -59,17 +38,12 @@ public class Yo extends Hero {
 
     @Override
     public void attackEnemyWithAbility(Enemy enemy, Hero hero, int index) {
-        if (hero.getMaxEther() > 10) {
-            if (index == 0) {
-                reason.reduceDamage(enemy, hero);
-            }
-            if (index == 1) {
-                naturae.reduceDefense(enemy, hero);
-            }
+        if (hero.getMaxEther() <= 10) {
+            hero.getAbilities()[index].specialAbility(enemy, hero);
         } // fin if
 
         else {
-            System.out.println("There's not enough ether to use any abilitie");
+            System.out.println("There's not enough ether to use any ability");
         } // fin else
 
     }
