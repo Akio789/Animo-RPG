@@ -23,6 +23,7 @@ public class Window extends JFrame {
     private JMenuItem saveMenuItem, loadMenuItem, exitMenuItem;
     private JLabel heroHpL, heroEtherL, enemyHpL, typeOfEnemy;
     private JButton attackB, specialAttackB1, specialAttackB2, escapeB;
+    private int turnCounter;
 
     // CONSTRUCTOR
     public Window() {
@@ -106,10 +107,10 @@ public class Window extends JFrame {
 
     // METHODS
     public void initComponents() {
-        hero = new Bestia("Akio", 2, 0, 50, 50, 5, 5, false,
+        hero = new Bestia("Akio", 2, 0, 100, 50, 15, 5, false,
                 new HealingFlask("Flask", 5, "This potion heals hp and ether."));
-        hero.setHp(15);
-        hero.setEther(25);
+        hero.setHp(95);
+        hero.setEther(45);
         hero.setPosX(0);
         hero.setPosX(0);
 
@@ -250,7 +251,7 @@ public class Window extends JFrame {
                 }
             }
         }
-        cells[hero.getPosY()][hero.getPosX()].setBackground(Color.blue);
+        // cells[hero.getPosY()][hero.getPosX()].setBackground(Color.blue);
         mapPanel = new JPanel();
         mapPanel.setPreferredSize(new Dimension(500, 500));
         mapPanel.setLayout(new GridLayout(20, 20));
@@ -414,13 +415,18 @@ public class Window extends JFrame {
 
     public class FightButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            Repainter repainter = new Repainter();
-            battleCharactersPanel.setVisible(true);
-            battleAttacksPanel.setVisible(true);
-            getWindow().specialAttackB1.setText(hero.getAbilities()[0].getClass().getSimpleName());
-            getWindow().specialAttackB2.setText(hero.getAbilities()[1].getClass().getSimpleName());
-            repainter.repaintFightPanel();
+            if (getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy() != null) {
+                Repainter repainter = new Repainter();
+                battleCharactersPanel.setVisible(true);
+                battleAttacksPanel.setVisible(true);
+                getWindow().specialAttackB1.setText(hero.getAbilities()[0].getClass().getSimpleName());
+                getWindow().specialAttackB2.setText(hero.getAbilities()[1].getClass().getSimpleName());
+                repainter.repaintFightPanel();
+            } else {
+                JOptionPane.showMessageDialog(null, "There's no enemy there.");
+            }
         }
+
     }
 
     public class NormalAttackListener implements ActionListener {
@@ -434,7 +440,7 @@ public class Window extends JFrame {
                 JOptionPane.showMessageDialog(null, exception.getMessage());
             }
             repainter.checkIfEnemyIsDead(enemy);
-            repainter.checkIfHeroIsDead(hero);
+            repainter.enemyAttack(enemy);
         }
     }
 
@@ -445,7 +451,7 @@ public class Window extends JFrame {
             hero.attackEnemyWithAbility(enemy, hero, 0);
             repainter.repaintFightPanel();
             repainter.checkIfEnemyIsDead(enemy);
-            repainter.checkIfHeroIsDead(hero);
+            repainter.enemyAttack(enemy);
         }
     }
 
@@ -456,7 +462,7 @@ public class Window extends JFrame {
             hero.attackEnemyWithAbility(enemy, hero, 1);
             repainter.repaintFightPanel();
             repainter.checkIfEnemyIsDead(enemy);
-            repainter.checkIfHeroIsDead(hero);
+            repainter.enemyAttack(enemy);
         }
     }
 
@@ -464,12 +470,15 @@ public class Window extends JFrame {
         public void actionPerformed(ActionEvent e) {
             int posX = getWindow().getHero().getPosX();
             int posY = getWindow().getHero().getPosY();
+            Repainter repainter = new Repainter();
             try {
                 if (getWindow().getCells()[posY][posX].getItem() != null) {
                     int backpackIndex = Integer.parseInt(JOptionPane.showInputDialog(null, "Backpack slot: ")) - 1;
                     getWindow().getHero().addItemToBackpack(backpackIndex,
-                            getWindow().getCells()[posX][posY].getItem());
-                    getWindow().getCells()[posX][posY].setItem(null);
+                            getWindow().getCells()[posY][posX].getItem());
+                    getWindow().getCells()[posY][posX].setItem(null);
+                    repainter.RepaintBackPack();
+                    repainter.repaintMap();
                 } else {
                     JOptionPane.showMessageDialog(null, "There's no item there.", "Item", JOptionPane.WARNING_MESSAGE);
                 }
@@ -479,8 +488,6 @@ public class Window extends JFrame {
             } catch (NumberFormatException exception2) {
                 JOptionPane.showMessageDialog(null, "Please enter a number.", "Item", JOptionPane.WARNING_MESSAGE);
             }
-            Repainter repainter = new Repainter();
-            repainter.RepaintBackPack();
         }
     }
 
@@ -585,6 +592,33 @@ public class Window extends JFrame {
             getWindow().repaint();
         }
 
+        public void repaintMap() {
+            for (int i = 0; i < cells.length; i++) {
+                for (int j = 0; j < cells[i].length; j++) {
+                    if (cells[i][j].getRestore() == true) {
+                        cells[i][j].setBackground(Color.green);
+                    }
+                    if (cells[i][j].getItem() != null) {
+                        cells[i][j].setBackground(Color.yellow);
+                    }
+                    if (cells[i][j].getEnemy() instanceof Boss) {
+                        cells[i][j].setBackground(Color.black);
+                    }
+                    if (cells[i][j].getEnemy() instanceof WildMinion || cells[i][j].getEnemy() instanceof OrderMinion) {
+                        cells[i][j].setBackground(Color.red);
+                    }
+                    if (cells[i][j].getItem() == null && cells[i][j].getEnemy() == null
+                            && cells[i][j].getRestore() == false) {
+                        cells[i][j].setBackground(Color.lightGray);
+
+                    }
+                }
+            }
+            // cells[hero.getPosY()][hero.getPosX()].setBackground(Color.blue);
+            getWindow().revalidate();
+            getWindow().repaint();
+        }
+
         public boolean checkIfHeroIsDead(Hero hero) {
             if ((int) hero.getHp() == 0) {
                 JOptionPane.showMessageDialog(null, "YOU DIED!");
@@ -597,10 +631,25 @@ public class Window extends JFrame {
         public boolean checkIfEnemyIsDead(Enemy enemy) {
             if ((int) enemy.getHp() == 0) {
                 JOptionPane.showMessageDialog(null, "You won the fight!");
+                getWindow().getCells()[hero.getPosY()][hero.getPosX()].setEnemy(null);
+                battleCharactersPanel.setVisible(false);
+                battleAttacksPanel.setVisible(false);
+                repaintMap();
+                repaintStats();
                 return true;
             } else {
                 return false;
             }
+        }
+
+        public void enemyAttack(Enemy enemy) {
+            try {
+                enemy.regularAttack(hero);
+                repaintFightPanel();
+            } catch (NoDamageException exception) {
+                JOptionPane.showMessageDialog(null, enemy.getClass().getSimpleName() + " dealed no damage.");
+            }
+            checkIfHeroIsDead(hero);
         }
     }
 }

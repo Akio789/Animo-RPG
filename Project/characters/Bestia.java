@@ -38,13 +38,14 @@ public class Bestia extends Hero {
 
     @Override
     public void attackEnemyWithAbility(Enemy enemy, Hero hero, int index) {
-        if (hero.getMaxEther() <= 10) {
+        if (hero.getEther() >= 10 && hero.getEther() > 0) {
             hero.getAbilities()[index].specialAbility(enemy, hero);
         } // fin if
-
         else {
             System.out.println("There's not enough ether to use that ability.");
         } // fin else
-
+        if ((enemy.getHp() <= 0)) {
+            enemy.setHp(0);
+        }
     }
 }

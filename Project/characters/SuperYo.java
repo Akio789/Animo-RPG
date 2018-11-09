@@ -38,7 +38,7 @@ public class SuperYo extends Hero {
 
     @Override
     public void attackEnemyWithAbility(Enemy enemy, Hero hero, int index) {
-        if (hero.getMaxEther() <= 10) {
+        if (hero.getEther() >= 10 && hero.getEther() > 0) {
             hero.getAbilities()[index].specialAbility(enemy, hero);
         } // fin if
 
