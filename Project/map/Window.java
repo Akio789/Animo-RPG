@@ -439,6 +439,7 @@ public class Window extends JFrame implements KeyListener {
                 getWindow().specialAttackB1.setText(hero.getAbilities()[0].getClass().getSimpleName());
                 getWindow().specialAttackB2.setText(hero.getAbilities()[1].getClass().getSimpleName());
                 repainter.repaintFightPanel();
+                setFocusable(false);
             } else {
                 JOptionPane.showMessageDialog(null, "There's no enemy there.");
             }
@@ -653,6 +654,7 @@ public class Window extends JFrame implements KeyListener {
                 battleAttacksPanel.setVisible(false);
                 repaintMap();
                 repaintStats();
+                setFocusable(true);
                 return true;
             } else {
                 return false;
