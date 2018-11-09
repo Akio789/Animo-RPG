@@ -4,12 +4,12 @@ import characters.*;
 import items.*;
 import javax.swing.*;
 import javax.swing.border.*;
-
+import java.lang.*;
 import java.awt.*;
 import java.awt.event.*;
 import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
-public class Window extends JFrame {
+public class Window extends JFrame implements KeyListener {
     // ATTRIBUTES
     private Cell[][] cells;
     private Hero hero;
@@ -23,7 +23,6 @@ public class Window extends JFrame {
     private JMenuItem saveMenuItem, loadMenuItem, exitMenuItem;
     private JLabel heroHpL, heroEtherL, enemyHpL, typeOfEnemy;
     private JButton attackB, specialAttackB1, specialAttackB2, escapeB;
-    private int turnCounter;
 
     // CONSTRUCTOR
     public Window() {
@@ -34,6 +33,9 @@ public class Window extends JFrame {
         setVisible(true);
         setLocationRelativeTo(null);
         setTitle("Animo RPG");
+        addKeyListener(this);
+        setFocusTraversalKeysEnabled(false);
+        setFocusable(true);
     }
 
     // GETTERS AND SETTERS
@@ -109,7 +111,7 @@ public class Window extends JFrame {
     public void initComponents() {
         hero = new Bestia("Akio", 2, 0, 100, 50, 15, 5, false,
                 new HealingFlask("Flask", 5, "This potion heals hp and ether."));
-        hero.setHp(95);
+        hero.setHp(20);
         hero.setEther(45);
         hero.setPosX(0);
         hero.setPosX(0);
@@ -118,10 +120,16 @@ public class Window extends JFrame {
         menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
         menu = new JMenu("Menu");
+        menu.setFocusable(false);
         menuBar.add(menu);
         saveMenuItem = new JMenuItem("Save");
+        saveMenuItem.setFocusable(false);
+        saveMenuItem.addActionListener(new SaveMenuItemListener());
         loadMenuItem = new JMenuItem("Load");
+        loadMenuItem.setFocusable(false);
+        loadMenuItem.addActionListener(new LoadMenuItemListener());
         exitMenuItem = new JMenuItem("Exit");
+        exitMenuItem.setFocusable(false);
         exitMenuItem.addActionListener(new ExitMenuItemListener());
         menu.add(saveMenuItem);
         menu.add(loadMenuItem);
@@ -138,18 +146,23 @@ public class Window extends JFrame {
         menuPanel.setBorder(new TitledBorder("Actions"));
         drinkFlaskButton = new JButton("Drink flask");
         drinkFlaskButton.setFont(new Font("Arial", Font.BOLD, 20));
+        drinkFlaskButton.setFocusable(false);
         drinkFlaskButton.addActionListener(new DrinkFlaskButtonListener());
         fightButton = new JButton("Fight");
         fightButton.setFont(new Font("Arial", Font.BOLD, 20));
+        fightButton.setFocusable(false);
         fightButton.addActionListener(new FightButtonListener());
         pickUpItemButton = new JButton("Pick up");
         pickUpItemButton.setFont(new Font("Arial", Font.BOLD, 20));
+        pickUpItemButton.setFocusable(false);
         pickUpItemButton.addActionListener(new PickUpItemButtonListener());
         equipItemButton = new JButton("Equip");
         equipItemButton.setFont(new Font("Arial", Font.BOLD, 20));
+        equipItemButton.setFocusable(false);
         equipItemButton.addActionListener(new EquipItemButtonListener());
         unEquipItemButton = new JButton("Unequip");
         unEquipItemButton.setFont(new Font("Arial", Font.BOLD, 20));
+        unEquipItemButton.setFocusable(false);
         unEquipItemButton.addActionListener(new UnEquipItemButtonListener());
         menuPanel.add(drinkFlaskButton);
         menuPanel.add(new JLabel(" "));
@@ -251,7 +264,7 @@ public class Window extends JFrame {
                 }
             }
         }
-        // cells[hero.getPosY()][hero.getPosX()].setBackground(Color.blue);
+        cells[hero.getPosY()][hero.getPosX()].setBackground(Color.blue);
         mapPanel = new JPanel();
         mapPanel.setPreferredSize(new Dimension(500, 500));
         mapPanel.setLayout(new GridLayout(20, 20));
@@ -338,15 +351,19 @@ public class Window extends JFrame {
         battleAttacksPanel = new JPanel(new GridLayout(2, 2));
         battleAttacksPanel.setPreferredSize(new Dimension(100, 100));
         attackB = new JButton("Normal Attack");
+        attackB.setFocusable(false);
         attackB.addActionListener(new NormalAttackListener());
         battleAttacksPanel.add(attackB);
         specialAttackB1 = new JButton("Special Attack1");
+        specialAttackB1.setFocusable(false);
         specialAttackB1.addActionListener(new AbilityAttack1Listener());
         battleAttacksPanel.add(specialAttackB1);
         specialAttackB2 = new JButton("Special Attack2");
+        specialAttackB2.setFocusable(false);
         specialAttackB2.addActionListener(new AbilityAttack2Listener());
         battleAttacksPanel.add(specialAttackB2);
         escapeB = new JButton("Escape");
+        escapeB.setFocusable(false);
         battleAttacksPanel.add(escapeB);
         fightPanel.add(battleAttacksPanel, BorderLayout.SOUTH);
         battleCharactersPanel.setVisible(false);
@@ -614,7 +631,7 @@ public class Window extends JFrame {
                     }
                 }
             }
-            // cells[hero.getPosY()][hero.getPosX()].setBackground(Color.blue);
+            cells[hero.getPosY()][hero.getPosX()].setBackground(Color.blue);
             getWindow().revalidate();
             getWindow().repaint();
         }
@@ -652,4 +669,64 @@ public class Window extends JFrame {
             checkIfHeroIsDead(hero);
         }
     }
+
+    public void keyTyped(KeyEvent e) {
+
+        try {
+            Repainter repainter = new Repainter();
+            if (e.getKeyChar() == 'w') {
+
+                hero.setPosY(hero.getPosY() - 1);
+                hero.getPosX();
+                cells[hero.getPosY()][hero.getPosX()].setBackground(Color.blue);
+                repainter.repaintMap();
+            }
+            if (e.getKeyChar() == 's') {
+                revalidate();
+                hero.setPosY(hero.getPosY() + 1);
+                hero.getPosX();
+                cells[hero.getPosY()][hero.getPosX()].setBackground(Color.blue);
+                repainter.repaintMap();
+            }
+            if (e.getKeyChar() == 'a') {
+                hero.setPosX(hero.getPosX() - 1);
+                hero.getPosY();
+                cells[hero.getPosY()][hero.getPosX()].setBackground(Color.blue);
+                repainter.repaintMap();
+            }
+            if (e.getKeyChar() == 'd') {
+                hero.setPosX(hero.getPosX() + 1);
+                hero.getPosY();
+                cells[hero.getPosY()][hero.getPosX()].setBackground(Color.blue);
+                repainter.repaintMap();
+            }
+        } // fin try
+        catch (ArrayIndexOutOfBoundsException array) {
+            if (e.getKeyChar() == 'w') {
+                hero.setPosY(hero.getPosY() + 1);
+                hero.getPosX();
+            } // fin if w
+            if (e.getKeyChar() == 's') {
+                hero.setPosY(hero.getPosY() - 1);
+                hero.getPosX();
+            } // fin if s
+            if (e.getKeyChar() == 'a') {
+                hero.getPosY();
+                hero.setPosX(hero.getPosX() + 1);
+            } // fin if a
+            if (e.getKeyChar() == 'd') {
+                hero.getPosY();
+                hero.setPosX(hero.getPosX() - 1);
+            } // fin if d
+
+        }
+
+    }
+
+    public void keyPressed(KeyEvent e) {
+    }
+
+    public void keyReleased(KeyEvent e) {
+    }
+
 }
