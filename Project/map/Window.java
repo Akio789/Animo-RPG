@@ -14,19 +14,21 @@ public class Window extends JFrame implements KeyListener {
     private Cell[][] cells;
     private Hero hero;
     private JPanel topPanel, bottomPanel, mapPanel, equipmentPanel, statsPanel, menuPanel, fightPanel, backpackPanel,
-            battleCharactersPanel, battleHeroPanel, battleEnemyPanel, battleAttacksPanel, heroImage, enemyImage;
+            battleCharactersPanel, battleHeroPanel, battleEnemyPanel, battleAttacksPanel, heroImage, enemyImage,
+            fightInfoP;
     private JPanel[] equipPanels, backpackPanels;
     private JLabel[] stats, equipPanelsL, backpackPanelsL;
     private JButton drinkFlaskButton, fightButton, pickUpItemButton, equipItemButton, unEquipItemButton;
     private JMenuBar menuBar;
     private JMenu menu;
     private JMenuItem saveMenuItem, loadMenuItem, exitMenuItem;
-    private JLabel heroHpL, heroEtherL, enemyHpL, typeOfEnemy;
+    private JLabel heroHpL, heroEtherL, enemyHpL, typeOfEnemy, turnL, heroDmgL, enemyDmgL;
     private JButton attackB, specialAttackB1, specialAttackB2, escapeB;
+    private int turn;
 
     // CONSTRUCTOR
     public Window() {
-        setSize(650, 700);
+        setSize(650, 730);
         setLayout(new GridLayout(2, 1));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         initComponents();
@@ -365,9 +367,20 @@ public class Window extends JFrame implements KeyListener {
         escapeB = new JButton("Escape");
         escapeB.setFocusable(false);
         battleAttacksPanel.add(escapeB);
-        fightPanel.add(battleAttacksPanel, BorderLayout.SOUTH);
+        fightPanel.add(battleAttacksPanel, BorderLayout.CENTER);
+        fightInfoP = new JPanel();
+        fightInfoP.setLayout(new BoxLayout(fightInfoP, BoxLayout.Y_AXIS));
+        turnL = new JLabel("Turn: ");
+        fightInfoP.add(turnL);
+        heroDmgL = new JLabel();
+        fightInfoP.add(heroDmgL);
+        enemyDmgL = new JLabel();
+        fightInfoP.add(enemyDmgL);
+        fightInfoP.setPreferredSize(new Dimension(100, 75));
+        fightPanel.add(fightInfoP, BorderLayout.SOUTH);
         battleCharactersPanel.setVisible(false);
         battleAttacksPanel.setVisible(false);
+        fightInfoP.setVisible(false);
         bottomPanel.add(fightPanel, BorderLayout.CENTER);
 
         // BACKPACK PANEL
@@ -432,10 +445,13 @@ public class Window extends JFrame implements KeyListener {
 
     public class FightButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            turn = 1;
             if (getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy() != null) {
                 Repainter repainter = new Repainter();
                 battleCharactersPanel.setVisible(true);
                 battleAttacksPanel.setVisible(true);
+                fightInfoP.setVisible(true);
+                turnL.setText("Turn " + turn);
                 getWindow().specialAttackB1.setText(hero.getAbilities()[0].getClass().getSimpleName());
                 getWindow().specialAttackB2.setText(hero.getAbilities()[1].getClass().getSimpleName());
                 repainter.repaintFightPanel();
@@ -449,13 +465,17 @@ public class Window extends JFrame implements KeyListener {
 
     public class NormalAttackListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            turn++;
             Repainter repainter = new Repainter();
             Enemy enemy = getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy();
             try {
+                int enemyHpBefore = (int) enemy.getHp();
                 hero.attackEnemy(enemy);
+                int enemyHpAfter = (int) enemy.getHp();
+                heroDmgL.setText("You dealed " + (enemyHpBefore - enemyHpAfter) + " damage");
                 repainter.repaintFightPanel();
             } catch (NoDamageException exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage());
+                heroDmgL.setText("You dealed no damage");
             }
             repainter.checkIfEnemyIsDead(enemy);
             repainter.enemyAttack(enemy);
@@ -464,9 +484,13 @@ public class Window extends JFrame implements KeyListener {
 
     public class AbilityAttack1Listener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            turn++;
             Repainter repainter = new Repainter();
             Enemy enemy = getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy();
+            int enemyHpBefore = (int) enemy.getHp();
             hero.attackEnemyWithAbility(enemy, hero, 0);
+            int enemyHpAfter = (int) enemy.getHp();
+            heroDmgL.setText("You dealed " + (enemyHpBefore - enemyHpAfter) + " damage");
             repainter.repaintFightPanel();
             repainter.checkIfEnemyIsDead(enemy);
             repainter.enemyAttack(enemy);
@@ -475,9 +499,13 @@ public class Window extends JFrame implements KeyListener {
 
     public class AbilityAttack2Listener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            turn++;
             Repainter repainter = new Repainter();
             Enemy enemy = getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy();
+            int enemyHpBefore = (int) enemy.getHp();
             hero.attackEnemyWithAbility(enemy, hero, 1);
+            int enemyHpAfter = (int) enemy.getHp();
+            heroDmgL.setText("You dealed " + (enemyHpBefore - enemyHpAfter) + " damage");
             repainter.repaintFightPanel();
             repainter.checkIfEnemyIsDead(enemy);
             repainter.enemyAttack(enemy);
@@ -605,6 +633,7 @@ public class Window extends JFrame implements KeyListener {
                 heroEtherL.setText(hero.printStats()[4]);
                 typeOfEnemy.setText(getCells()[hero.getPosY()][hero.getPosX()].getEnemy().getClass().getSimpleName());
                 enemyHpL.setText("Hp: " + (int) getCells()[hero.getPosY()][hero.getPosX()].getEnemy().getHp());
+                turnL.setText("Turn: " + turn);
             }
             getWindow().revalidate();
             getWindow().repaint();
@@ -663,10 +692,14 @@ public class Window extends JFrame implements KeyListener {
 
         public void enemyAttack(Enemy enemy) {
             try {
+                int heroHpBefore = (int) hero.getHp();
                 enemy.regularAttack(hero);
+                int heroHpAfter = (int) hero.getHp();
+                enemyDmgL.setText(
+                        enemy.getClass().getSimpleName() + " dealed " + (heroHpBefore - heroHpAfter) + " damage.");
                 repaintFightPanel();
             } catch (NoDamageException exception) {
-                JOptionPane.showMessageDialog(null, enemy.getClass().getSimpleName() + " dealed no damage.");
+                enemyDmgL.setText(enemy.getClass().getSimpleName() + " dealed no damage.");
             }
             checkIfHeroIsDead(hero);
         }
