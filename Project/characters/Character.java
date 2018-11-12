@@ -1,8 +1,10 @@
 package characters;
 
+import java.io.Serializable;
+
 import abilities.*;
 
-public abstract class Character {
+public abstract class Character implements Serializable {
 	private double hp;
 	private double attack;
 	private double defense;

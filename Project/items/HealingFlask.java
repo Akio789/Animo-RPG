@@ -1,8 +1,10 @@
 package items;
 
+import java.io.Serializable;
+
 import characters.*;
 
-public class HealingFlask extends Item {
+public class HealingFlask extends Item implements Serializable {
   // ATTRIBUTES
   private int charges, maxCharges;
 

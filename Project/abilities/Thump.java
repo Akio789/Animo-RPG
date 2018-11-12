@@ -3,8 +3,9 @@ package abilities;
 import characters.*;
 import items.*;
 import map.*;
+import java.io.Serializable;
 
-public class Thump extends Ability {
+public class Thump extends Ability implements Serializable {
 	// golpe fuerte
 
 	public void specialAbility(Enemy enemy, Hero hero) {

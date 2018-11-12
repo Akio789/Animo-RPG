@@ -1,9 +1,13 @@
 package characters;
 
 import abilitiesboss.*;
+
+import java.io.Serializable;
 import java.util.*;
 
-public class AntiBestia extends Boss {
+import javax.swing.JLabel;
+
+public class AntiBestia extends Boss implements Serializable {
     // ATTRIBUTES
     private AntiRush rush;
     private AntiThump thump;
@@ -34,19 +38,9 @@ public class AntiBestia extends Boss {
     }
 
     // METHODS
-    public void criticAttack(Hero hero) {
-        if (hero.getDefense() < (1.5 * getAttack() * getCritic())) {
-            System.out.println("¡Critic attack! Anti Bestia dealed "
-                    + (1.5 * getAttack() * getCritic() - (hero.getDefense())) + " damage.");
-            hero.setHp((hero.getHp() + hero.getDefense()) - (1.5 * getAttack()) * getCritic());
-        } else {
-            System.out.println("Anti Bestia is too weak, he dealed no damage!");
-        }
-    }
-
-    public void regularAttack(Hero hero) throws NoDamageException {
+    public void attack(Hero hero) throws NoDamageException {
         double dmgMult = 1.4;
-        double damageDone = hero.getDefense() - (dmgMult * getAttack());
+        double damageDone = hero.getDefense() - (dmgMult * getAttack() * getCritic());
         if (hero.getDefense() < (dmgMult * getAttack())) {
             System.out.println("Wild minion dealed " + (dmgMult * getAttack() - (hero.getDefense())) + " damage.");
             if ((hero.getHp() + damageDone) <= 0) {
@@ -57,22 +51,5 @@ public class AntiBestia extends Boss {
         } else {
             throw new NoDamageException();
         }
-    }
-
-    public void attackHeroWithAbility(Enemy enemy, Hero hero) {
-        Random r = new Random();
-        double rand = r.nextDouble();
-        if (hero.getMaxEther() > 10) {
-            if (rand < 0.5) {
-                thump.strongAttack(enemy, hero);
-            }
-            if (rand >= 0.5) {
-                rush.stacking(enemy, hero);
-            }
-        } // fin if
-
-        else {
-            System.out.println("There's not enough ether to use any abilitie");
-        } // fin else
     }
 }

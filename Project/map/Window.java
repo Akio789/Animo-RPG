@@ -7,9 +7,11 @@ import javax.swing.border.*;
 import java.lang.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
+
 import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
-public class Window extends JFrame implements KeyListener {
+public class Window extends JFrame implements KeyListener, Serializable {
     // ATTRIBUTES
     private Cell[][] cells;
     private Hero hero;
@@ -18,13 +20,13 @@ public class Window extends JFrame implements KeyListener {
             fightInfoP;
     private JPanel[] equipPanels, backpackPanels;
     private JLabel[] stats, equipPanelsL, backpackPanelsL;
-    private JButton drinkFlaskButton, fightButton, pickUpItemButton, equipItemButton, unEquipItemButton;
+    private JButton drinkFlaskButton, fightButton, pickUpItemButton, equipItemButton, unEquipItemButton, restoreButton;
     private JMenuBar menuBar;
     private JMenu menu;
     private JMenuItem saveMenuItem, loadMenuItem, exitMenuItem;
     private JLabel heroHpL, heroEtherL, enemyHpL, typeOfEnemy, turnL, heroDmgL, enemyDmgL;
     private JButton attackB, specialAttackB1, specialAttackB2, escapeB;
-    private int turn;
+    private int turn, turnsFrozen;
 
     // CONSTRUCTOR
     public Window() {
@@ -109,11 +111,19 @@ public class Window extends JFrame implements KeyListener {
         this.enemyHpL = enemyHpL;
     }
 
+    public int getTurn() {
+        return turn;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
+
     // METHODS
     public void initComponents() {
-        hero = new Bestia("Akio", 2, 0, 100, 50, 15, 5, false,
+        hero = new SuperYo("Akio", 2, 0, 1000, 50, 25, 5, false,
                 new HealingFlask("Flask", 5, "This potion heals hp and ether."));
-        hero.setHp(20);
+        hero.setHp(200);
         hero.setEther(45);
         hero.setPosX(0);
         hero.setPosX(0);
@@ -166,6 +176,10 @@ public class Window extends JFrame implements KeyListener {
         unEquipItemButton.setFont(new Font("Arial", Font.BOLD, 20));
         unEquipItemButton.setFocusable(false);
         unEquipItemButton.addActionListener(new UnEquipItemButtonListener());
+        restoreButton = new JButton("Touch river");
+        restoreButton.setFont(new Font("Arial", Font.BOLD, 20));
+        restoreButton.setFocusable(false);
+        restoreButton.addActionListener(new RestoreButtonListener());
         menuPanel.add(drinkFlaskButton);
         menuPanel.add(new JLabel(" "));
         menuPanel.add(fightButton);
@@ -175,6 +189,8 @@ public class Window extends JFrame implements KeyListener {
         menuPanel.add(equipItemButton);
         menuPanel.add(new JLabel(" "));
         menuPanel.add(unEquipItemButton);
+        menuPanel.add(new JLabel(" "));
+        menuPanel.add(restoreButton);
         topPanel.add(menuPanel, BorderLayout.WEST);
 
         // MAP PANEL
@@ -198,8 +214,8 @@ public class Window extends JFrame implements KeyListener {
         // Cells with Enemies
         cells[1][3].setEnemy(new WildMinion(10, 10, 10, 10, false));
         // Cells with Bosses
-        cells[2][5].setEnemy(new AntiBestia(10, 10, 10, 10, false));
-        cells[17][17].setEnemy(new AntiSuperYo(10, 10, 10, 10, false));
+        cells[2][5].setEnemy(new AntiBestia(100, 10, 10, 10, false));
+        cells[17][17].setEnemy(new AntiSuperYo(100, 10, 10, 10, false));
         // Cells that restore
         cells[19][4].setRestore(true);
         cells[19][5].setRestore(true);
@@ -366,6 +382,7 @@ public class Window extends JFrame implements KeyListener {
         battleAttacksPanel.add(specialAttackB2);
         escapeB = new JButton("Escape");
         escapeB.setFocusable(false);
+        escapeB.addActionListener(new EscapeBattleListener());
         battleAttacksPanel.add(escapeB);
         fightPanel.add(battleAttacksPanel, BorderLayout.CENTER);
         fightInfoP = new JPanel();
@@ -426,11 +443,36 @@ public class Window extends JFrame implements KeyListener {
 
     public class SaveMenuItemListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            try {
+                FileOutputStream fos = new FileOutputStream("game.animo");
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(hero);
+                oos.close();
+                JOptionPane.showMessageDialog(null, "Game saved.");
+            } catch (IOException exception) {
+                JOptionPane.showMessageDialog(null, "Couldn't save.");
+            }
         }
     }
 
     public class LoadMenuItemListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            try {
+                Repainter repainter = new Repainter();
+                File file = new File("game.animo");
+                FileInputStream fin = new FileInputStream(file);
+                ObjectInputStream ois = new ObjectInputStream(fin);
+                hero = (Hero) ois.readObject();
+                repainter.repaintStats();
+                repainter.repaintBackpackAndEquipment();
+                repainter.RepaintBackPack();
+                repainter.repaintMap();
+                JOptionPane.showMessageDialog(null, "Game loaded.");
+            } catch (IOException exception) {
+                JOptionPane.showMessageDialog(null, "Couldn't load.");
+            } catch (ClassNotFoundException exception2) {
+                exception2.printStackTrace();
+            }
         }
     }
 
@@ -452,6 +494,8 @@ public class Window extends JFrame implements KeyListener {
                 battleAttacksPanel.setVisible(true);
                 fightInfoP.setVisible(true);
                 turnL.setText("Turn " + turn);
+                heroDmgL.setText("");
+                enemyDmgL.setText("");
                 getWindow().specialAttackB1.setText(hero.getAbilities()[0].getClass().getSimpleName());
                 getWindow().specialAttackB2.setText(hero.getAbilities()[1].getClass().getSimpleName());
                 repainter.repaintFightPanel();
@@ -465,18 +509,18 @@ public class Window extends JFrame implements KeyListener {
 
     public class NormalAttackListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            turn++;
             Repainter repainter = new Repainter();
             Enemy enemy = getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy();
             try {
                 int enemyHpBefore = (int) enemy.getHp();
                 hero.attackEnemy(enemy);
                 int enemyHpAfter = (int) enemy.getHp();
-                heroDmgL.setText("You dealed " + (enemyHpBefore - enemyHpAfter) + " damage");
+                heroDmgL.setText("You dealed " + (enemyHpBefore - enemyHpAfter) + " damage.");
                 repainter.repaintFightPanel();
             } catch (NoDamageException exception) {
-                heroDmgL.setText("You dealed no damage");
+                heroDmgL.setText("You dealed no damage.");
             }
+            turn++;
             repainter.checkIfEnemyIsDead(enemy);
             repainter.enemyAttack(enemy);
         }
@@ -484,31 +528,82 @@ public class Window extends JFrame implements KeyListener {
 
     public class AbilityAttack1Listener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            turn++;
+            int index = 0;
             Repainter repainter = new Repainter();
             Enemy enemy = getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy();
-            int enemyHpBefore = (int) enemy.getHp();
-            hero.attackEnemyWithAbility(enemy, hero, 0);
-            int enemyHpAfter = (int) enemy.getHp();
-            heroDmgL.setText("You dealed " + (enemyHpBefore - enemyHpAfter) + " damage");
-            repainter.repaintFightPanel();
-            repainter.checkIfEnemyIsDead(enemy);
-            repainter.enemyAttack(enemy);
+            try {
+                if (hero instanceof Bestia) {
+                    int enemyHpBefore = (int) enemy.getHp();
+                    hero.attackEnemyWithAbility(enemy, hero, index);
+                    int enemyHpAfter = (int) enemy.getHp();
+                    heroDmgL.setText("You dealed " + (enemyHpBefore - enemyHpAfter) + " damage.");
+                } else if (hero instanceof Yo) {
+                    hero.attackEnemyWithAbility(enemy, hero, index);
+                    int enemyDefAfter = (int) enemy.getDefense();
+                    heroDmgL.setText("Enemy's defense was reduced to " + enemyDefAfter + ".");
+                } else if (hero instanceof SuperYo) {
+                    hero.attackEnemyWithAbility(enemy, hero, index);
+                    int enemyDefAfter = (int) enemy.getDefense();
+                    int enemyAtkAfter = (int) enemy.getAttack();
+                    heroDmgL.setText("Enemy's defense was reduced to " + enemyDefAfter + " and attack to "
+                            + enemyAtkAfter + ".");
+                }
+                turn++;
+                repainter.repaintFightPanel();
+                repainter.checkIfEnemyIsDead(enemy);
+                repainter.enemyAttack(enemy);
+            } catch (NotEnoughEtherException exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage());
+            }
         }
     }
 
     public class AbilityAttack2Listener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            turn++;
+            int index = 1;
             Repainter repainter = new Repainter();
             Enemy enemy = getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy();
-            int enemyHpBefore = (int) enemy.getHp();
-            hero.attackEnemyWithAbility(enemy, hero, 1);
-            int enemyHpAfter = (int) enemy.getHp();
-            heroDmgL.setText("You dealed " + (enemyHpBefore - enemyHpAfter) + " damage");
-            repainter.repaintFightPanel();
-            repainter.checkIfEnemyIsDead(enemy);
-            repainter.enemyAttack(enemy);
+            try {
+                if (hero instanceof Bestia) {
+                    int enemyHpBefore = (int) enemy.getHp();
+                    hero.attackEnemyWithAbility(enemy, hero, index);
+                    int enemyHpAfter = (int) enemy.getHp();
+                    heroDmgL.setText("You dealed " + (enemyHpBefore - enemyHpAfter) + " damage.");
+                } else if (hero instanceof Yo) {
+                    hero.attackEnemyWithAbility(enemy, hero, index);
+                    int enemyDefAfter = (int) enemy.getDefense();
+                    heroDmgL.setText("Enemy's defense was reduced to " + enemyDefAfter + ".");
+                } else if (hero instanceof SuperYo) {
+                    hero.attackEnemyWithAbility(enemy, hero, index);
+                    turnsFrozen = 3;
+                }
+                turn++;
+                repainter.repaintFightPanel();
+                repainter.checkIfEnemyIsDead(enemy);
+                repainter.enemyAttack(enemy);
+            } catch (NotEnoughEtherException exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage());
+            }
+        }
+    }
+
+    public class EscapeBattleListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            double rand = Math.random();
+            Repainter repainter = new Repainter();
+            Enemy enemy = getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy();
+            if (rand > 0.70) {
+                JOptionPane.showMessageDialog(null, "You escaped!");
+                setFocusable(true);
+                battleAttacksPanel.setVisible(false);
+                battleCharactersPanel.setVisible(false);
+                fightInfoP.setVisible(false);
+                repainter.repaintStats();
+            } else {
+                JOptionPane.showMessageDialog(null, "You couldn't escape!");
+                repainter.enemyAttack(enemy);
+                heroDmgL.setText(" ");
+            }
         }
     }
 
@@ -580,6 +675,21 @@ public class Window extends JFrame implements KeyListener {
             Repainter repainter = new Repainter();
             repainter.repaintStats();
             repainter.repaintBackpackAndEquipment();
+        }
+    }
+
+    public class RestoreButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            Repainter repainter = new Repainter();
+            try {
+                getWindow().getCells()[hero.getPosY()][hero.getPosX()].restore(hero, getWindow());
+                JOptionPane.showMessageDialog(null, "All your stats and your flask are restored");
+                repainter.repaintStats();
+                repainter.repaintBackpackAndEquipment();
+                repainter.repaintStats();
+            } catch (NoRiverException exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage());
+            }
         }
     }
 
@@ -681,6 +791,7 @@ public class Window extends JFrame implements KeyListener {
                 getWindow().getCells()[hero.getPosY()][hero.getPosX()].setEnemy(null);
                 battleCharactersPanel.setVisible(false);
                 battleAttacksPanel.setVisible(false);
+                fightInfoP.setVisible(false);
                 repaintMap();
                 repaintStats();
                 setFocusable(true);
@@ -691,17 +802,25 @@ public class Window extends JFrame implements KeyListener {
         }
 
         public void enemyAttack(Enemy enemy) {
-            try {
-                int heroHpBefore = (int) hero.getHp();
-                enemy.regularAttack(hero);
-                int heroHpAfter = (int) hero.getHp();
-                enemyDmgL.setText(
-                        enemy.getClass().getSimpleName() + " dealed " + (heroHpBefore - heroHpAfter) + " damage.");
-                repaintFightPanel();
-            } catch (NoDamageException exception) {
-                enemyDmgL.setText(enemy.getClass().getSimpleName() + " dealed no damage.");
+            if (!enemy.getStatusParalysis()) {
+                try {
+                    int heroHpBefore = (int) hero.getHp();
+                    enemy.attack(hero);
+                    int heroHpAfter = (int) hero.getHp();
+                    enemyDmgL.setText(
+                            enemy.getClass().getSimpleName() + " dealed " + (heroHpBefore - heroHpAfter) + " damage.");
+                    repaintFightPanel();
+                    checkIfHeroIsDead(hero);
+                } catch (NoDamageException exception) {
+                    enemyDmgL.setText(enemy.getClass().getSimpleName() + " dealed no damage.");
+                }
+            } else {
+                turnsFrozen--;
+                enemyDmgL.setText("Enemy is restrained for " + turnsFrozen + " turns, it can't attack.");
+                if (turnsFrozen == 1) {
+                    enemy.setStatusParalysis(false);
+                }
             }
-            checkIfHeroIsDead(hero);
         }
     }
 

@@ -1,6 +1,10 @@
 package characters;
 
-public abstract class Enemy extends Character {
+import java.io.Serializable;
+
+import javax.swing.*;
+
+public abstract class Enemy extends Character implements Serializable {
 
     // CONTSTRUCTOR
     public Enemy(double hp, double ether, double attack, double defense, boolean statusParalysis) {
@@ -8,10 +12,5 @@ public abstract class Enemy extends Character {
     }
 
     // METHODS
-    public void displayHp() {
-        System.out.println("Enemy hp: " + getHp());
-    }
-
-    public abstract void regularAttack(Hero hero) throws NoDamageException;
-
+    public abstract void attack(Hero hero) throws NoDamageException;
 }

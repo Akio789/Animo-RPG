@@ -3,8 +3,9 @@ package abilities;
 import characters.*;
 import items.*;
 import map.*;
+import java.io.Serializable;
 
-public class Vindication extends Ability {
+public class Vindication extends Ability implements Serializable {
 
 	public void specialAbility(Enemy enemy, Hero hero) {
 

@@ -3,12 +3,12 @@ package characters;
 import items.*;
 import abilities.*;
 import java.util.*;
-
+import java.io.Serializable;
 import javax.swing.JOptionPane;
 
 import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
-public abstract class Hero extends Character {
+public abstract class Hero extends Character implements Serializable {
 	// ATTRIBUTES
 	private String name;
 	private int xp;
@@ -247,8 +247,29 @@ public abstract class Hero extends Character {
 	public abstract void levelUp();
 
 	/// Attack enemy with a regular attack.
-	public abstract void attackEnemy(Enemy enemy) throws NoDamageException;
+	public void attackEnemy(Enemy enemy) throws NoDamageException {
+		double damageDone = enemy.getDefense() - getAttack();
+		if (enemy.getDefense() < getAttack()) {
+			System.out.println(getName() + " dealed " + (getAttack() - (enemy.getDefense())) + " damage.");
+			if ((enemy.getHp() + damageDone) <= 0) {
+				enemy.setHp(0);
+			} else {
+				enemy.setHp(enemy.getHp() + damageDone);
+			}
+		} else {
+			throw new NoDamageException();
+		}
+	}
 
 	/// Attack enemy with ability.
-	public abstract void attackEnemyWithAbility(Enemy enemy, Hero hero, int index);
+	public void attackEnemyWithAbility(Enemy enemy, Hero hero, int index) throws NotEnoughEtherException {
+		if (hero.getEther() >= 10 && hero.getEther() > 0) {
+			hero.getAbilities()[index].specialAbility(enemy, hero);
+		} // fin if
+
+		else {
+			throw new NotEnoughEtherException();
+		} // fin else
+
+	}
 }

@@ -5,8 +5,9 @@ import items.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.Serializable;
 
-public class Cell extends JPanel {
+public class Cell extends JPanel implements Serializable {
     // ATTRIBUTES
     private EquipmentItem item;
     private Enemy enemy;
@@ -67,9 +68,13 @@ public class Cell extends JPanel {
     }
 
     // METHODS
-    public void restore(Hero hero) {
-        hero.getHealingFlask().setCharges(hero.getHealingFlask().getMaxCharges());
-        hero.setHp(hero.getMaxHp());
-        hero.setEther(hero.getMaxEther());
+    public void restore(Hero hero, Window window) throws NoRiverException {
+        if (window.getCells()[hero.getPosY()][hero.getPosX()].getRestore()) {
+            hero.getHealingFlask().setCharges(hero.getHealingFlask().getMaxCharges());
+            hero.setHp(hero.getMaxHp());
+            hero.setEther(hero.getMaxEther());
+        } else {
+            throw new NoRiverException();
+        }
     }
 }

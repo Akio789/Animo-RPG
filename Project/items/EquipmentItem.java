@@ -1,8 +1,10 @@
 package items;
 
+import java.io.Serializable;
+
 import characters.*;
 
-public abstract class EquipmentItem extends Item {
+public abstract class EquipmentItem extends Item implements Serializable {
     // CONSTRUCTOR
     public EquipmentItem(String name, double points, String description) {
         super(name, points, description);

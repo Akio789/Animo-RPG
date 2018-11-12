@@ -1,9 +1,11 @@
 package characters;
 
 import abilitiesboss.*;
+
+import java.io.Serializable;
 import java.util.*;
 
-public class AntiYo extends Boss {
+public class AntiYo extends Boss implements Serializable {
     // ATTRIBUTES
     private AntiReason reason;
     private AntiNaturae naturae;
@@ -34,19 +36,9 @@ public class AntiYo extends Boss {
     }
 
     // METHODS
-    public void criticAttack(Hero hero) {
-        if (hero.getDefense() < (1 * getAttack() * getCritic())) {
-            System.out.println("¡Critic attack! Anti Yo dealed " + (1 * getAttack() * getCritic() - (hero.getDefense()))
-                    + " damage.");
-            hero.setHp((hero.getHp() + hero.getDefense()) - (1 * getAttack()) * getCritic());
-        } else {
-            System.out.println("Anti Yo is too weak, he dealed no damage!");
-        }
-    }
-
-    public void regularAttack(Hero hero) throws NoDamageException {
-        double dmgMult = 1;
-        double damageDone = hero.getDefense() - (dmgMult * getAttack());
+    public void attack(Hero hero) throws NoDamageException {
+        double dmgMult = 1.4;
+        double damageDone = hero.getDefense() - (dmgMult * getAttack() * getCritic());
         if (hero.getDefense() < (dmgMult * getAttack())) {
             System.out.println("Wild minion dealed " + (dmgMult * getAttack() - (hero.getDefense())) + " damage.");
             if ((hero.getHp() + damageDone) <= 0) {
@@ -57,22 +49,5 @@ public class AntiYo extends Boss {
         } else {
             throw new NoDamageException();
         }
-    }
-
-    public void attackHeroWithAbility(Enemy enemy, Hero hero) {
-        Random r = new Random();
-        double rand = r.nextDouble();
-        if (hero.getMaxEther() > 10) {
-            if (rand < 0.5) {
-                naturae.reduceDefense(hero);
-            }
-            if (rand >= 0.5) {
-                reason.reduceDamage(enemy, hero);
-            }
-        } // fin if
-
-        else {
-            System.out.println("There's not enough ether to use any abilitie");
-        } // fin else
     }
 }

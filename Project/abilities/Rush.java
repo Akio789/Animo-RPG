@@ -3,8 +3,9 @@ package abilities;
 import characters.*;
 import items.*;
 import map.*;
+import java.io.Serializable;
 
-public class Rush extends Ability {
+public class Rush extends Ability implements Serializable {
 	// Rafaga
 
 	public void specialAbility(Enemy enemy, Hero hero) {

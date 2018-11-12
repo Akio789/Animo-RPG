@@ -1,8 +1,10 @@
 package items;
 
+import java.io.Serializable;
+
 import characters.*;
 
-public class AttackItem extends EquipmentItem {
+public class AttackItem extends EquipmentItem implements Serializable {
 	// CONSTRUCTOR
 	public AttackItem(String name, double points, String description) {
 		super(name, points, description);

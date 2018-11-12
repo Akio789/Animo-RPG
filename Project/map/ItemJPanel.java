@@ -7,9 +7,11 @@ import javax.swing.border.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.Serializable;
+
 import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
-public class ItemJPanel extends JPanel {
+public class ItemJPanel extends JPanel implements Serializable {
     private Item item;
     private JLabel itemName;
 

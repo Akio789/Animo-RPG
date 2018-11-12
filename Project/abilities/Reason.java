@@ -3,8 +3,9 @@ package abilities;
 import characters.*;
 import items.*;
 import map.*;
+import java.io.Serializable;
 
-public class Reason extends Ability {
+public class Reason extends Ability implements Serializable {
 	// Razon
 
 	public void specialAbility(Enemy enemy, Hero hero) {
