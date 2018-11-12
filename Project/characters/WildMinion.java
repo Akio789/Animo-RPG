@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.swing.*;
 
 public class WildMinion extends Enemy implements Serializable {
-
     // CONSTRUCTOR
     public WildMinion(double hp, double ether, double attack, double defense, boolean statusParalysis) {
         super(hp, ether, attack, defense, statusParalysis);

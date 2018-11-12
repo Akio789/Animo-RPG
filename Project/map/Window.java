@@ -36,7 +36,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
         initComponents();
         setVisible(true);
         setLocationRelativeTo(null);
-        setTitle("Animo RPG");
+        setTitle("Uncanny Valley");
         addKeyListener(this);
         setFocusTraversalKeysEnabled(false);
         setFocusable(true);
@@ -125,8 +125,8 @@ public class Window extends JFrame implements KeyListener, Serializable {
                 new HealingFlask("Flask", 5, "This potion heals hp and ether."));
         hero.setHp(200);
         hero.setEther(45);
-        hero.setPosX(0);
-        hero.setPosX(0);
+        hero.setPosX(8);
+        hero.setPosY(19);
 
         // MENU BAR
         menuBar = new JMenuBar();
@@ -203,19 +203,115 @@ public class Window extends JFrame implements KeyListener, Serializable {
             }
         }
         // Cells with Items
-        EquipmentItem longSword = new AttackItem("Sword", 7, "A sword crafted for war");
-        cells[0][0].setItem(longSword);
-        cells[0][0].setEnemy(new WildMinion(100, 10, 10, 10, false));
-        cells[18][1].setItem(longSword);
-        cells[1][3].setItem(longSword);
-        cells[8][7].setItem(longSword);
-        cells[5][15].setItem(longSword);
-        cells[13][17].setItem(longSword);
+        EquipmentItem motherStone = new DefenseItem("Mother Stone", 7, "It's pink, it feels warm, like home... home, a mother, I didn't even remember having one.");
+        EquipmentItem deathStone = new AttackItem("Death", 23, "I am cursed now, I feel a uncontrollable rage, I remember pain and anger, I killed a man, and I didn't feel a thing."); // Designed to work with solitude
+        EquipmentItem solitudeStone = new DefenseItem("Solitude", 35, "As I touched this artifact I got absorbed by a spiral of sadness, I remembered the lowest points of my life and they generated a profund rage."); // Complements death
+        EquipmentItem reasonStone = new DefenseItem("Counter-Logic", 12, "I finally find peace, but not for long, quickly I get sorrounded by thoughts, questions, but most of it can be answered by just analising my envoriment, I find peace again, I like it, and I remember, I remember my work, my world, my name... this is not real."); // Last stone, final piece of the puzzle
+        EquipmentItem animalStone = new AttackItem("Instinct", 10, "I feel empty, I have hunger, but not just for eat, hunger for everything, I need a gal, I need to eat, I need to fight, I need violence, I need to scape, NO, I like it in here, here I can have it all."); // Drive Theory
+        cells[18][1].setItem(deathStone);
+        cells[1][3].setItem(animalStone);
+        cells[8][7].setItem(motherStone);
+        cells[5][15].setItem(solitudeStone);
+        cells[13][17].setItem(reasonStone);
         // Cells with Enemies
-        cells[1][3].setEnemy(new WildMinion(10, 10, 10, 10, false));
+            //WildMinions
+            cells[0][1].setEnemy(new WildMinion(85, 200, 9, 2, false));
+            cells[1][1].setEnemy(new WildMinion(85, 200, 9, 2, false));
+            cells[5][0].setEnemy(new WildMinion(85, 200, 9, 2, false));
+            cells[9][0].setEnemy(new WildMinion(85, 200, 9, 2, false));
+            cells[16][0].setEnemy(new WildMinion(85, 200, 9, 2, false));
+            cells[0][5].setEnemy(new WildMinion(85, 200, 9, 2, false));
+            cells[0][11].setEnemy(new WildMinion(85, 200, 9, 2, false));
+            cells[2][8].setEnemy(new WildMinion(85, 200, 9, 2, false));
+            cells[4][5].setEnemy(new WildMinion(85, 200, 9, 2, false));
+            cells[5][8].setEnemy(new WildMinion(85, 200, 9, 2, false));
+            cells[6][7].setEnemy(new WildMinion(85, 200, 9, 2, false));
+            cells[7][3].setEnemy(new WildMinion(85, 200, 9, 2, false));
+            cells[7][5].setEnemy(new WildMinion(85, 200, 9, 2, false));
+            cells[9][0].setEnemy(new WildMinion(85, 200, 9, 2, false));
+            cells[11][2].setEnemy(new WildMinion(85, 200, 9, 2, false));
+            cells[13][4].setEnemy(new WildMinion(85, 200, 9, 2, false));
+            cells[16][0].setEnemy(new WildMinion(85, 200, 9, 2, false));
+            cells[17][2].setEnemy(new WildMinion(85, 200, 9, 2, false));
+            cells[18][2].setEnemy(new WildMinion(85, 200, 9, 2, false));
+            //StrongWildMinions
+            cells[1][0].setEnemy(new StrongWildMinion(250, 200, 45, 1, false));
+            cells[2][4].setEnemy(new StrongWildMinion(250, 200, 45, 1, false));
+            cells[2][6].setEnemy(new StrongWildMinion(250, 200, 45, 1, false));
+            cells[2][10].setEnemy(new StrongWildMinion(250, 200, 45, 1, false));
+            cells[6][1].setEnemy(new StrongWildMinion(250, 200, 45, 1, false));
+            cells[9][3].setEnemy(new StrongWildMinion(250, 200, 45, 1, false));
+            cells[14][2].setEnemy(new StrongWildMinion(250, 200, 45, 1, false));
+            cells[16][1].setEnemy(new StrongWildMinion(250, 200, 45, 1, false));
+            cells[19][2].setEnemy(new StrongWildMinion(250, 200, 45, 1, false));
+            //OrderMinions
+            cells[1][18].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[2][18].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[4][18].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[4][14].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[6][18].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[6][16].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[7][18].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[8][13].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[10][15].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[10][14].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[10][12].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[11][19].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[11][12].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[12][19].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[12][16].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[12][12].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[13][16].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[13][15].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[13][14].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[13][11].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[13][10].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[14][14].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[14][10].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[15][10].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[16][8].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[16][7].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[17][19].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[17][12].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[17][11].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[17][10].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            cells[17][9].setEnemy(new OrderMinion(110, 200, 5, 3, false));
+            //StrongOrderMinions
+            cells[0][18].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[3][18].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[4][16].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[5][18].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[6][14].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[8][18].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[8][16].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[8][17].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[8][14].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[9][16].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[10][16].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[10][13].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[11][18].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[12][17].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[13][12].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[14][19].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[14][18].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[15][14].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[15][15].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[16][9].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[16][18].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[17][18].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[17][15].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[17][13].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[18][18].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[18][17].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[18][15].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+            cells[19][15].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
         // Cells with Bosses
         cells[2][5].setEnemy(new AntiBestia(100, 10, 10, 10, false));
         cells[17][17].setEnemy(new AntiSuperYo(100, 10, 10, 10, false));
+        /* //Este codigo es para poner el antiYo donde sea que vaya dependiendo de la eleccion de personaje del jugador, si el jugador elige razon, el antiyo irá en la posición en la que iría este y lo mismo para el ello
+        cells[2][5].setEnemy(new AntiYo(100, 10, 10, 10, false));
+        cells[17][17].setEnemy(new AntiYo(100, 10, 10, 10, false));
+        */
         // Cells that restore
         cells[19][4].setRestore(true);
         cells[19][5].setRestore(true);
@@ -269,7 +365,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 if (cells[i][j].getRestore() == true) {
-                    cells[i][j].setBackground(Color.green);
+                    cells[i][j].setBackground(Color.cyan);
                 }
                 if (cells[i][j].getItem() != null) {
                     cells[i][j].setBackground(Color.yellow);
@@ -277,8 +373,17 @@ public class Window extends JFrame implements KeyListener, Serializable {
                 if (cells[i][j].getEnemy() instanceof Boss) {
                     cells[i][j].setBackground(Color.black);
                 }
-                if (cells[i][j].getEnemy() instanceof WildMinion || cells[i][j].getEnemy() instanceof OrderMinion) {
+                if (cells[i][j].getEnemy() instanceof WildMinion) {
                     cells[i][j].setBackground(Color.red);
+                }
+                if (cells[i][j].getEnemy() instanceof StrongWildMinion) {
+                    cells[i][j].setBackground(Color.orange);
+                }
+                if (cells[i][j].getEnemy() instanceof OrderMinion) {
+                    cells[i][j].setBackground(Color.gray);
+                }
+                if (cells[i][j].getEnemy() instanceof StrongOrderMinion) {
+                    cells[i][j].setBackground(Color.white);
                 }
             }
         }
