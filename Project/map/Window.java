@@ -716,6 +716,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
 
         public void repaintBackpackAndEquipment() {
             // Repaint equipment
+            equipPanelsL[0].setText("Charges: " + getHero().getHealingFlask().getCharges());
             for (int i = 0; i < getWindow().getHero().getEquipment().length; i++) {
                 try {
                     equipPanelsL[i + 1].setText(getWindow().getHero().getEquipment()[i].getName());
