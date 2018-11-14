@@ -449,6 +449,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
         equipPanelsB[0].setFocusable(false);
         equipPanels[0] = new ItemJPanel(hero.getHealingFlask(), equipPanelsB[0]);
         equipPanelsB[0].setActionCommand("4");
+        // equipPanelsB[0].setIcon(new ImageIcon("images/trump.png"));
         equipPanelsB[0].addActionListener(new EquipmentReadDescriptionListener());
         equipmentPanel.add(equipPanels[0]);
         for (int i = 0; i < hero.getEquipment().length; i++) {
