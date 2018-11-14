@@ -13,9 +13,9 @@ import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
 public class ItemJPanel extends JPanel implements Serializable {
     private Item item;
-    private JLabel itemName;
+    private JButton itemName;
 
-    public ItemJPanel(Item item, JLabel itemName) {
+    public ItemJPanel(Item item, JButton itemName) {
         this.item = item;
         this.itemName = itemName;
         this.add(itemName);
@@ -29,11 +29,11 @@ public class ItemJPanel extends JPanel implements Serializable {
         this.item = item;
     }
 
-    public JLabel getItemName() {
+    public JButton getItemName() {
         return itemName;
     }
 
-    public void setItemName(JLabel itemName) {
+    public void setItemName(JButton itemName) {
         this.itemName = itemName;
     }
 }

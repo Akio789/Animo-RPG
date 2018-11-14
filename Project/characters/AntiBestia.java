@@ -8,33 +8,10 @@ import java.util.*;
 import javax.swing.JLabel;
 
 public class AntiBestia extends Boss implements Serializable {
-    // ATTRIBUTES
-    private AntiRush rush;
-    private AntiThump thump;
-
     // CONSTRUCTOR
     public AntiBestia(double hp, double ether, double attack, double defense, boolean statusParalysis) {
         super(hp, ether, attack, defense, statusParalysis);
         setCritic(1.5);
-        rush = new AntiRush();
-        thump = new AntiThump();
-    }
-
-    // GETTERS AND SETTERS
-    public AntiRush getRush() {
-        return rush;
-    }
-
-    public void setRush(AntiRush rush) {
-        this.rush = rush;
-    }
-
-    public AntiThump getThump() {
-        return thump;
-    }
-
-    public void setThump(AntiThump thump) {
-        this.thump = thump;
     }
 
     // METHODS

@@ -13,7 +13,11 @@ public class Thump extends Ability implements Serializable {
 		System.out.println("You activated the special ability Thump");
 		hero.setAttack(hero.getAttack() * 2);
 		System.out.println("You dealed " + hero.getAttack() + " of damage");
-		enemy.setHp(enemy.getHp() - hero.getAttack());
+		if ((enemy.getHp() - hero.getAttack()) <= 0) {
+			enemy.setHp(0);
+		} else {
+			enemy.setHp(enemy.getHp() - hero.getAttack());
+		}
 		System.out.println(hero.getName() + " consumed 10 of ether");
 		hero.setEther(hero.getEther() - 10);
 		System.out.println("");

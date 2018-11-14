@@ -6,33 +6,10 @@ import java.io.Serializable;
 import java.util.*;
 
 public class AntiYo extends Boss implements Serializable {
-    // ATTRIBUTES
-    private AntiReason reason;
-    private AntiNaturae naturae;
-
     // CONSTRUCTOR
     public AntiYo(double hp, double ether, double attack, double defense, boolean statusParalysis) {
         super(hp, ether, attack, defense, statusParalysis);
         setCritic(1.2);
-        reason = new AntiReason();
-        naturae = new AntiNaturae();
-    }
-
-    // GETTERS AND SETTERS
-    public AntiReason getReason() {
-        return reason;
-    }
-
-    public void setReason(AntiReason reason) {
-        this.reason = reason;
-    }
-
-    public AntiNaturae getNaturae() {
-        return naturae;
-    }
-
-    public void setNaturae(AntiNaturae naturae) {
-        this.naturae = naturae;
     }
 
     // METHODS
