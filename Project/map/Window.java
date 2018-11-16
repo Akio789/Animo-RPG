@@ -15,9 +15,9 @@ public class Window extends JFrame implements KeyListener, Serializable {
     // ATTRIBUTES
     private Cell[][] cells;
     private Hero hero;
-    private JPanel topPanel, bottomPanel, mapPanel, equipmentPanel, statsPanel, menuPanel, fightPanel, backpackPanel,
-            battleCharactersPanel, battleHeroPanel, battleEnemyPanel, battleAttacksPanel, heroImage, enemyImage,
-            fightInfoP;
+    private JPanel wrapper, topPanel, bottomPanel, mapPanel, equipmentPanel, statsPanel, menuPanel, fightPanel,
+            backpackPanel, battleCharactersPanel, battleHeroPanel, battleEnemyPanel, battleAttacksPanel, heroImage,
+            enemyImage, fightInfoP;
     private JPanel[] equipPanels, backpackPanels;
     private JLabel[] stats;
     private JButton drinkFlaskButton, fightButton, pickUpItemButton, equipItemButton, unEquipItemButton, restoreButton;
@@ -33,7 +33,6 @@ public class Window extends JFrame implements KeyListener, Serializable {
     // CONSTRUCTOR
     public Window() {
         setSize(650, 730);
-        setLayout(new GridLayout(2, 1));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         initComponents();
         setVisible(true);
@@ -562,9 +561,13 @@ public class Window extends JFrame implements KeyListener, Serializable {
         }
         bottomPanel.add(backpackPanel, BorderLayout.EAST);
 
-        // ADD MAIN PANELS TO WINDOW
-        add(topPanel);
-        add(bottomPanel);
+        // ADD MAIN PANELS TO WRAPPER
+        wrapper = new JPanel();
+        wrapper.setLayout(new GridLayout(2, 1));
+
+        wrapper.add(topPanel);
+        wrapper.add(bottomPanel);
+        add(wrapper);
     }
 
     // ACTION LISTENERS
