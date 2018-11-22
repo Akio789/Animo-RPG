@@ -426,11 +426,11 @@ public class Window extends JFrame implements KeyListener, Serializable {
         statsPanel.setBorder(new TitledBorder("Stats"));
         stats = new JLabel[hero.printStats().length];
         for (int i = 0; i < stats.length; i++) {
-            stats[i] = new JLabel("  " + hero.printStats()[i]);
             if (i == 0) {
+                stats[i] = new JLabel(" " + hero.getClass().getSimpleName() + " " + hero.printStats()[i]);
                 stats[i].setFont(new Font("Arial", Font.BOLD, 24));
-
             } else {
+                stats[i] = new JLabel("  " + hero.printStats()[i]);
                 stats[i].setFont(new Font("Arial", Font.BOLD, 22));
             }
             statsPanel.add(stats[i]);
@@ -859,7 +859,8 @@ public class Window extends JFrame implements KeyListener, Serializable {
         public void actionPerformed(ActionEvent e) {
             itemInfo = Integer.parseInt(e.getActionCommand());
             if (hero.getBackpack()[itemInfo] != null) {
-                JOptionPane.showMessageDialog(null, hero.getBackpack()[itemInfo].getDescription());
+                JOptionPane.showMessageDialog(null, hero.getBackpack()[itemInfo].getDescription(),
+                        hero.getBackpack()[itemInfo].getName() + " description", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
@@ -868,9 +869,11 @@ public class Window extends JFrame implements KeyListener, Serializable {
         public void actionPerformed(ActionEvent e) {
             itemInfo = Integer.parseInt(e.getActionCommand());
             if (itemInfo == 4) {
-                JOptionPane.showMessageDialog(null, hero.getHealingFlask().getDescription());
+                JOptionPane.showMessageDialog(null, hero.getHealingFlask().getDescription(),
+                        "Healing Flask description", JOptionPane.INFORMATION_MESSAGE);
             } else if (hero.getEquipment()[itemInfo - 5] != null) {
-                JOptionPane.showMessageDialog(null, hero.getEquipment()[itemInfo - 5].getDescription());
+                JOptionPane.showMessageDialog(null, hero.getEquipment()[itemInfo - 5].getDescription(),
+                        hero.getEquipment()[itemInfo - 5].getName() + " description", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }

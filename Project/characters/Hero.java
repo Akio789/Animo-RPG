@@ -198,9 +198,8 @@ public abstract class Hero extends Character implements Serializable {
 
 	/// Print stats.
 	public String[] printStats() {
-		String[] stats = { "Hero " + getName() + "  ", "Lvl: " + getLevel(), "Exp: " + getXp(),
-				"Hp: " + ((int) getHp()), "Ether: " + ((int) getEther()), "Att: " + ((int) getAttack()),
-				"Def: " + ((int) getDefense()) };
+		String[] stats = { getName() + "  ", "Lvl: " + getLevel(), "Exp: " + getXp(), "Hp: " + ((int) getHp()),
+				"Ether: " + ((int) getEther()), "Att: " + ((int) getAttack()), "Def: " + ((int) getDefense()) };
 		return stats;
 	}
 
