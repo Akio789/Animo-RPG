@@ -8,6 +8,7 @@ import java.lang.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.*;
 
 import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
@@ -123,8 +124,8 @@ public class Window extends JFrame implements KeyListener, Serializable {
 
     // METHODS
     public void initComponents() {
-        hero = new Bestia("Akio", 2, 0, 1000, 50, 25, 5, false,
-                new HealingFlask("Flask", 5, "This potion heals hp and ether."));
+        hero = new SuperYo("Akio", 1, 0, 100, 240, 15, 1, false,
+                new HealingFlask("Flask", 50, "This inane fluid heals hp and ether."));
         hero.setHp(600);
         hero.setEther(45);
         hero.setPosX(8);
@@ -328,8 +329,8 @@ public class Window extends JFrame implements KeyListener, Serializable {
         cells[18][15].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
         cells[19][15].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
         // Cells with Bosses
-        cells[2][5].setEnemy(new AntiBestia(100, 10, 10, 10, false));
-        cells[17][17].setEnemy(new AntiSuperYo(100, 10, 10, 10, false));
+        cells[2][5].setEnemy(new AntiBestia(700, 780, 60, 10, false));
+        cells[17][17].setEnemy(new AntiSuperYo(900, 780, 60, 10, false));
         /*
          * //Este codigo es para poner el antiYo donde sea que vaya dependiendo de la
          * eleccion de personaje del jugador, si el jugador elige razon, el antiyo irá
@@ -674,6 +675,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
         public void actionPerformed(ActionEvent e) {
             Repainter repainter = new Repainter();
             Enemy enemy = getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy();
+            // implementar InstanceOF para cambiar como se comporta dependiendo del enemigo
             try {
                 int enemyHpBefore = (int) enemy.getHp();
                 hero.attackEnemy(enemy);
@@ -1000,13 +1002,22 @@ public class Window extends JFrame implements KeyListener, Serializable {
         }
 
         public void enemyAttack(Enemy enemy) {
+            Random dice = new Random();
+            int diceNum = dice.nextInt((100 - 1) + 1) + 1;
             if (!enemy.getStatusParalysis()) {
                 try {
                     int heroHpBefore = (int) hero.getHp();
-                    enemy.attack(hero);
+                    if(diceNum<75){
+                        enemy.attack(hero);
+                    }else{
+                        enemy.heavyAttack(hero);
+                    }
                     int heroHpAfter = (int) hero.getHp();
-                    enemyDmgL.setText(
-                            enemy.getClass().getSimpleName() + " dealed " + (heroHpBefore - heroHpAfter) + " damage.");
+                    if(diceNum<75){
+                        enemyDmgL.setText(enemy.getClass().getSimpleName() + "made a normal attack and dealed " + (heroHpBefore - heroHpAfter) + " damage.");
+                    }else{
+                        enemyDmgL.setText(enemy.getClass().getSimpleName() + "made a heavy attack and dealed " + (heroHpBefore - heroHpAfter) + " damage.");
+                    }
                     repaintFightPanel();
                     checkIfHeroIsDead(hero);
                 } catch (NoDamageException exception) {

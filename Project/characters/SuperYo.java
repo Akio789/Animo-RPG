@@ -17,9 +17,9 @@ public class SuperYo extends Hero implements Serializable {
 
     public void levelUp() {
         setLevel(getLevel() + 1);
-        setMaxHp(getMaxHp() + 5);
-        setMaxEther(getMaxEther() + 5);
-        setAttack(getAttack() + 2);
-        setDefense(getDefense() + 2);
+        setMaxHp(getMaxHp() + 65);
+        setMaxEther(getMaxEther() + 60);
+        setAttack(getAttack() + 5);
+        setDefense(getDefense() + 1);
     }
 }

@@ -14,10 +14,26 @@ public class AntiYo extends Boss implements Serializable {
 
     // METHODS
     public void attack(Hero hero) throws NoDamageException {
-        double dmgMult = 1.4;
-        double damageDone = hero.getDefense() - (dmgMult * getAttack() * getCritic());
-        if (hero.getDefense() < (dmgMult * getAttack())) {
-            System.out.println("Wild minion dealed " + (dmgMult * getAttack() - (hero.getDefense())) + " damage.");
+        double dmgMult = 1.1*getAttack();
+        double rawDefense = hero.getDefense()*.06;
+        double damageDone = (dmgMult) - (dmgMult*rawDefense);
+        if (rawDefense < 1) {
+            System.out.println("Your conscience is gaining ground and  dealed " + damageDone + " damage.");
+            if ((hero.getHp() + damageDone) <= 0) {
+                hero.setHp(0);
+            } else {
+                hero.setHp(hero.getHp() + damageDone);
+            }
+        } else {
+            throw new NoDamageException();
+        }
+    }
+    public void heavyAttack(Hero hero) throws NoDamageException {
+        double dmgMult = 2*getAttack();
+        double rawDefense = hero.getDefense()*.06;
+        double damageDone = (dmgMult) - (dmgMult*rawDefense);
+        if (rawDefense < 1) {
+            System.out.println("Your conscience obliterated you and dealed " + damageDone + " damage.");
             if ((hero.getHp() + damageDone) <= 0) {
                 hero.setHp(0);
             } else {

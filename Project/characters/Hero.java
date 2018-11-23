@@ -247,13 +247,13 @@ public abstract class Hero extends Character implements Serializable {
 
 	/// Attack enemy with a regular attack.
 	public void attackEnemy(Enemy enemy) throws NoDamageException {
-		double damageDone = enemy.getDefense() - getAttack();
-		if (enemy.getDefense() < getAttack()) {
-			System.out.println(getName() + " dealed " + (getAttack() - (enemy.getDefense())) + " damage.");
-			if ((enemy.getHp() + damageDone) <= 0) {
+		double damageDone =  getAttack() - ((enemy.getDefense()*.06)*getAttack());
+		if ((enemy.getDefense()*.06) < 1) {
+			System.out.println(getName() + " dealed " + damageDone);
+			if ((enemy.getHp() - damageDone) <= 0) {
 				enemy.setHp(0);
 			} else {
-				enemy.setHp(enemy.getHp() + damageDone);
+				enemy.setHp(enemy.getHp() - damageDone);
 			}
 		} else {
 			throw new NoDamageException();

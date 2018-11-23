@@ -18,9 +18,9 @@ public class Yo extends Hero implements Serializable {
     // METHODS
     public void levelUp() {
         setLevel(getLevel() + 1);
-        setMaxHp(getMaxHp() + 5);
-        setMaxEther(getMaxEther() + 4);
-        setAttack(getAttack() + 2);
-        setDefense(getDefense() + 3);
+        setMaxHp(getMaxHp() + 65);
+        setMaxEther(getMaxEther() + 60);
+        setAttack(getAttack() + 5);
+        setDefense(getDefense() + 1);
     }
 }
