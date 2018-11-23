@@ -29,6 +29,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
     private JButton attackB, specialAttackB1, specialAttackB2, escapeB;
     private int turn, turnsFrozen;
     private int itemInfo;
+    private Color mapBackground;
 
     // CONSTRUCTOR
     public Window() {
@@ -194,13 +195,16 @@ public class Window extends JFrame implements KeyListener, Serializable {
         menuPanel.add(restoreButton);
         topPanel.add(menuPanel, BorderLayout.WEST);
 
+
+        //Setting colors
+        mapBackground = new Color(94, 99, 102); //Dark gray
         // MAP PANEL
         cells = new Cell[20][20];
         // Empty cells
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 cells[i][j] = new Cell();
-                cells[i][j].setBackground(Color.lightGray);
+                cells[i][j].setBackground(mapBackground);
             }
         }
         // Cells with Items
@@ -215,8 +219,8 @@ public class Window extends JFrame implements KeyListener, Serializable {
         EquipmentItem solitudeStone = new DefenseItem("Solitude", 35,
                 "As I touched this artifact I got absorbed by a spiral of sadness, I remembered the lowest points of my life and they generated a profund rage."); // Complements
                                                                                                                                                                    // death
-        EquipmentItem reasonStone = new DefenseItem("Counter-Logic", 12,
-                "I finally find peace, but not for long, quickly I get sorrounded by thoughts, questions, but most of it can be answered by just analising my envoriment, I find peace again, I like it, and I remember, I remember my work, my world, my name... this is not real."); // Last
+        EquipmentItem reasonStone = new DefenseItem("Aporia", 12,
+                "I finally find peace, but not for long, quickly I get sorrounded by thoughts, questions, but most of it can be answered by just analising my envoriment, I find peace again, I like it, and I remember, I remember my work, my world, my name... this is not real, or is that life the fake one?"); // Last
                                                                                                                                                                                                                                                                                        // stone,
                                                                                                                                                                                                                                                                                        // final
                                                                                                                                                                                                                                                                                        // piece
@@ -404,7 +408,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
                     cells[i][j].setBackground(Color.gray);
                 }
                 if (cells[i][j].getEnemy() instanceof StrongOrderMinion) {
-                    cells[i][j].setBackground(Color.white);
+                    cells[i][j].setBackground(Color.lightGray);
                 }
             }
         }
@@ -957,11 +961,11 @@ public class Window extends JFrame implements KeyListener, Serializable {
                         cells[i][j].setBackground(Color.gray);
                     }
                     if (cells[i][j].getEnemy() instanceof StrongOrderMinion) {
-                        cells[i][j].setBackground(Color.white);
+                        cells[i][j].setBackground(Color.lightGray);
                     }
                     if (cells[i][j].getEnemy() == null && cells[i][j].getItem() == null
                             && cells[i][j].getRestore() == false) {
-                        cells[i][j].setBackground(Color.lightGray);
+                        cells[i][j].setBackground(mapBackground);
                     }
                 }
             }
