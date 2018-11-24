@@ -21,7 +21,7 @@ public class StrongWildMinion extends Enemy implements Serializable {
             if ((hero.getHp() + damageDone) <= 0) {
                 hero.setHp(0);
             } else {
-                hero.setHp(hero.getHp() + damageDone);
+                hero.setHp(hero.getHp() - damageDone);
             }
         } else {
             throw new NoDamageException();
@@ -36,7 +36,7 @@ public class StrongWildMinion extends Enemy implements Serializable {
             if ((hero.getHp() + damageDone) <= 0) {
                 hero.setHp(0);
             } else {
-                hero.setHp(hero.getHp() + damageDone);
+                hero.setHp(hero.getHp() - damageDone);
             }
         } else {
             throw new NoDamageException();
