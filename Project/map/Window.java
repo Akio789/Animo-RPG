@@ -19,17 +19,17 @@ public class Window extends JFrame implements KeyListener, Serializable {
     private Hero hero;
     private JPanel wrapper, topPanel, bottomPanel, mapPanel, equipmentPanel, statsPanel, menuPanel, fightPanel,
             backpackPanel, battleCharactersPanel, battleHeroPanel, battleEnemyPanel, battleAttacksPanel, heroImage,
-            enemyImage, fightInfoP, startPanel;
+            enemyImage, fightInfoP, startPanel, gameOverPanel;
     private JPanel[] equipPanels, backpackPanels;
     private JLabel[] stats;
     private JButton drinkFlaskButton, fightButton, pickUpItemButton, equipItemButton, unEquipItemButton, restoreButton,
-            selectYo, selectBestia, selectSuperYo;
+            selectYo, selectBestia, selectSuperYo, continueInGameOver, loadScreenStart;
     private JButton[] equipPanelsB, backpackPanelsB;
     private JMenuBar menuBar;
     private JMenu menu;
     private JMenuItem saveMenuItem, loadMenuItem, exitMenuItem;
     private JLabel heroHpL, heroEtherL, enemyHpL, typeOfEnemy, turnL, heroDmgL, enemyDmgL, bestia, yo, superYo,
-            antorcha, antorcha_dos, title, descriptionYo, descriptionSuperYo, descriptionBestia;
+            antorcha, antorcha_dos, title, descriptionYo, descriptionSuperYo, descriptionBestia, gameOver, spaceMagic;
     private JButton attackB, specialAttackB1, specialAttackB2, escapeB;
     private int turn, turnsFrozen;
     private int itemInfo;
@@ -129,7 +129,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
         // START PANEL
 
         startPanel = new JPanel();
-        startPanel.setLayout(new GridLayout(4, 3));
+        startPanel.setLayout(new GridLayout(5, 3));
         startPanel.setVisible(true);
         startPanel.setBackground(Color.black);
         add(startPanel);
@@ -150,24 +150,24 @@ public class Window extends JFrame implements KeyListener, Serializable {
         antorcha_dos.setIcon(antorchaFoto);
         startPanel.add(antorcha_dos);
 
-        yo = new JLabel("Yo");
+        yo = new JLabel();
         ImageIcon yoFoto = new ImageIcon("images/bossEllo.png");
         yo.setIcon(yoFoto);
-        yoFoto = new ImageIcon(yoFoto.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
+        yoFoto = new ImageIcon(yoFoto.getImage().getScaledInstance(200, 160, Image.SCALE_DEFAULT));
         yo.setIcon(yoFoto);
         startPanel.add(yo);
 
-        superYo = new JLabel("superYo");
+        superYo = new JLabel();
         ImageIcon superYoFoto = new ImageIcon("images/bossSuperYo.png");
         superYo.setIcon(superYoFoto);
-        superYoFoto = new ImageIcon(superYoFoto.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
+        superYoFoto = new ImageIcon(superYoFoto.getImage().getScaledInstance(200, 160, Image.SCALE_DEFAULT));
         superYo.setIcon(superYoFoto);
         startPanel.add(superYo);
 
-        bestia = new JLabel("Bestia");
+        bestia = new JLabel();
         ImageIcon bestiaImage = new ImageIcon("images/bossEllo.png");
         bestia.setIcon(bestiaImage);
-        bestiaImage = new ImageIcon(bestiaImage.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
+        bestiaImage = new ImageIcon(bestiaImage.getImage().getScaledInstance(200, 160, Image.SCALE_DEFAULT));
         bestia.setIcon(bestiaImage);
         startPanel.add(bestia);
 
@@ -194,6 +194,31 @@ public class Window extends JFrame implements KeyListener, Serializable {
         descriptionSuperYo = new JLabel("Dios Oscar");
         descriptionSuperYo.setForeground(Color.WHITE);
         startPanel.add(descriptionSuperYo);
+
+        spaceMagic=new JLabel();
+        startPanel.add(spaceMagic);
+
+        loadScreenStart=new JButton("Continue");
+        loadScreenStart.addActionListener(new ContinueStart() );
+        startPanel.add(loadScreenStart);
+    }
+
+    public void GameOverPanel(){
+
+        gameOverPanel=new JPanel();
+        gameOverPanel.setLayout(new GridLayout(1,2) );
+        add(gameOverPanel);
+
+        gameOver=new JLabel();
+        ImageIcon fotoPerder= new ImageIcon("images/gameOver");
+        gameOver.setIcon(fotoPerder);
+        fotoPerder= new ImageIcon(fotoPerder.getImage().getScaledInstance(650, 365, Image.SCALE_DEFAULT));
+        gameOver.setIcon(fotoPerder);
+        gameOverPanel.add(gameOver);
+
+        continueInGameOver=new JButton("You lost, new adventure");
+        continueInGameOver.addActionListener(new CloseLosing() );
+
     }
 
     // METHODS
@@ -685,6 +710,16 @@ public class Window extends JFrame implements KeyListener, Serializable {
     }
 
     // ACTION LISTENERS
+
+    public class CloseLosing implements ActionListener{
+        public void actionPerformed(ActionEvent e) {}
+    }
+
+    public class ContinueStart implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
 
     public class SelectYo implements ActionListener {
         public void actionPerformed(ActionEvent e) {
