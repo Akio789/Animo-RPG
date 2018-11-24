@@ -14,19 +14,22 @@ import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
 public class Window extends JFrame implements KeyListener, Serializable {
     // ATTRIBUTES
+    public int numero=1;
     private Cell[][] cells;
     private Hero hero;
     private JPanel wrapper, topPanel, bottomPanel, mapPanel, equipmentPanel, statsPanel, menuPanel, fightPanel,
             backpackPanel, battleCharactersPanel, battleHeroPanel, battleEnemyPanel, battleAttacksPanel, heroImage,
-            enemyImage, fightInfoP;
+            enemyImage, fightInfoP, startPanel;
     private JPanel[] equipPanels, backpackPanels;
     private JLabel[] stats;
-    private JButton drinkFlaskButton, fightButton, pickUpItemButton, equipItemButton, unEquipItemButton, restoreButton;
+    private JButton drinkFlaskButton, fightButton, pickUpItemButton, equipItemButton, unEquipItemButton, restoreButton
+    ,selectYo, selectBestia, selectSuperYo;
     private JButton[] equipPanelsB, backpackPanelsB;
     private JMenuBar menuBar;
     private JMenu menu;
     private JMenuItem saveMenuItem, loadMenuItem, exitMenuItem;
-    private JLabel heroHpL, heroEtherL, enemyHpL, typeOfEnemy, turnL, heroDmgL, enemyDmgL;
+    private JLabel heroHpL, heroEtherL, enemyHpL, typeOfEnemy, turnL, heroDmgL, enemyDmgL, bestia, yo
+    , superYo, antorcha,antorcha_dos,title,descriptionYo, descriptionSuperYo, descriptionBestia;
     private JButton attackB, specialAttackB1, specialAttackB2, escapeB;
     private int turn, turnsFrozen;
     private int itemInfo;
@@ -124,12 +127,122 @@ public class Window extends JFrame implements KeyListener, Serializable {
 
     // METHODS
     public void initComponents() {
-        hero = new SuperYo("Akio", 1, 0, 100, 240, 15, 1, false,
-                new HealingFlask("Flask", 50, "This inane fluid heals hp and ether."));
-        hero.setHp(600);
-        hero.setEther(45);
-        hero.setPosX(8);
-        hero.setPosY(19);
+
+
+
+        switch(numero){
+
+            
+            case 1:
+            hero = new Yo("Oscar", 2, 0, 1000, 50, 25, 5, false,
+                    new HealingFlask("Flask", 5, "This potion heals hp and ether."));
+            hero.setHp(600);
+            hero.setEther(45);
+            hero.setPosX(8);
+            hero.setPosY(19);
+            invalidate();
+            validate();
+            repaint();
+            break;
+            case 2:
+            hero = new SuperYo("Akio", 2, 0, 1000, 50, 25, 5, false,
+                    new HealingFlask("Flask", 5, "This potion heals hp and ether."));
+            hero.setHp(600);
+            hero.setEther(45);
+            hero.setPosX(8);
+            hero.setPosY(19);
+            invalidate();
+            validate();
+            repaint();
+            break;
+            case 3:
+            hero = new Bestia("Itzani", 2, 0, 1000, 50, 25, 5, false,
+                    new HealingFlask("Flask", 5, "This potion heals hp and ether."));
+            hero.setHp(600);
+            hero.setEther(45);
+            hero.setPosX(8);
+            hero.setPosY(19);
+            invalidate();
+            validate();
+            repaint();
+            break;
+        }
+       
+
+        //START PANEL
+
+        startPanel=new JPanel();
+        startPanel.setLayout(new GridLayout(4,3) );
+        startPanel.setVisible(true);
+        startPanel.setBackground(Color.black);
+        add(startPanel);
+
+        antorcha=new JLabel();
+        ImageIcon antorchaFoto=new ImageIcon("images/antorcha.gif");
+        antorcha.setIcon(antorchaFoto);
+        antorchaFoto = new ImageIcon(antorchaFoto.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
+        antorcha.setIcon(antorchaFoto);
+        startPanel.add(antorcha);
+
+        title=new JLabel("Uncanny Valley");
+        title.setForeground(Color.WHITE);
+        title.setFont (title.getFont ().deriveFont (25.0f));
+        startPanel.add(title);
+
+        antorcha_dos=new JLabel();
+        antorcha_dos.setIcon(antorchaFoto);
+        startPanel.add(antorcha_dos);
+
+
+        yo=new JLabel("Yo");
+        ImageIcon yoFoto=new ImageIcon("images/bossEllo.png");
+        yo.setIcon(yoFoto);
+        yoFoto = new ImageIcon(yoFoto.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
+        yo.setIcon(yoFoto );
+        startPanel.add(yo);
+
+        superYo= new JLabel("superYo");
+        ImageIcon superYoFoto=new ImageIcon("images/bossSuperYo.png");
+        superYo.setIcon(superYoFoto);
+        superYoFoto = new ImageIcon(superYoFoto.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
+        superYo.setIcon(superYoFoto);
+        startPanel.add(superYo);
+
+        bestia=new JLabel("Bestia");
+        ImageIcon bestiaImage=new ImageIcon("images/bossEllo.png");
+        bestia.setIcon(bestiaImage);
+        bestiaImage = new ImageIcon(bestiaImage.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
+        bestia.setIcon(bestiaImage);
+        startPanel.add(bestia);
+
+        selectYo=new JButton("Select Yo");
+        selectYo.addActionListener(new SelectYo());
+        startPanel.add(selectYo);
+
+        selectSuperYo=new JButton("Select SuperYo");
+        selectSuperYo.addActionListener(new SelectSuperYo() );
+        startPanel.add(selectSuperYo);
+
+        selectBestia=new JButton("Select Bestia");
+        selectBestia.addActionListener(new SelectBestia());
+        startPanel.add(selectBestia);
+
+        
+
+       
+        descriptionYo=new JLabel("El que se la come entera, akio");
+        descriptionYo.setForeground(Color.WHITE);
+        startPanel.add(descriptionYo);
+
+        descriptionBestia=new JLabel("El que medio se la come. itztani");
+        descriptionBestia.setForeground(Color.WHITE);
+        startPanel.add(descriptionBestia);
+
+        descriptionSuperYo=new JLabel("Dios Oscar");
+        descriptionSuperYo.setForeground(Color.WHITE);
+        startPanel.add(descriptionSuperYo);
+
+
 
         // MENU BAR
         menuBar = new JMenuBar();
@@ -572,10 +685,87 @@ public class Window extends JFrame implements KeyListener, Serializable {
 
         wrapper.add(topPanel);
         wrapper.add(bottomPanel);
-        add(wrapper);
+        wrapper.setVisible(true);
     }
 
     // ACTION LISTENERS
+
+     public class SelectYo implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            numero=1;
+            hero = new Yo("Oscar", 2, 0, 1000, 50, 25, 5, false,
+                    new HealingFlask("Flask", 5, "This potion heals hp and ether."));
+            hero.setHp(600);
+            hero.setEther(45);
+            hero.setPosX(8);
+            hero.setPosY(19);
+            
+            startPanel.setVisible(false);
+            if (startPanel.isVisible() ) {
+                System.out.print("Yo");
+                }else {
+              remove(startPanel);  
+              add(wrapper); 
+              
+              System.out.print("Yo");
+          }  
+            invalidate();
+            validate();
+            repaint();
+            
+        }
+    }
+
+    public class SelectSuperYo implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            numero=2;
+            hero = new SuperYo("Akio", 2, 0, 1000, 50, 25, 5, false,
+                    new HealingFlask("Flask", 5, "This potion heals hp and ether."));
+            hero.setHp(600);
+            hero.setEther(45);
+            hero.setPosX(8);
+            hero.setPosY(19);
+
+            startPanel.setVisible(false);
+            if (startPanel.isVisible() ) {
+                System.out.print("SuperYo");
+                }else {
+              remove(startPanel);  
+              add(wrapper); 
+              
+              System.out.print("SuperYo");
+          }  
+            invalidate();
+            validate();
+            repaint();
+        }
+    }
+
+    public class SelectBestia implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            numero=3;
+            hero = new Bestia("Itzani", 2, 0, 1000, 50, 25, 5, false,
+                    new HealingFlask("Flask", 5, "This potion heals hp and ether."));
+            hero.setHp(600);
+            hero.setEther(45);
+            hero.setPosX(8);
+            hero.setPosY(19);
+
+            startPanel.setVisible(false);
+            if (startPanel.isVisible() ) {
+                System.out.print("Bestia");
+                }else {
+              remove(startPanel);  
+              add(wrapper); 
+              
+              System.out.print("Bestis");
+          }  
+            invalidate();
+            validate();
+            repaint();
+        }
+    }
+
     public class DrinkFlaskButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             Repainter repainter = new Repainter();
