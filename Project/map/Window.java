@@ -195,29 +195,29 @@ public class Window extends JFrame implements KeyListener, Serializable {
         descriptionSuperYo.setForeground(Color.WHITE);
         startPanel.add(descriptionSuperYo);
 
-        spaceMagic=new JLabel();
+        spaceMagic = new JLabel();
         startPanel.add(spaceMagic);
 
-        loadScreenStart=new JButton("Continue");
-        loadScreenStart.addActionListener(new ContinueStart() );
+        loadScreenStart = new JButton("Continue");
+        loadScreenStart.addActionListener(new ContinueStart());
         startPanel.add(loadScreenStart);
     }
 
-    public void GameOverPanel(){
+    public void initGameOverPanel() {
 
-        gameOverPanel=new JPanel();
-        gameOverPanel.setLayout(new GridLayout(1,2) );
+        gameOverPanel = new JPanel();
+        gameOverPanel.setLayout(new GridLayout(1, 2));
         add(gameOverPanel);
 
-        gameOver=new JLabel();
-        ImageIcon fotoPerder= new ImageIcon("images/gameOver");
+        gameOver = new JLabel();
+        ImageIcon fotoPerder = new ImageIcon("images/gameOver");
         gameOver.setIcon(fotoPerder);
-        fotoPerder= new ImageIcon(fotoPerder.getImage().getScaledInstance(650, 365, Image.SCALE_DEFAULT));
+        fotoPerder = new ImageIcon(fotoPerder.getImage().getScaledInstance(650, 365, Image.SCALE_DEFAULT));
         gameOver.setIcon(fotoPerder);
         gameOverPanel.add(gameOver);
 
-        continueInGameOver=new JButton("You lost, new adventure");
-        continueInGameOver.addActionListener(new CloseLosing() );
+        continueInGameOver = new JButton("You lost, new adventure");
+        continueInGameOver.addActionListener(new CloseLosing());
 
     }
 
@@ -229,7 +229,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
         case 1:
             hero = new Yo("Oscar", 2, 0, 1000, 50, 25, 5, false,
                     new HealingFlask("Flask", 5, "This potion heals hp and ether."));
-            hero.setHp(600);
+            hero.setHp(0);
             hero.setEther(45);
             hero.setPosX(8);
             hero.setPosY(19);
@@ -711,13 +711,32 @@ public class Window extends JFrame implements KeyListener, Serializable {
 
     // ACTION LISTENERS
 
-    public class CloseLosing implements ActionListener{
-        public void actionPerformed(ActionEvent e) {}
+    public class CloseLosing implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            JOptionPane.showMessageDialog(null, "See you next time!");
+        }
     }
 
-    public class ContinueStart implements ActionListener{
+    public class ContinueStart implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-
+            remove(startPanel);
+            try {
+                File file1 = new File("hero.animo");
+                FileInputStream fin1 = new FileInputStream(file1);
+                ObjectInputStream ois1 = new ObjectInputStream(fin1);
+                hero = (Hero) ois1.readObject();
+                File file2 = new File("map.animo");
+                FileInputStream fin2 = new FileInputStream(file2);
+                ObjectInputStream ois2 = new ObjectInputStream(fin2);
+                cells = (Cell[][]) ois2.readObject();
+                add(wrapper);
+                revalidate();
+                repaint();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Couldn't load.");
+            } catch (ClassNotFoundException ex2) {
+                JOptionPane.showMessageDialog(null, "Couldn't find class.");
+            }
         }
     }
 
@@ -1147,7 +1166,12 @@ public class Window extends JFrame implements KeyListener, Serializable {
 
         public boolean checkIfHeroIsDead(Hero hero) {
             if ((int) hero.getHp() == 0) {
-                JOptionPane.showMessageDialog(null, "YOU DIED!");
+                remove(wrapper);
+                remove(menuBar);
+                initGameOverPanel();
+                add(gameOverPanel);
+                revalidate();
+                repaint();
                 return true;
             } else {
                 return false;
