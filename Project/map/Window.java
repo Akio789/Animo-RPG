@@ -14,7 +14,7 @@ import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
 public class Window extends JFrame implements KeyListener, Serializable {
     // ATTRIBUTES
-    public int numero=1;
+    public int numero = 1;
     private Cell[][] cells;
     private Hero hero;
     private JPanel wrapper, topPanel, bottomPanel, mapPanel, equipmentPanel, statsPanel, menuPanel, fightPanel,
@@ -22,14 +22,14 @@ public class Window extends JFrame implements KeyListener, Serializable {
             enemyImage, fightInfoP, startPanel;
     private JPanel[] equipPanels, backpackPanels;
     private JLabel[] stats;
-    private JButton drinkFlaskButton, fightButton, pickUpItemButton, equipItemButton, unEquipItemButton, restoreButton
-    ,selectYo, selectBestia, selectSuperYo;
+    private JButton drinkFlaskButton, fightButton, pickUpItemButton, equipItemButton, unEquipItemButton, restoreButton,
+            selectYo, selectBestia, selectSuperYo;
     private JButton[] equipPanelsB, backpackPanelsB;
     private JMenuBar menuBar;
     private JMenu menu;
     private JMenuItem saveMenuItem, loadMenuItem, exitMenuItem;
-    private JLabel heroHpL, heroEtherL, enemyHpL, typeOfEnemy, turnL, heroDmgL, enemyDmgL, bestia, yo
-    , superYo, antorcha,antorcha_dos,title,descriptionYo, descriptionSuperYo, descriptionBestia;
+    private JLabel heroHpL, heroEtherL, enemyHpL, typeOfEnemy, turnL, heroDmgL, enemyDmgL, bestia, yo, superYo,
+            antorcha, antorcha_dos, title, descriptionYo, descriptionSuperYo, descriptionBestia;
     private JButton attackB, specialAttackB1, specialAttackB2, escapeB;
     private int turn, turnsFrozen;
     private int itemInfo;
@@ -39,7 +39,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
     public Window() {
         setSize(650, 730);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        initComponents();
+        initStartPanel();
         setVisible(true);
         setLocationRelativeTo(null);
         setTitle("Uncanny Valley");
@@ -125,15 +125,83 @@ public class Window extends JFrame implements KeyListener, Serializable {
         this.turn = turn;
     }
 
+    public void initStartPanel() {
+        // START PANEL
+
+        startPanel = new JPanel();
+        startPanel.setLayout(new GridLayout(4, 3));
+        startPanel.setVisible(true);
+        startPanel.setBackground(Color.black);
+        add(startPanel);
+
+        antorcha = new JLabel();
+        ImageIcon antorchaFoto = new ImageIcon("images/antorcha.gif");
+        antorcha.setIcon(antorchaFoto);
+        antorchaFoto = new ImageIcon(antorchaFoto.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
+        antorcha.setIcon(antorchaFoto);
+        startPanel.add(antorcha);
+
+        title = new JLabel("Uncanny Valley");
+        title.setForeground(Color.WHITE);
+        title.setFont(title.getFont().deriveFont(25.0f));
+        startPanel.add(title);
+
+        antorcha_dos = new JLabel();
+        antorcha_dos.setIcon(antorchaFoto);
+        startPanel.add(antorcha_dos);
+
+        yo = new JLabel("Yo");
+        ImageIcon yoFoto = new ImageIcon("images/bossEllo.png");
+        yo.setIcon(yoFoto);
+        yoFoto = new ImageIcon(yoFoto.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
+        yo.setIcon(yoFoto);
+        startPanel.add(yo);
+
+        superYo = new JLabel("superYo");
+        ImageIcon superYoFoto = new ImageIcon("images/bossSuperYo.png");
+        superYo.setIcon(superYoFoto);
+        superYoFoto = new ImageIcon(superYoFoto.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
+        superYo.setIcon(superYoFoto);
+        startPanel.add(superYo);
+
+        bestia = new JLabel("Bestia");
+        ImageIcon bestiaImage = new ImageIcon("images/bossEllo.png");
+        bestia.setIcon(bestiaImage);
+        bestiaImage = new ImageIcon(bestiaImage.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
+        bestia.setIcon(bestiaImage);
+        startPanel.add(bestia);
+
+        selectYo = new JButton("Select Yo");
+        selectYo.addActionListener(new SelectYo());
+        startPanel.add(selectYo);
+
+        selectSuperYo = new JButton("Select SuperYo");
+        selectSuperYo.addActionListener(new SelectSuperYo());
+        startPanel.add(selectSuperYo);
+
+        selectBestia = new JButton("Select Bestia");
+        selectBestia.addActionListener(new SelectBestia());
+        startPanel.add(selectBestia);
+
+        descriptionYo = new JLabel("El que se la come entera, akio");
+        descriptionYo.setForeground(Color.WHITE);
+        startPanel.add(descriptionYo);
+
+        descriptionBestia = new JLabel("El que medio se la come. itztani");
+        descriptionBestia.setForeground(Color.WHITE);
+        startPanel.add(descriptionBestia);
+
+        descriptionSuperYo = new JLabel("Dios Oscar");
+        descriptionSuperYo.setForeground(Color.WHITE);
+        startPanel.add(descriptionSuperYo);
+    }
+
     // METHODS
-    public void initComponents() {
+    public void initGamePanel() {
 
+        switch (numero) {
 
-
-        switch(numero){
-
-            
-            case 1:
+        case 1:
             hero = new Yo("Oscar", 2, 0, 1000, 50, 25, 5, false,
                     new HealingFlask("Flask", 5, "This potion heals hp and ether."));
             hero.setHp(600);
@@ -144,7 +212,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
             validate();
             repaint();
             break;
-            case 2:
+        case 2:
             hero = new SuperYo("Akio", 2, 0, 1000, 50, 25, 5, false,
                     new HealingFlask("Flask", 5, "This potion heals hp and ether."));
             hero.setHp(600);
@@ -155,7 +223,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
             validate();
             repaint();
             break;
-            case 3:
+        case 3:
             hero = new Bestia("Itzani", 2, 0, 1000, 50, 25, 5, false,
                     new HealingFlask("Flask", 5, "This potion heals hp and ether."));
             hero.setHp(600);
@@ -167,82 +235,10 @@ public class Window extends JFrame implements KeyListener, Serializable {
             repaint();
             break;
         }
-       
 
-        //START PANEL
-
-        startPanel=new JPanel();
-        startPanel.setLayout(new GridLayout(4,3) );
-        startPanel.setVisible(true);
-        startPanel.setBackground(Color.black);
-        add(startPanel);
-
-        antorcha=new JLabel();
-        ImageIcon antorchaFoto=new ImageIcon("images/antorcha.gif");
-        antorcha.setIcon(antorchaFoto);
-        antorchaFoto = new ImageIcon(antorchaFoto.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
-        antorcha.setIcon(antorchaFoto);
-        startPanel.add(antorcha);
-
-        title=new JLabel("Uncanny Valley");
-        title.setForeground(Color.WHITE);
-        title.setFont (title.getFont ().deriveFont (25.0f));
-        startPanel.add(title);
-
-        antorcha_dos=new JLabel();
-        antorcha_dos.setIcon(antorchaFoto);
-        startPanel.add(antorcha_dos);
-
-
-        yo=new JLabel("Yo");
-        ImageIcon yoFoto=new ImageIcon("images/bossEllo.png");
-        yo.setIcon(yoFoto);
-        yoFoto = new ImageIcon(yoFoto.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
-        yo.setIcon(yoFoto );
-        startPanel.add(yo);
-
-        superYo= new JLabel("superYo");
-        ImageIcon superYoFoto=new ImageIcon("images/bossSuperYo.png");
-        superYo.setIcon(superYoFoto);
-        superYoFoto = new ImageIcon(superYoFoto.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
-        superYo.setIcon(superYoFoto);
-        startPanel.add(superYo);
-
-        bestia=new JLabel("Bestia");
-        ImageIcon bestiaImage=new ImageIcon("images/bossEllo.png");
-        bestia.setIcon(bestiaImage);
-        bestiaImage = new ImageIcon(bestiaImage.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
-        bestia.setIcon(bestiaImage);
-        startPanel.add(bestia);
-
-        selectYo=new JButton("Select Yo");
-        selectYo.addActionListener(new SelectYo());
-        startPanel.add(selectYo);
-
-        selectSuperYo=new JButton("Select SuperYo");
-        selectSuperYo.addActionListener(new SelectSuperYo() );
-        startPanel.add(selectSuperYo);
-
-        selectBestia=new JButton("Select Bestia");
-        selectBestia.addActionListener(new SelectBestia());
-        startPanel.add(selectBestia);
-
-        
-
-       
-        descriptionYo=new JLabel("El que se la come entera, akio");
-        descriptionYo.setForeground(Color.WHITE);
-        startPanel.add(descriptionYo);
-
-        descriptionBestia=new JLabel("El que medio se la come. itztani");
-        descriptionBestia.setForeground(Color.WHITE);
-        startPanel.add(descriptionBestia);
-
-        descriptionSuperYo=new JLabel("Dios Oscar");
-        descriptionSuperYo.setForeground(Color.WHITE);
-        startPanel.add(descriptionSuperYo);
-
-
+        // MAIN PANELS
+        topPanel = new JPanel(new BorderLayout());
+        bottomPanel = new JPanel(new BorderLayout());
 
         // MENU BAR
         menuBar = new JMenuBar();
@@ -262,10 +258,6 @@ public class Window extends JFrame implements KeyListener, Serializable {
         menu.add(saveMenuItem);
         menu.add(loadMenuItem);
         menu.add(exitMenuItem);
-
-        // MAIN PANELS
-        topPanel = new JPanel(new BorderLayout());
-        bottomPanel = new JPanel(new BorderLayout());
 
         // MENU PANEL
         menuPanel = new JPanel();
@@ -309,9 +301,8 @@ public class Window extends JFrame implements KeyListener, Serializable {
         menuPanel.add(restoreButton);
         topPanel.add(menuPanel, BorderLayout.WEST);
 
-
-        //Setting colors
-        mapBackground = new Color(94, 99, 102); //Dark gray
+        // Setting colors
+        mapBackground = new Color(94, 99, 102); // Dark gray
         // MAP PANEL
         cells = new Cell[20][20];
         // Empty cells
@@ -335,12 +326,12 @@ public class Window extends JFrame implements KeyListener, Serializable {
                                                                                                                                                                    // death
         EquipmentItem reasonStone = new DefenseItem("Aporia", 12,
                 "I finally find peace, but not for long, quickly I get sorrounded by thoughts, questions, but most of it can be answered by just analising my envoriment, I find peace again, I like it, and I remember, I remember my work, my world, my name... this is not real, or is that life the fake one?"); // Last
-                                                                                                                                                                                                                                                                                       // stone,
-                                                                                                                                                                                                                                                                                       // final
-                                                                                                                                                                                                                                                                                       // piece
-                                                                                                                                                                                                                                                                                       // of
-                                                                                                                                                                                                                                                                                       // the
-                                                                                                                                                                                                                                                                                       // puzzle
+        // stone,
+        // final
+        // piece
+        // of
+        // the
+        // puzzle
         EquipmentItem animalStone = new AttackItem("Instinct", 10,
                 "I feel empty, I have hunger, but not just for eat, hunger for everything, I need a gal, I need to eat, I need to fight, I need violence, I need to scape, NO, I like it in here, here I can have it all."); // Drive
                                                                                                                                                                                                                              // Theory
@@ -545,8 +536,11 @@ public class Window extends JFrame implements KeyListener, Serializable {
         stats = new JLabel[hero.printStats().length];
         for (int i = 0; i < stats.length; i++) {
             if (i == 0) {
-                stats[i] = new JLabel(" " + hero.getClass().getSimpleName() + " " + hero.printStats()[i]);
-                stats[i].setFont(new Font("Arial", Font.BOLD, 24));
+                stats[i] = new JLabel("  " + hero.getClass().getSimpleName());
+                stats[i].setFont(new Font("Arial", Font.BOLD, 22));
+                JLabel name = new JLabel(" " + hero.getName());
+                name.setFont(new Font("Arial", Font.BOLD, 24));
+                statsPanel.add(name);
             } else {
                 stats[i] = new JLabel("  " + hero.printStats()[i]);
                 stats[i].setFont(new Font("Arial", Font.BOLD, 22));
@@ -685,84 +679,34 @@ public class Window extends JFrame implements KeyListener, Serializable {
 
         wrapper.add(topPanel);
         wrapper.add(bottomPanel);
-        wrapper.setVisible(true);
+        add(wrapper);
+        revalidate();
+        repaint();
     }
 
     // ACTION LISTENERS
 
-     public class SelectYo implements ActionListener{
+    public class SelectYo implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            numero=1;
-            hero = new Yo("Oscar", 2, 0, 1000, 50, 25, 5, false,
-                    new HealingFlask("Flask", 5, "This potion heals hp and ether."));
-            hero.setHp(600);
-            hero.setEther(45);
-            hero.setPosX(8);
-            hero.setPosY(19);
-            
-            startPanel.setVisible(false);
-            if (startPanel.isVisible() ) {
-                System.out.print("Yo");
-                }else {
-              remove(startPanel);  
-              add(wrapper); 
-              
-              System.out.print("Yo");
-          }  
-            invalidate();
-            validate();
-            repaint();
-            
+            numero = 1;
+            remove(startPanel);
+            initGamePanel();
         }
     }
 
-    public class SelectSuperYo implements ActionListener{
+    public class SelectSuperYo implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            numero=2;
-            hero = new SuperYo("Akio", 2, 0, 1000, 50, 25, 5, false,
-                    new HealingFlask("Flask", 5, "This potion heals hp and ether."));
-            hero.setHp(600);
-            hero.setEther(45);
-            hero.setPosX(8);
-            hero.setPosY(19);
-
-            startPanel.setVisible(false);
-            if (startPanel.isVisible() ) {
-                System.out.print("SuperYo");
-                }else {
-              remove(startPanel);  
-              add(wrapper); 
-              
-              System.out.print("SuperYo");
-          }  
-            invalidate();
-            validate();
-            repaint();
+            numero = 2;
+            remove(startPanel);
+            initGamePanel();
         }
     }
 
-    public class SelectBestia implements ActionListener{
+    public class SelectBestia implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            numero=3;
-            hero = new Bestia("Itzani", 2, 0, 1000, 50, 25, 5, false,
-                    new HealingFlask("Flask", 5, "This potion heals hp and ether."));
-            hero.setHp(600);
-            hero.setEther(45);
-            hero.setPosX(8);
-            hero.setPosY(19);
-
-            startPanel.setVisible(false);
-            if (startPanel.isVisible() ) {
-                System.out.print("Bestia");
-                }else {
-              remove(startPanel);  
-              add(wrapper); 
-              
-              System.out.print("Bestis");
-          }  
-            invalidate();
-            validate();
-            repaint();
+            numero = 3;
+            remove(startPanel);
+            initGamePanel();
         }
     }
 
@@ -1197,16 +1141,18 @@ public class Window extends JFrame implements KeyListener, Serializable {
             if (!enemy.getStatusParalysis()) {
                 try {
                     int heroHpBefore = (int) hero.getHp();
-                    if(diceNum<75){
+                    if (diceNum < 75) {
                         enemy.attack(hero);
-                    }else{
+                    } else {
                         enemy.heavyAttack(hero);
                     }
                     int heroHpAfter = (int) hero.getHp();
-                    if(diceNum<75){
-                        enemyDmgL.setText(enemy.getClass().getSimpleName() + "made a normal attack and dealed " + (heroHpBefore - heroHpAfter) + " damage.");
-                    }else{
-                        enemyDmgL.setText(enemy.getClass().getSimpleName() + "made a heavy attack and dealed " + (heroHpBefore - heroHpAfter) + " damage.");
+                    if (diceNum < 75) {
+                        enemyDmgL.setText(enemy.getClass().getSimpleName() + "made a normal attack and dealed "
+                                + (heroHpBefore - heroHpAfter) + " damage.");
+                    } else {
+                        enemyDmgL.setText(enemy.getClass().getSimpleName() + "made a heavy attack and dealed "
+                                + (heroHpBefore - heroHpAfter) + " damage.");
                     }
                     repaintFightPanel();
                     checkIfHeroIsDead(hero);
