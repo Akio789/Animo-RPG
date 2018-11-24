@@ -216,7 +216,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
         gameOver.setIcon(fotoPerder);
         gameOverPanel.add(gameOver);
 
-        continueInGameOver = new JButton("GAME OVER");
+        continueInGameOver = new JButton("Exit Game");
         continueInGameOver.addActionListener(new CloseLosing());
         gameOverPanel.add(continueInGameOver);
     }
