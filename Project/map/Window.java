@@ -206,19 +206,19 @@ public class Window extends JFrame implements KeyListener, Serializable {
     public void initGameOverPanel() {
 
         gameOverPanel = new JPanel();
-        gameOverPanel.setLayout(new GridLayout(1, 2));
+        gameOverPanel.setLayout(new GridLayout(2, 1));
         add(gameOverPanel);
 
         gameOver = new JLabel();
-        ImageIcon fotoPerder = new ImageIcon("images/gameOver");
+        ImageIcon fotoPerder = new ImageIcon("images/gameOver.jpg");
         gameOver.setIcon(fotoPerder);
         fotoPerder = new ImageIcon(fotoPerder.getImage().getScaledInstance(650, 365, Image.SCALE_DEFAULT));
         gameOver.setIcon(fotoPerder);
         gameOverPanel.add(gameOver);
 
-        continueInGameOver = new JButton("You lost, new adventure");
+        continueInGameOver = new JButton("GAME OVER");
         continueInGameOver.addActionListener(new CloseLosing());
-
+        gameOverPanel.add(continueInGameOver);
     }
 
     // METHODS
@@ -229,7 +229,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
         case 1:
             hero = new Yo("Oscar", 2, 0, 1000, 50, 25, 5, false,
                     new HealingFlask("Flask", 5, "This potion heals hp and ether."));
-            hero.setHp(0);
+            hero.setHp(10);
             hero.setEther(45);
             hero.setPosX(8);
             hero.setPosY(19);
@@ -714,13 +714,16 @@ public class Window extends JFrame implements KeyListener, Serializable {
     public class CloseLosing implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             JOptionPane.showMessageDialog(null, "See you next time!");
+            System.exit(0);
         }
     }
 
     public class ContinueStart implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            remove(startPanel);
             try {
+                Repainter repainter = new Repainter();
+                remove(startPanel);
+                initGamePanel();
                 File file1 = new File("hero.animo");
                 FileInputStream fin1 = new FileInputStream(file1);
                 ObjectInputStream ois1 = new ObjectInputStream(fin1);
@@ -729,9 +732,18 @@ public class Window extends JFrame implements KeyListener, Serializable {
                 FileInputStream fin2 = new FileInputStream(file2);
                 ObjectInputStream ois2 = new ObjectInputStream(fin2);
                 cells = (Cell[][]) ois2.readObject();
+                mapPanel.removeAll();
+                for (int i = 0; i < cells.length; i++) {
+                    for (int j = 0; j < cells[i].length; j++) {
+                        mapPanel.add(cells[i][j]);
+                    }
+                }
+                repainter.repaintStats();
+                repainter.repaintBackpackAndEquipment();
+                repainter.RepaintBackPack();
+                repainter.repaintMap();
                 add(wrapper);
-                revalidate();
-                repaint();
+                JOptionPane.showMessageDialog(null, "Game loaded.");
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, "Couldn't load.");
             } catch (ClassNotFoundException ex2) {
@@ -984,6 +996,8 @@ public class Window extends JFrame implements KeyListener, Serializable {
 
             } catch (NumberFormatException exception2) {
                 JOptionPane.showMessageDialog(null, "Please enter a number.", "Item", JOptionPane.WARNING_MESSAGE);
+            } catch (SlotFullException exception3) {
+                JOptionPane.showMessageDialog(null, "Slot is full.");
             }
         }
     }
@@ -1165,7 +1179,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
         }
 
         public boolean checkIfHeroIsDead(Hero hero) {
-            if ((int) hero.getHp() == 0) {
+            if ((int) hero.getHp() <= 0) {
                 remove(wrapper);
                 remove(menuBar);
                 initGameOverPanel();
