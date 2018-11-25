@@ -10,15 +10,15 @@ import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
 public abstract class Hero extends Character implements Serializable {
 	// ATTRIBUTES
-	private String name;
-	private int xp;
-	private double maxHp;
-	private double maxEther;
-	private HealingFlask healingFlask;
+	private static String name;
+	private static int xp;
+	private static double maxHp;
+	private static double maxEther;
+	private static HealingFlask healingFlask;
 	private static EquipmentItem[] backpack;
 	private static EquipmentItem[] equipment;
-	private int level;
-	private int posX, posY;
+	private static int level;
+	private static int posX, posY;
 
 	// CONSTRUCTOR
 	public Hero(String name, int level, int xp, double hp, double ether, double attack, double defense,
