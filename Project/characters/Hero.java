@@ -15,8 +15,8 @@ public abstract class Hero extends Character implements Serializable {
 	private double maxHp;
 	private double maxEther;
 	private HealingFlask healingFlask;
-	private EquipmentItem[] backpack;
-	private EquipmentItem[] equipment;
+	private static EquipmentItem[] backpack;
+	private static EquipmentItem[] equipment;
 	private int level;
 	private int posX, posY;
 
@@ -75,20 +75,20 @@ public abstract class Hero extends Character implements Serializable {
 		this.healingFlask = healingFlask;
 	}
 
-	public EquipmentItem[] getBackpack() {
+	public static EquipmentItem[] getBackpack() {
 		return backpack;
 	}
 
-	public void setBackpack(EquipmentItem[] backpack) {
-		this.backpack = backpack;
+	public static void setBackpack(EquipmentItem[] backpack) {
+		Hero.backpack = backpack;
 	}
 
-	public EquipmentItem[] getEquipment() {
+	public static EquipmentItem[] getEquipment() {
 		return equipment;
 	}
 
-	public void setEquipment(EquipmentItem[] equipment) {
-		this.equipment = equipment;
+	public static void setEquipment(EquipmentItem[] equipment) {
+		Hero.equipment = equipment;
 	}
 
 	public int getLevel() {
@@ -117,11 +117,11 @@ public abstract class Hero extends Character implements Serializable {
 
 	// METHODS
 	/// Adds item to desired slot
-	public void addItemToBackpack(int index, EquipmentItem item) {
-		if (backpack[index] == null) {
-			backpack[index] = item;
+	public void addItemToBackpack(int index, EquipmentItem item) throws SlotFullException {
+		if (backpack[index] != null) {
+			throw new SlotFullException();
 		} else {
-			System.out.println("Slot in backpack is full.");
+			backpack[index] = item;
 		}
 	}
 
@@ -247,8 +247,8 @@ public abstract class Hero extends Character implements Serializable {
 
 	/// Attack enemy with a regular attack.
 	public void attackEnemy(Enemy enemy) throws NoDamageException {
-		double damageDone =  getAttack() - ((enemy.getDefense()*.06)*getAttack());
-		if ((enemy.getDefense()*.06) < 1) {
+		double damageDone = getAttack() - ((enemy.getDefense() * .06) * getAttack());
+		if ((enemy.getDefense() * .06) < 1) {
 			System.out.println(getName() + " dealed " + damageDone);
 			if ((enemy.getHp() - damageDone) <= 0) {
 				enemy.setHp(0);
