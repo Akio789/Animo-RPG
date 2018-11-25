@@ -152,50 +152,6 @@ public abstract class Hero extends Character implements Serializable {
 		}
 	}
 
-	// /// Shows backpack contents.
-	// public void printBackpack() {
-	// System.out.println("BACKPACK: ");
-	// System.out.println("1.- Healing flask, charges: " +
-	// healingFlask.getCharges());
-	// for (int i = 1; i < backpack.length; i++) {
-	// if (backpack[i] == null) {
-	// System.out.println((i + 1) + ".- Empty.");
-	// } else {
-	// if (backpack[i] instanceof AttackItem) {
-	// System.out.println((i + 1) + ".- " + backpack[i].getName() + ", " +
-	// backpack[i].getPoints()
-	// + " attack points, " + backpack[i].getDescription());
-	// }
-	// if (backpack[i] instanceof DefenseItem) {
-	// System.out.println((i + 1) + ".- " + backpack[i].getName() + ", attack: " +
-	// backpack[i].getPoints()
-	// + " defense points, " + backpack[i].getDescription());
-	// }
-	// }
-	// }
-	// }
-
-	// /// Shows equipped items.
-	// public void printEquipment() {
-	// System.out.println("EQUIPMENT: ");
-	// for (int i = 0; i < equipment.length; i++) {
-	// if (equipment[i] == null) {
-	// System.out.println((i + 1) + ".- Empty.");
-	// } else {
-	// if (equipment[i] instanceof AttackItem) {
-	// System.out.println((i + 1) + ".- " + equipment[i].getName() + ", " +
-	// equipment[i].getPoints()
-	// + " attack points, " + equipment[i].getDescription());
-	// }
-	// if (equipment[i] instanceof DefenseItem) {
-	// System.out.println((i + 1) + ".- " + equipment[i].getName() + ", attack: "
-	// + equipment[i].getPoints() + " defense points, " +
-	// equipment[i].getDescription());
-	// }
-	// }
-	// }
-	// }
-
 	/// Print stats.
 	public String[] printStats() {
 		String[] stats = { getName() + "  ", "Lvl: " + getLevel(), "Exp: " + getXp(), "Hp: " + ((int) getHp()),
