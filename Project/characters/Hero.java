@@ -15,8 +15,8 @@ public abstract class Hero extends Character implements Serializable {
 	private double maxHp;
 	private double maxEther;
 	private HealingFlask healingFlask;
-	private EquipmentItem[] backpack;
-	private EquipmentItem[] equipment;
+	private static EquipmentItem[] backpack;
+	private static EquipmentItem[] equipment;
 	private int level;
 	private int posX, posY;
 
@@ -75,20 +75,20 @@ public abstract class Hero extends Character implements Serializable {
 		this.healingFlask = healingFlask;
 	}
 
-	public EquipmentItem[] getBackpack() {
+	public static EquipmentItem[] getBackpack() {
 		return backpack;
 	}
 
-	public void setBackpack(EquipmentItem[] backpack) {
-		this.backpack = backpack;
+	public static void setBackpack(EquipmentItem[] backpack) {
+		Hero.backpack = backpack;
 	}
 
-	public EquipmentItem[] getEquipment() {
+	public static EquipmentItem[] getEquipment() {
 		return equipment;
 	}
 
-	public void setEquipment(EquipmentItem[] equipment) {
-		this.equipment = equipment;
+	public static void setEquipment(EquipmentItem[] equipment) {
+		Hero.equipment = equipment;
 	}
 
 	public int getLevel() {
