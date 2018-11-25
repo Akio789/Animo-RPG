@@ -21,7 +21,7 @@ public class AntiBestia extends Boss implements Serializable {
         double damageDone = (dmgMult) - (dmgMult*rawDefense);
         if (rawDefense < 1) {
             System.out.println("Your instincts used pulsions and  dealed " + damageDone + " damage.");
-            if ((hero.getHp() + damageDone) <= 0) {
+            if ((hero.getHp() - damageDone) <= 0) {
                 hero.setHp(0);
             } else {
                 hero.setHp(hero.getHp() - damageDone);
@@ -36,7 +36,7 @@ public class AntiBestia extends Boss implements Serializable {
         double damageDone = (dmgMult) - (dmgMult*rawDefense);
         if (rawDefense < 1) {
             System.out.println("Your reason  used moral chains and dealed " + damageDone + " damage.");
-            if ((hero.getHp() + damageDone) <= 0) {
+            if ((hero.getHp() - damageDone) <= 0) {
                 hero.setHp(0);
             } else {
                 hero.setHp(hero.getHp() - damageDone);

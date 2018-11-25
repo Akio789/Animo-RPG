@@ -19,7 +19,7 @@ public class AntiYo extends Boss implements Serializable {
         double damageDone = (dmgMult) - (dmgMult*rawDefense);
         if (rawDefense < 1) {
             System.out.println("Your conscience is gaining ground and  dealed " + damageDone + " damage.");
-            if ((hero.getHp() + damageDone) <= 0) {
+            if ((hero.getHp() - damageDone) <= 0) {
                 hero.setHp(0);
             } else {
                 hero.setHp(hero.getHp() - damageDone);
@@ -34,7 +34,7 @@ public class AntiYo extends Boss implements Serializable {
         double damageDone = (dmgMult) - (dmgMult*rawDefense);
         if (rawDefense < 1) {
             System.out.println("Your conscience obliterated you and dealed " + damageDone + " damage.");
-            if ((hero.getHp() + damageDone) <= 0) {
+            if ((hero.getHp() - damageDone) <= 0) {
                 hero.setHp(0);
             } else {
                 hero.setHp(hero.getHp() - damageDone);

@@ -20,7 +20,7 @@ public class AntiSuperYo extends Boss implements Serializable {
         double damageDone = (dmgMult) - (dmgMult*rawDefense);
         if (rawDefense < 1) {
             System.out.println("Your reason used logic and  dealed " + damageDone + " damage.");
-            if ((hero.getHp() + damageDone) <= 0) {
+            if ((hero.getHp() - damageDone) <= 0) {
                 hero.setHp(0);
             } else {
                 hero.setHp(hero.getHp() - damageDone);
@@ -35,7 +35,7 @@ public class AntiSuperYo extends Boss implements Serializable {
         double damageDone = (dmgMult) - (dmgMult*rawDefense);
         if (rawDefense < 1) {
             System.out.println("Your reason used moral chains and dealed " + damageDone + " damage.");
-            if ((hero.getHp() + damageDone) <= 0) {
+            if ((hero.getHp() - damageDone) <= 0) {
                 hero.setHp(0);
             } else {
                 hero.setHp(hero.getHp() - damageDone);
