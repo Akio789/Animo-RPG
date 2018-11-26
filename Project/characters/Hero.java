@@ -19,6 +19,7 @@ public abstract class Hero extends Character implements Serializable {
 	private static EquipmentItem[] equipment;
 	private static int level;
 	private static int posX, posY;
+	private static int xpReal;
 
 	// CONSTRUCTOR
 	public Hero(String name, int level, int xp, double hp, double ether, double attack, double defense,
@@ -48,6 +49,14 @@ public abstract class Hero extends Character implements Serializable {
 	}
 
 	public void setXp(int xp) {
+		this.xp = xp;
+	}
+
+	public int getXpReal() {
+		return xp;
+	}
+
+	public void setXpReal(int xp) {
 		this.xp = xp;
 	}
 
@@ -83,8 +92,12 @@ public abstract class Hero extends Character implements Serializable {
 		Hero.backpack = backpack;
 	}
 
-	public static EquipmentItem[] getEquipment() {
+	public static EquipmentItem[] getEquipmentItems() {
 		return equipment;
+	}
+
+	public EquipmentItem[] getEquipment(){
+		return getEquipmentItems();
 	}
 
 	public static void setEquipment(EquipmentItem[] equipment) {
@@ -154,7 +167,7 @@ public abstract class Hero extends Character implements Serializable {
 
 	/// Print stats.
 	public String[] printStats() {
-		String[] stats = { getName() + "  ", "Lvl: " + getLevel(), "Exp: " + getXp(), "Hp: " + ((int) getHp()),
+		String[] stats = { getName() + "  ", "Lvl: " + getLevel(), "Exp: " + getXp()+"/100", "Hp: " + ((int) getHp()),
 				"Ether: " + ((int) getEther()), "Att: " + ((int) getAttack()), "Def: " + ((int) getDefense()) };
 		return stats;
 	}
@@ -191,13 +204,31 @@ public abstract class Hero extends Character implements Serializable {
 	public boolean escapeFromBattle() {
 		Random rand = new Random();
 		double escape = rand.nextDouble();
-		if (escape > 0.8) {
+		if (escape > 0.4) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
+	/// Add XP
+	public void addXP(Enemy enemy){
+		int acumulator = 0, xpCounter, u, preChange, postChange, acumulator1=100;
+        if(getXp()<100){
+            xpCounter = getXp();
+        }
+        if(enemy instanceof WildMinion){
+            setXp(getXp()+75);
+            acumulator = 75;
+        }
+        
+        getXp();
+        if(getXp() >=100 ){
+			xpCounter = getXp();
+			levelUp();
+			setXpReal(xpCounter);
+		}
+	}
 	/// Level up.
 	public abstract void levelUp();
 
@@ -218,13 +249,8 @@ public abstract class Hero extends Character implements Serializable {
 
 	/// Attack enemy with ability.
 	public void attackEnemyWithAbility(Enemy enemy, Hero hero, int index) throws NotEnoughEtherException {
-		if (hero.getEther() >= 10 && hero.getEther() > 0) {
+		
 			hero.getAbilities()[index].specialAbility(enemy, hero);
-		} // fin if
-
-		else {
-			throw new NotEnoughEtherException();
-		} // fin else
 
 	}
 }
