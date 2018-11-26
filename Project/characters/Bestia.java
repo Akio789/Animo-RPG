@@ -21,5 +21,7 @@ public class Bestia extends Hero implements Serializable {
         setMaxEther(getMaxEther() + 60);
         setAttack(getAttack() + 5);
         setDefense(getDefense() + 1);
+        setHp(getMaxHp());
+        setEther(getMaxEther());
     }
 }

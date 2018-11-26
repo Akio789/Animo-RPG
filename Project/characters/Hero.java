@@ -154,7 +154,7 @@ public abstract class Hero extends Character implements Serializable {
 
 	/// Print stats.
 	public String[] printStats() {
-		String[] stats = { getName() + "  ", "Lvl: " + getLevel(), "Exp: " + getXp(), "Hp: " + ((int) getHp()),
+		String[] stats = { getName() + "  ", "Lvl: " + getLevel(), "Exp: " + getXp() + "/100", "Hp: " + ((int) getHp()),
 				"Ether: " + ((int) getEther()), "Att: " + ((int) getAttack()), "Def: " + ((int) getDefense()) };
 		return stats;
 	}
@@ -175,6 +175,13 @@ public abstract class Hero extends Character implements Serializable {
 			} else if (getMaxEther() < (getEther() + healingFlask.getPoints())) {
 				setEther(getMaxEther());
 			}
+		}
+	}
+
+	/// Add XP
+	public void addXp(Enemy enemy) {
+		if (enemy instanceof WildMinion) {
+			setXp(getXp() + 75);
 		}
 	}
 
@@ -218,7 +225,7 @@ public abstract class Hero extends Character implements Serializable {
 
 	/// Attack enemy with ability.
 	public void attackEnemyWithAbility(Enemy enemy, Hero hero, int index) throws NotEnoughEtherException {
-		if (hero.getEther() >= 10 && hero.getEther() > 0) {
+		if (hero.getEther() >= 50 && hero.getEther() > 0) {
 			hero.getAbilities()[index].specialAbility(enemy, hero);
 		} // fin if
 

@@ -7,13 +7,13 @@ import java.io.Serializable;
 
 public class Thump extends Ability implements Serializable {
 	// golpe fuerte
-	//ello
+	// ello
 	public void specialAbility(Enemy enemy, Hero hero) {
 		double initialAttack = hero.getAttack();
 		System.out.println("");
 		System.out.println("You activated the special ability Thump");
 		hero.setAttack(hero.getAttack() * 2.5);
-		double damageDone =  hero.getAttack() - ((enemy.getDefense()*.06)*hero.getAttack());
+		double damageDone = hero.getAttack() - ((enemy.getDefense() * .06) * hero.getAttack());
 		System.out.println("You dealed " + damageDone + " of damage");
 		if ((enemy.getHp() - damageDone <= 0)) {
 			enemy.setHp(0);
@@ -21,7 +21,7 @@ public class Thump extends Ability implements Serializable {
 			enemy.setHp(enemy.getHp() - damageDone);
 		}
 		System.out.println(hero.getName() + " consumed 80 of ether");
-		hero.setEther(hero.getEther() - 80);
+		hero.setEther(hero.getEther() - 50);
 		System.out.println("End of spcecial ability.");
 		System.out.println("");
 		hero.setAttack(initialAttack);

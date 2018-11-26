@@ -13,11 +13,11 @@ public class Rush extends Ability implements Serializable {
 		System.out.println("");
 		hero.setAttack(hero.getAttack() * .6);
 		System.out.println("The special ability rush was activated");
-		double initialDamageDone =  hero.getAttack() - ((enemy.getDefense()*.06)*hero.getAttack());
+		double initialDamageDone = hero.getAttack() - ((enemy.getDefense() * .06) * hero.getAttack());
 		enemy.setHp(enemy.getHp() - initialDamageDone);
-		System.out.println("Initial damage done is "+ initialDamageDone);
+		System.out.println("Initial damage done is " + initialDamageDone);
 		hero.setAttack(hero.getAttack() * .15);
-		double damageDone =  hero.getAttack() - ((enemy.getDefense()*.06)*hero.getAttack());
+		double damageDone = hero.getAttack() - ((enemy.getDefense() * .06) * hero.getAttack());
 		if ((enemy.getHp() - (3 * damageDone) <= 0)) {
 			enemy.setHp(0);
 		} else {
@@ -30,7 +30,7 @@ public class Rush extends Ability implements Serializable {
 			enemy.setHp(enemy.getHp() - damageDone);
 		}
 		System.out.println(hero.getName() + " consumed 30 of ether");
-		hero.setEther(hero.getEther() - 30);
+		hero.setEther(hero.getEther() - 50);
 		// valor temporal
 		System.out.println("End of spcecial ability.");
 		enemy.setDefense(enemy.getDefense() - (enemy.getDefense() - 1));

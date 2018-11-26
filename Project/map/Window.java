@@ -23,7 +23,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
     private JPanel[] equipPanels, backpackPanels;
     private JLabel[] stats;
     private JButton drinkFlaskButton, fightButton, pickUpItemButton, equipItemButton, unEquipItemButton, restoreButton,
-            selectYo, selectBestia, selectSuperYo, continueInGameOver, loadScreenStart;
+            selectYo, selectBestia, selectSuperYo, continueInGameOver, loadScreenStart, bestiary;
     private JButton[] equipPanelsB, backpackPanelsB;
     private JMenuBar menuBar;
     private JMenu menu;
@@ -34,6 +34,10 @@ public class Window extends JFrame implements KeyListener, Serializable {
     private int turn, turnsFrozen;
     private int itemInfo;
     private Color mapBackground;
+    private JPanel bestiaryPanel, descripcionsPanel, buttonPanel;
+    private JPanel[] bestiaryRows;
+    private JLabel[] bestiaryPics, bestiaryDescriptions;
+    private JButton goBackBtn;
 
     // CONSTRUCTOR
     public Window() {
@@ -313,6 +317,11 @@ public class Window extends JFrame implements KeyListener, Serializable {
         restoreButton.setFont(new Font("Arial", Font.BOLD, 20));
         restoreButton.setFocusable(false);
         restoreButton.addActionListener(new RestoreButtonListener());
+        bestiary = new JButton("Bestiary");
+        bestiary.setFont(new Font("Arial", Font.BOLD, 20));
+        bestiary.setFocusable(false);
+        bestiary.addActionListener(new BestiaryButtonListener());
+
         menuPanel.add(drinkFlaskButton);
         menuPanel.add(new JLabel(" "));
         menuPanel.add(fightButton);
@@ -324,6 +333,8 @@ public class Window extends JFrame implements KeyListener, Serializable {
         menuPanel.add(unEquipItemButton);
         menuPanel.add(new JLabel(" "));
         menuPanel.add(restoreButton);
+        menuPanel.add(new JLabel(" "));
+        menuPanel.add(bestiary);
         topPanel.add(menuPanel, BorderLayout.WEST);
 
         // Setting colors
@@ -709,6 +720,35 @@ public class Window extends JFrame implements KeyListener, Serializable {
         repaint();
     }
 
+    public void initBestiaryPanel() {
+        bestiaryPanel = new JPanel();
+        bestiaryPanel.setLayout(new BoxLayout(bestiaryPanel, BoxLayout.Y_AXIS));
+        descripcionsPanel = new JPanel(new GridLayout(6, 3));
+        descripcionsPanel.setSize(650, 680);
+        buttonPanel = new JPanel();
+        buttonPanel.setSize(650, 50);
+        bestiaryRows = new JPanel[6];
+        bestiaryPics = new JLabel[6];
+        bestiaryDescriptions = new JLabel[6];
+        for (int i = 0; i < bestiaryPics.length; i++) {
+            bestiaryRows[i] = new JPanel();
+            bestiaryPics[i] = new JLabel();
+            ImageIcon pic = new ImageIcon("images/bossEllo.png");
+            pic = new ImageIcon(pic.getImage().getScaledInstance(90, 90, Image.SCALE_DEFAULT));
+            bestiaryPics[i].setIcon(pic);
+            bestiaryDescriptions[i] = new JLabel("Lorem ipsum oscar se la come oscar se la come oscar se la come");
+            bestiaryRows[i].add(bestiaryPics[i]);
+            bestiaryRows[i].add(bestiaryDescriptions[i]);
+            descripcionsPanel.add(bestiaryRows[i]);
+        }
+        goBackBtn = new JButton("Go back");
+        goBackBtn.addActionListener(new GoBackButtonListener());
+        bestiaryPanel.add(descripcionsPanel);
+        buttonPanel.add(goBackBtn);
+        bestiaryPanel.add(buttonPanel);
+        add(bestiaryPanel);
+    }
+
     // ACTION LISTENERS
 
     public class CloseLosing implements ActionListener {
@@ -1063,6 +1103,25 @@ public class Window extends JFrame implements KeyListener, Serializable {
         }
     }
 
+    public class BestiaryButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            remove(wrapper);
+            initBestiaryPanel();
+            add(bestiaryPanel);
+            revalidate();
+            repaint();
+        }
+    }
+
+    public class GoBackButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            remove(bestiaryPanel);
+            add(wrapper);
+            revalidate();
+            repaint();
+        }
+    }
+
     public class BackpackReadDescriptionListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             itemInfo = Integer.parseInt(e.getActionCommand());
@@ -1199,6 +1258,11 @@ public class Window extends JFrame implements KeyListener, Serializable {
                 battleCharactersPanel.setVisible(false);
                 battleAttacksPanel.setVisible(false);
                 fightInfoP.setVisible(false);
+                hero.addXp(enemy);
+                if (hero.getXp() >= 100) {
+                    hero.levelUp();
+                    hero.setXp(hero.getXp() - 100);
+                }
                 repaintMap();
                 repaintStats();
                 setFocusable(true);
