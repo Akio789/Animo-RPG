@@ -16,14 +16,10 @@ public class Bestia extends Hero implements Serializable {
     }
 
     public void levelUp() {
-
-        setXp(getXp()-100);
         setLevel(getLevel() + 1);
-        setMaxHp(getMaxHp() + 70);
-        setMaxEther(getMaxEther() + 55);
+        setMaxHp(getMaxHp() + 65);
+        setMaxEther(getMaxEther() + 60);
         setAttack(getAttack() + 5);
-        setDefense(getDefense() + 1.2);
-    
-        System.out.println("xp is =  " + getXp());
+        setDefense(getDefense() + 1);
     }
 }

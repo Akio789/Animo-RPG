@@ -17,13 +17,10 @@ public class Yo extends Hero implements Serializable {
 
     // METHODS
     public void levelUp() {
-        setXp(getXp()-100);
         setLevel(getLevel() + 1);
-        setMaxHp(getMaxHp() + 70);
+        setMaxHp(getMaxHp() + 65);
         setMaxEther(getMaxEther() + 60);
-        setAttack(getAttack() + 5.5);
+        setAttack(getAttack() + 5);
         setDefense(getDefense() + 1);
-    
-        System.out.println("xp is =  " + getXp());
     }
 }

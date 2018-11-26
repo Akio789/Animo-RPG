@@ -12,9 +12,6 @@ import java.util.*;
 
 import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
-import abilities.MaxLifeException;
-import abilities.NegativeArmorException;
-
 public class Window extends JFrame implements KeyListener, Serializable {
     // ATTRIBUTES
     public int numero = 1;
@@ -232,7 +229,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
         case 1:
             hero = new Yo("Oscar", 2, 0, 1000, 50, 25, 5, false,
                     new HealingFlask("Flask", 5, "This potion heals hp and ether."));
-            hero.setHp(600);
+            hero.setHp(10);
             hero.setEther(45);
             hero.setPosX(8);
             hero.setPosY(19);
@@ -461,19 +458,15 @@ public class Window extends JFrame implements KeyListener, Serializable {
         cells[18][15].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
         cells[19][15].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
         // Cells with Bosses
-        if (hero instanceof Bestia){
-            cells[17][17].setEnemy(new AntiSuperYo(900, 780, 60, 10, false));
-            cells[2][5].setEnemy(new AntiYo(800, 780, 60, 10, false));
-        }
-        if (hero instanceof SuperYo){
-            cells[2][5].setEnemy(new AntiBestia(700, 780, 60, 10, false));
-            cells[17][17].setEnemy(new AntiYo(800, 780, 60, 10, false));
-        }
-        if (hero instanceof Yo){
-            cells[2][5].setEnemy(new AntiBestia(700, 780, 60, 10, false));
-            cells[17][17].setEnemy(new AntiSuperYo(900, 780, 60, 10, false));
-        }
-
+        cells[2][5].setEnemy(new AntiBestia(700, 780, 60, 10, false));
+        cells[17][17].setEnemy(new AntiSuperYo(900, 780, 60, 10, false));
+        /*
+         * //Este codigo es para poner el antiYo donde sea que vaya dependiendo de la
+         * eleccion de personaje del jugador, si el jugador elige razon, el antiyo irá
+         * en la posición en la que iría este y lo mismo para el ello
+         * cells[2][5].setEnemy(new AntiYo(100, 10, 10, 10, false));
+         * cells[17][17].setEnemy(new AntiYo(100, 10, 10, 10, false));
+         */
         // Cells that restore
         cells[19][4].setRestore(true);
         cells[19][5].setRestore(true);
@@ -954,25 +947,6 @@ public class Window extends JFrame implements KeyListener, Serializable {
             } catch (NotEnoughEtherException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage());
             }
-            try{
-                if (hero instanceof Bestia) {
-                    int enemyHpBefore = (int) enemy.getHp();
-                    hero.attackEnemyWithAbility(enemy, hero, index);
-                    int enemyHpAfter = (int) enemy.getHp();
-                    heroDmgL.setText("You dealed " + (enemyHpBefore - enemyHpAfter) + " damage.");
-                }
-            }catch (NegativeArmorException exception){
-                JOptionPane.showMessageDialog(null, exception.getMessage());
-            }
-            
-            try{
-                if (hero instanceof SuperYo) {
-                    hero.attackEnemyWithAbility(enemy, hero, index);
-                    turnsFrozen = 3;
-                }
-            }catch (MaxLifeException exception){
-                JOptionPane.showMessageDialog(null, exception.getMessage());
-            }
             turn++;
             repainter.repaintFightPanel();
             if (!repainter.checkIfEnemyIsDead(enemy)) {
@@ -1225,7 +1199,6 @@ public class Window extends JFrame implements KeyListener, Serializable {
                 battleCharactersPanel.setVisible(false);
                 battleAttacksPanel.setVisible(false);
                 fightInfoP.setVisible(false);
-                hero.addXP(enemy);
                 repaintMap();
                 repaintStats();
                 setFocusable(true);

@@ -10,7 +10,6 @@ public class Naturae extends Ability implements Serializable {
 
 	public void specialAbility(Enemy enemy, Hero hero) {
 
-		if (hero.getEther()>=50) {
 		System.out.println("");
 		System.out.println("You activated the special abilitie Naturae");
 		// valor puede cambiar
@@ -22,10 +21,6 @@ public class Naturae extends Ability implements Serializable {
 		System.out.println(hero.getName() + " consumed 50 of ether");
 		hero.setEther(hero.getEther() - 50);
 		System.out.println("");
-		} else {
-			throw new NotEnoughEtherException();
-		}
-
 	}// fin reducir defensa
 
 }// fin clase
