@@ -14,7 +14,7 @@ import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
 public class Window extends JFrame implements KeyListener, Serializable {
     // ATTRIBUTES
-    public int numero = 1;
+    public int numero;
     private Cell[][] cells;
     private Hero hero;
     private JPanel wrapper, topPanel, bottomPanel, mapPanel, equipmentPanel, statsPanel, menuPanel, fightPanel,
@@ -763,6 +763,10 @@ public class Window extends JFrame implements KeyListener, Serializable {
             try {
                 Repainter repainter = new Repainter();
                 remove(startPanel);
+                File file3 = new File("typeOfHero.animo");
+                FileInputStream fin3 = new FileInputStream(file3);
+                ObjectInputStream ois3 = new ObjectInputStream(fin3);
+                numero = (int) ois3.readObject();
                 initGamePanel();
                 File file1 = new File("hero.animo");
                 FileInputStream fin1 = new FileInputStream(file1);
@@ -772,6 +776,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
                 FileInputStream fin2 = new FileInputStream(file2);
                 ObjectInputStream ois2 = new ObjectInputStream(fin2);
                 cells = (Cell[][]) ois2.readObject();
+
                 mapPanel.removeAll();
                 for (int i = 0; i < cells.length; i++) {
                     for (int j = 0; j < cells[i].length; j++) {
@@ -842,6 +847,10 @@ public class Window extends JFrame implements KeyListener, Serializable {
                 ObjectOutputStream oos2 = new ObjectOutputStream(fos2);
                 oos2.writeObject(cells);
                 oos2.close();
+                FileOutputStream fos3 = new FileOutputStream("typeOfHero.animo");
+                ObjectOutputStream oos3 = new ObjectOutputStream(fos3);
+                oos3.writeObject(numero);
+                oos3.close();
                 JOptionPane.showMessageDialog(null, "Game saved.");
             } catch (IOException exception) {
                 JOptionPane.showMessageDialog(null, "Couldn't save.");
