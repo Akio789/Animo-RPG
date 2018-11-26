@@ -18,8 +18,13 @@ public class Window extends JFrame implements KeyListener, Serializable {
     private Cell[][] cells;
     private Hero hero;
     private JPanel wrapper, topPanel, bottomPanel, mapPanel, equipmentPanel, statsPanel, menuPanel, fightPanel,
+<<<<<<< HEAD
             backpackPanel, battleCharactersPanel, battleHeroPanel, battleEnemyPanel, battleAttacksPanel, fightInfoP,
             startPanel, gameOverPanel;
+=======
+            backpackPanel, battleCharactersPanel, battleHeroPanel, battleEnemyPanel, battleAttacksPanel,
+            fightInfoP, startPanel, gameOverPanel;
+>>>>>>> 822b6078149c4209d71274ba8f4090dab2978350
     private JPanel[] equipPanels, backpackPanels;
     private JLabel[] stats;
     private JButton drinkFlaskButton, fightButton, pickUpItemButton, equipItemButton, unEquipItemButton, restoreButton,
@@ -28,22 +33,31 @@ public class Window extends JFrame implements KeyListener, Serializable {
     private JMenuBar menuBar;
     private JMenu menu;
     private JMenuItem saveMenuItem, loadMenuItem, exitMenuItem;
+<<<<<<< HEAD
     private JLabel heroHpL, heroEtherL, enemyHpL, typeOfEnemy, turnL, heroDmgL, enemyDmgL, bestia, yo, superYo,
             heroImage, antorcha, antorcha_dos, title, descriptionYo, descriptionSuperYo, descriptionBestia, gameOver,
             spaceMagic, enemyImage;
+=======
+    private JLabel heroHpL, heroEtherL, enemyHpL, typeOfEnemy, turnL, heroDmgL, enemyDmgL, bestia, yo, superYo, heroImage,
+            antorcha, antorcha_dos, title, descriptionYo, descriptionSuperYo, descriptionBestia, gameOver, spaceMagic, enemyImage;
+>>>>>>> 822b6078149c4209d71274ba8f4090dab2978350
     private JButton attackB, specialAttackB1, specialAttackB2, escapeB;
     private int turn, turnsFrozen;
     private int itemInfo;
     private Color mapBackground;
-    private JPanel bestiaryPanel, descripcionsPanel, buttonPanel;
+    private JPanel bestiaryPanel, descripcionsPanel, buttonPanel, gameEndPanel;
     private JPanel[] bestiaryRows;
     private JLabel[] bestiaryPics, bestiaryDescriptions;
     private JButton goBackBtn;
+<<<<<<< HEAD
     private ImageIcon icon;
 
+=======
+    private ImageIcon superYoImg, yoImg, bestiaImg, wildMinion, strongWildMinion, orderMinion, strongOrderMinion, stone1, stone2, stone3, stone4, stone5, stone6, flask, wendigo, vaporW, train, universe, picHero, picEnemy;
+>>>>>>> 822b6078149c4209d71274ba8f4090dab2978350
     // CONSTRUCTOR
     public Window() {
-        setSize(650, 730);
+        setSize(700, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         initStartPanel();
         setVisible(true);
@@ -133,6 +147,25 @@ public class Window extends JFrame implements KeyListener, Serializable {
 
     public void initStartPanel() {
         // START PANEL
+        // Init Images
+        superYoImg = new ImageIcon("images/bossSuperYo.png");
+        yoImg = new ImageIcon("images/bossYo.png");
+        bestiaImg = new ImageIcon("images/bossEllo.png");
+        wildMinion = new ImageIcon("images/weakEllo.png");
+        strongWildMinion = new ImageIcon("images/strongEllo.png");
+        orderMinion = new ImageIcon("images/weakSuperYo.png");
+        strongOrderMinion = new ImageIcon("images/strongSuperYo.png");
+        stone1 = new ImageIcon("images/gema-1-pixilart.png");
+        stone2 = new ImageIcon("images/gema 2.png");
+        stone3 = new ImageIcon("images/mega 3.png");
+        stone4 = new ImageIcon("images/gema 4.png");
+        stone5 = new ImageIcon("images/gema 5.png");
+        stone6 = new ImageIcon("images/gema 6.png");
+        flask = new ImageIcon("images/pixil-frame-0 (3).png");
+        wendigo = new ImageIcon("images/pixil-frame-0 (2).png");
+        vaporW = new ImageIcon("images/pixil-frame-0 (1).png");
+        train  = new ImageIcon("images/Copia de pixil-frame-0.png");
+        universe = new ImageIcon("images/pixil-frame-0.png");;
 
         startPanel = new JPanel();
         startPanel.setLayout(new GridLayout(5, 3));
@@ -157,24 +190,21 @@ public class Window extends JFrame implements KeyListener, Serializable {
         startPanel.add(antorcha_dos);
 
         yo = new JLabel();
-        ImageIcon yoFoto = new ImageIcon("images/bossEllo.png");
-        yo.setIcon(yoFoto);
-        yoFoto = new ImageIcon(yoFoto.getImage().getScaledInstance(200, 160, Image.SCALE_DEFAULT));
-        yo.setIcon(yoFoto);
+        yo.setIcon(yoImg);
+        yoImg = new ImageIcon(yoImg.getImage().getScaledInstance(200, 160, Image.SCALE_DEFAULT));
+        yo.setIcon(yoImg);
         startPanel.add(yo);
 
         superYo = new JLabel();
-        ImageIcon superYoFoto = new ImageIcon("images/bossSuperYo.png");
-        superYo.setIcon(superYoFoto);
-        superYoFoto = new ImageIcon(superYoFoto.getImage().getScaledInstance(200, 160, Image.SCALE_DEFAULT));
-        superYo.setIcon(superYoFoto);
+        superYo.setIcon(superYoImg);
+        superYoImg = new ImageIcon(superYoImg.getImage().getScaledInstance(200, 160, Image.SCALE_DEFAULT));
+        superYo.setIcon(superYoImg);
         startPanel.add(superYo);
 
         bestia = new JLabel();
-        ImageIcon bestiaImage = new ImageIcon("images/bossEllo.png");
-        bestia.setIcon(bestiaImage);
-        bestiaImage = new ImageIcon(bestiaImage.getImage().getScaledInstance(200, 160, Image.SCALE_DEFAULT));
-        bestia.setIcon(bestiaImage);
+        bestia.setIcon(bestiaImg);
+        bestiaImg = new ImageIcon(bestiaImg.getImage().getScaledInstance(200, 160, Image.SCALE_DEFAULT));
+        bestia.setIcon(bestiaImg);
         startPanel.add(bestia);
 
         selectYo = new JButton("Select Yo");
@@ -571,15 +601,23 @@ public class Window extends JFrame implements KeyListener, Serializable {
         cells[0][14].setRestore(true);
         cells[0][15].setRestore(true);
         cells[0][16].setRestore(true);
+
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 if (cells[i][j].getRestore() == true) {
                     cells[i][j].setBackground(Color.cyan);
+
                 }
                 if (cells[i][j].getItem() != null) {
                     cells[i][j].setBackground(Color.yellow);
                 }
-                if (cells[i][j].getEnemy() instanceof Boss) {
+                if (cells[i][j].getEnemy() instanceof AntiBestia) {
+                    cells[i][j].setBackground(Color.black);
+                }
+                if (cells[i][j].getEnemy() instanceof AntiSuperYo) {
+                    cells[i][j].setBackground(Color.black);
+                }
+                if (cells[i][j].getEnemy() instanceof AntiYo) {
                     cells[i][j].setBackground(Color.black);
                 }
                 if (cells[i][j].getEnemy() instanceof WildMinion) {
@@ -675,8 +713,28 @@ public class Window extends JFrame implements KeyListener, Serializable {
         heroEtherL = new JLabel(hero.printStats()[4]);
         battleHeroPanel.add(heroHpL);
         battleHeroPanel.add(heroEtherL);
+<<<<<<< HEAD
         heroImage = new JLabel();
         heroImage.setIcon(hero.getIcon());
+=======
+        picHero = universe;
+        if(hero instanceof Yo){
+            picHero = yoImg;
+        }
+        if(hero instanceof Bestia){
+            picHero = bestiaImg;
+        }
+        if(hero instanceof SuperYo){
+            picHero = superYoImg;
+        }
+
+        picHero = new ImageIcon(picHero.getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
+
+        heroImage = new JLabel();
+        heroImage.setPreferredSize(new Dimension(30, 30));
+        heroImage.setBorder(new TitledBorder("Hero pic"));
+        heroImage.setIcon(picHero);
+>>>>>>> 822b6078149c4209d71274ba8f4090dab2978350
         battleHeroPanel.add(heroImage);
         battleEnemyPanel = new JPanel();
         battleEnemyPanel.setLayout(new BoxLayout(battleEnemyPanel, BoxLayout.Y_AXIS));
@@ -686,8 +744,41 @@ public class Window extends JFrame implements KeyListener, Serializable {
         battleEnemyPanel.add(typeOfEnemy);
         enemyHpL = new JLabel("Hp: ");
         battleEnemyPanel.add(enemyHpL);
+<<<<<<< HEAD
         enemyImage = new JLabel();
         enemyImage.setPreferredSize(new Dimension(30, 30));
+=======
+
+        picEnemy = universe;
+        if (getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy() instanceof AntiBestia) {
+            picEnemy = bestiaImg;
+        }
+        if (getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy()  instanceof AntiSuperYo) {
+            picEnemy = superYoImg;
+        }
+        if (getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy()  instanceof AntiYo) {
+            picEnemy = yoImg;
+        }
+        if (getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy() instanceof WildMinion) {
+            picEnemy = wildMinion;
+        }
+        if (getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy()  instanceof StrongWildMinion) {
+            picEnemy = strongWildMinion;
+        }
+        if (getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy()  instanceof OrderMinion) {
+            picEnemy = orderMinion;
+        }
+        if (getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy()  instanceof StrongOrderMinion) {
+            picEnemy = strongOrderMinion;
+        }
+
+        picEnemy = new ImageIcon(picEnemy.getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
+
+        enemyImage = new JLabel();
+        enemyImage.setPreferredSize(new Dimension(30, 30));
+        enemyImage.setBorder(new TitledBorder("Enemy pic"));
+        enemyImage.setIcon(picEnemy);
+>>>>>>> 822b6078149c4209d71274ba8f4090dab2978350
         battleEnemyPanel.add(enemyImage);
         battleCharactersPanel.add(battleHeroPanel, BorderLayout.WEST);
         battleCharactersPanel.add(battleEnemyPanel, BorderLayout.EAST);
@@ -775,7 +866,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
             bestiaryRows[i] = new JPanel();
             bestiaryPics[i] = new JLabel();
             ImageIcon pic = new ImageIcon("images/bossEllo.png");
-            pic = new ImageIcon(pic.getImage().getScaledInstance(90, 90, Image.SCALE_DEFAULT));
+            pic = new ImageIcon(pic.getImage().getScaledInstance(110, 110, Image.SCALE_DEFAULT));
             bestiaryPics[i].setIcon(pic);
             bestiaryDescriptions[i] = new JLabel("Lorem ipsum oscar se la come oscar se la come oscar se la come");
             bestiaryRows[i].add(bestiaryPics[i]);
@@ -790,6 +881,9 @@ public class Window extends JFrame implements KeyListener, Serializable {
         add(bestiaryPanel);
     }
 
+    public void initGameEndPanel(){
+
+    }
     // ACTION LISTENERS
 
     public class CloseLosing implements ActionListener {
@@ -804,10 +898,6 @@ public class Window extends JFrame implements KeyListener, Serializable {
             try {
                 Repainter repainter = new Repainter();
                 remove(startPanel);
-                File file3 = new File("typeOfHero.animo");
-                FileInputStream fin3 = new FileInputStream(file3);
-                ObjectInputStream ois3 = new ObjectInputStream(fin3);
-                numero = (int) ois3.readObject();
                 initGamePanel();
                 File file1 = new File("hero.animo");
                 FileInputStream fin1 = new FileInputStream(file1);
@@ -817,7 +907,6 @@ public class Window extends JFrame implements KeyListener, Serializable {
                 FileInputStream fin2 = new FileInputStream(file2);
                 ObjectInputStream ois2 = new ObjectInputStream(fin2);
                 cells = (Cell[][]) ois2.readObject();
-
                 mapPanel.removeAll();
                 for (int i = 0; i < cells.length; i++) {
                     for (int j = 0; j < cells[i].length; j++) {
@@ -888,10 +977,6 @@ public class Window extends JFrame implements KeyListener, Serializable {
                 ObjectOutputStream oos2 = new ObjectOutputStream(fos2);
                 oos2.writeObject(cells);
                 oos2.close();
-                FileOutputStream fos3 = new FileOutputStream("typeOfHero.animo");
-                ObjectOutputStream oos3 = new ObjectOutputStream(fos3);
-                oos3.writeObject(numero);
-                oos3.close();
                 JOptionPane.showMessageDialog(null, "Game saved.");
             } catch (IOException exception) {
                 JOptionPane.showMessageDialog(null, "Couldn't save.");
@@ -943,8 +1028,34 @@ public class Window extends JFrame implements KeyListener, Serializable {
         public void actionPerformed(ActionEvent e) {
             turn = 1;
             if (getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy() != null) {
+
+                if (getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy() instanceof AntiBestia) {
+                    picEnemy = bestiaImg;
+                }
+                if (getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy()  instanceof AntiSuperYo) {
+                    picEnemy = superYoImg;
+                }
+                if (getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy()  instanceof AntiYo) {
+                    picEnemy = yoImg;
+                }
+                if (getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy() instanceof WildMinion) {
+                    picEnemy = wildMinion;
+                }
+                if (getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy()  instanceof StrongWildMinion) {
+                    picEnemy = strongWildMinion;
+                }
+                if (getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy()  instanceof OrderMinion) {
+                    picEnemy = orderMinion;
+                }
+                if (getWindow().getCells()[hero.getPosY()][hero.getPosX()].getEnemy()  instanceof StrongOrderMinion) {
+                    picEnemy = strongOrderMinion;
+                }
                 Repainter repainter = new Repainter();
+<<<<<<< HEAD
                 enemyImage.setIcon(cells[hero.getPosY()][hero.getPosX()].getEnemy().getIcon());
+=======
+                repainter.repaintFightPanel();
+>>>>>>> 822b6078149c4209d71274ba8f4090dab2978350
                 battleCharactersPanel.setVisible(true);
                 battleAttacksPanel.setVisible(true);
                 fightInfoP.setVisible(true);
@@ -1243,6 +1354,28 @@ public class Window extends JFrame implements KeyListener, Serializable {
             int posX = getWindow().getHero().getPosX();
             int posY = getWindow().getHero().getPosY();
             if (getWindow().getCells()[posY][posX].getEnemy() != null) {
+                if (getWindow().getCells()[posY][posX].getEnemy() instanceof AntiBestia) {
+                    picEnemy = bestiaImg;
+                }
+                if (getWindow().getCells()[posY][posX].getEnemy() instanceof AntiSuperYo) {
+                    picEnemy = superYoImg;
+                }
+                if (getWindow().getCells()[posY][posX].getEnemy() instanceof AntiYo) {
+                    picEnemy = yoImg;
+                }
+                if (getWindow().getCells()[posY][posX].getEnemy() instanceof WildMinion) {
+                    picEnemy = wildMinion;
+                }
+                if (getWindow().getCells()[posY][posX].getEnemy() instanceof StrongWildMinion) {
+                    picEnemy = strongWildMinion;
+                }
+                if (getWindow().getCells()[posY][posX].getEnemy() instanceof OrderMinion) {
+                    picEnemy = orderMinion;
+                }
+                if (getWindow().getCells()[posY][posX].getEnemy() instanceof StrongOrderMinion) {
+                    picEnemy = strongOrderMinion;
+                }
+                
                 heroHpL.setText(hero.printStats()[3]);
                 heroEtherL.setText(hero.printStats()[4]);
                 typeOfEnemy.setText(getCells()[hero.getPosY()][hero.getPosX()].getEnemy().getClass().getSimpleName());
