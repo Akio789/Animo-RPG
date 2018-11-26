@@ -1,16 +1,17 @@
 package characters;
 
 import java.io.Serializable;
-
+import javax.swing.*;
 import abilities.*;
 
-public abstract class Character implements Serializable {
+public abstract class Character extends JFrame implements Serializable {
 	private double hp;
 	private double attack;
 	private double defense;
 	private boolean statusParalysis; // Both the hero and the enemies can get paralized //ATTRIBUTES
 	private double ether;
 	private Ability[] abilities;
+	private ImageIcon icon;
 
 	// CONSTRUCTOR
 	public Character(double hp, double ether, double attack, double defense, boolean statusParalysis) {
@@ -69,5 +70,13 @@ public abstract class Character implements Serializable {
 
 	public void setAbilities(Ability[] abilities) {
 		this.abilities = abilities;
+	}
+
+	public ImageIcon getIcon() {
+		return icon;
+	}
+
+	public void setIcon(ImageIcon icon) {
+		this.icon = icon;
 	}
 }

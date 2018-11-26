@@ -1,9 +1,9 @@
 package characters;
 
 import items.*;
-
 import java.io.Serializable;
-
+import javax.swing.*;
+import java.util.*;
 import abilities.*;
 
 public class Bestia extends Hero implements Serializable {
