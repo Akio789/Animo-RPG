@@ -280,8 +280,6 @@ public class Window extends JFrame implements KeyListener, Serializable {
                     new HealingFlask("Flask", 55, "This potion heals hp and ether."));
             icon = new ImageIcon("images/bossYo.png");
             icon = new ImageIcon(icon.getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
-            hero.setHp(100);
-            hero.setEther(240);
             hero.setPosX(8);
             hero.setPosY(19);
             invalidate();
@@ -293,8 +291,6 @@ public class Window extends JFrame implements KeyListener, Serializable {
                     new HealingFlask("Flask", 55, "This potion heals hp and ether."));
             icon = new ImageIcon("images/bossSuperYo.png");
             icon = new ImageIcon(icon.getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
-            hero.setHp(150);
-            hero.setEther(260);
             hero.setPosX(8);
             hero.setPosY(19);
             invalidate();
@@ -306,8 +302,6 @@ public class Window extends JFrame implements KeyListener, Serializable {
                     new HealingFlask("Flask", 55, "This potion heals hp and ether."));
             icon = new ImageIcon("images/bossEllo.png");
             icon = new ImageIcon(icon.getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
-            hero.setHp(80);
-            hero.setEther(220);
             hero.setPosX(8);
             hero.setPosY(19);
             invalidate();
