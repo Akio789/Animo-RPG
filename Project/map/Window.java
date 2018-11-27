@@ -407,7 +407,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
                 "<html>As I touched this artifact I got absorbed by a spiral of sadness, <br> I remembered the lowest points of my life and they generated a profund rage.</html>"); // Complements
         // death
         EquipmentItem reasonStone = new AttackItem("Aporia", 50,
-                "<html>I finally find peace, but not for long, quickly I get sorrounded by thoughts, <br> questions, but most of it can be answered by just analising my envoriment, <br> I find peace again, I like it, and I remember, I remember my work, my world, my name... <br> this is not real, or is that life the fake one?</html>"); // Last
+                "<html>I finally found peace, but not for long, quickly I get sorrounded by thoughts, <br> questions, but most of it can be answered by just analising my envoriment, <br> I find peace again, I like it, and I remember, I remember my work, my world, my name... <br> this is not real, or is that life the fake one?</html>"); // Last
         // stone,
         // final
         // piece
