@@ -415,7 +415,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
         // the
         // puzzle
         EquipmentItem animalStone = new AttackItem("Instinct", 35,
-                "<html>I feel empty, I have hunger, but not just for eat, hunger for everything, <br> I need a mate, I need to eat, I need to fight, I need violence, <br> I need to scape, NO, I like it in here, here I can have it all.</html>"); // Drive
+                "<html>I feel empty, I have hunger, but not just for food, hunger for everything, <br> I need a mate, I need to eat, I need to fight, I need violence, <br> I need to scape, NO, I like it in here, here I can have it all.</html>"); // Drive
         // Theory
         cells[18][1].setItem(deathStone);
         cells[1][3].setItem(animalStone);
