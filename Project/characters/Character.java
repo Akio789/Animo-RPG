@@ -10,7 +10,6 @@ public abstract class Character extends JFrame implements Serializable {
 	private double defense;
 	private boolean statusParalysis; // Both the hero and the enemies can get paralized //ATTRIBUTES
 	private double ether;
-	private Ability[] abilities;
 	private ImageIcon icon;
 
 	// CONSTRUCTOR
@@ -20,7 +19,6 @@ public abstract class Character extends JFrame implements Serializable {
 		this.attack = attack;
 		this.defense = defense;
 		this.statusParalysis = statusParalysis;
-		abilities = new Ability[2];
 	}
 
 	// GETTERS AND SETTERS
@@ -62,14 +60,6 @@ public abstract class Character extends JFrame implements Serializable {
 
 	public void setStatusParalysis(boolean statusParalysis) {
 		this.statusParalysis = statusParalysis;
-	}
-
-	public Ability[] getAbilities() {
-		return abilities;
-	}
-
-	public void setAbilities(Ability[] abilities) {
-		this.abilities = abilities;
 	}
 
 	public ImageIcon getIcon() {

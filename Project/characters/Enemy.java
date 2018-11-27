@@ -1,7 +1,6 @@
 package characters;
 
 import java.io.Serializable;
-
 import javax.swing.*;
 
 public abstract class Enemy extends Character implements Serializable {
@@ -13,5 +12,6 @@ public abstract class Enemy extends Character implements Serializable {
 
     // METHODS
     public abstract void attack(Hero hero) throws NoDamageException;
+
     public abstract void heavyAttack(Hero hero) throws NoDamageException;
 }

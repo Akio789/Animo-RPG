@@ -19,6 +19,7 @@ public abstract class Hero extends Character implements Serializable {
 	private static EquipmentItem[] equipment;
 	private int level;
 	private int posX, posY;
+	private Ability[] abilities;
 
 	// CONSTRUCTOR
 	public Hero(String name, int level, int xp, double hp, double ether, double attack, double defense,
@@ -32,6 +33,7 @@ public abstract class Hero extends Character implements Serializable {
 		this.healingFlask = healingFlask;
 		backpack = new EquipmentItem[4];
 		equipment = new EquipmentItem[3];
+		abilities = new Ability[2];
 	}
 
 	// GETTERS AND SETTERS
@@ -113,6 +115,14 @@ public abstract class Hero extends Character implements Serializable {
 
 	public void setPosY(int posY) {
 		this.posY = posY;
+	}
+
+	public Ability[] getAbilities() {
+		return abilities;
+	}
+
+	public void setAbilities(Ability[] abilities) {
+		this.abilities = abilities;
 	}
 
 	// METHODS
