@@ -19,9 +19,10 @@ public class Window extends JFrame implements KeyListener, Serializable {
     private Hero hero;
     private JPanel wrapper, topPanel, bottomPanel, mapPanel, equipmentPanel, statsPanel, menuPanel, fightPanel,
             backpackPanel, battleCharactersPanel, battleHeroPanel, battleEnemyPanel, battleAttacksPanel, fightInfoP,
-            startPanel, gameOverPanel;
+            startPanel, gameOverPanel, wonPanel;
     private JPanel[] equipPanels, backpackPanels;
     private JLabel[] stats;
+    private JLabel[][] wonLabels;
     private JButton drinkFlaskButton, fightButton, pickUpItemButton, equipItemButton, unEquipItemButton, restoreButton,
             selectYo, selectBestia, selectSuperYo, continueInGameOver, loadScreenStart, bestiary;
     private JButton[] equipPanelsB, backpackPanelsB;
@@ -31,7 +32,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
     private JLabel heroHpL, heroEtherL, enemyHpL, typeOfEnemy, turnL, heroDmgL, enemyDmgL, bestia, yo, superYo,
             heroImage, antorcha, antorcha_dos, title, descriptionYo, descriptionSuperYo, descriptionBestia, gameOver,
             spaceMagic, enemyImage;
-    private JButton attackB, specialAttackB1, specialAttackB2, escapeB;
+    private JButton attackB, specialAttackB1, specialAttackB2, escapeB, wonExitButton;
     private int turn, turnsFrozen;
     private int itemInfo;
     private Color mapBackground;
@@ -209,10 +210,45 @@ public class Window extends JFrame implements KeyListener, Serializable {
         startPanel.add(loadScreenStart);
     }
 
+    public void initWonPanel() {
+        wonPanel = new JPanel(new GridLayout(5, 5));
+        wonLabels = new JLabel[5][5];
+        wonExitButton = new JButton("You won!");
+        wonExitButton.addActionListener(new ExitMenuItemListener());
+        for (int i = 0; i < wonLabels.length; i++) {
+            for (int j = 0; j < wonLabels[i].length; j++) {
+                if (i == 2 && j == 2) {
+                    wonPanel.add(wonExitButton);
+                } else {
+                    wonLabels[i][j] = new JLabel();
+                    wonPanel.add(wonLabels[i][j]);
+                }
+            }
+        }
+        ImageIcon icon = new ImageIcon("images/pixil-frame-0 (2).png");
+        icon = new ImageIcon(icon.getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
+        wonLabels[0][0].setIcon(icon);
+        wonLabels[1][0].setText("Descripcion");
+        ImageIcon icon2 = new ImageIcon("images/pixil-frame-0 (1).png");
+        icon2 = new ImageIcon(icon2.getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
+        wonLabels[4][4].setIcon(icon2);
+        wonLabels[3][4].setText("Descripcion");
+        ImageIcon icon3 = new ImageIcon("images/2pixil-frame-0.png");
+        icon3 = new ImageIcon(icon3.getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
+        wonLabels[0][4].setIcon(icon3);
+        wonLabels[1][4].setText("Descripcion");
+        ImageIcon icon4 = new ImageIcon("images/pixil-frame-0.png");
+        icon4 = new ImageIcon(icon4.getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
+        wonLabels[4][0].setIcon(icon4);
+        wonLabels[3][0].setText("Descripcion");
+    }
+
     public void initGameOverPanel() {
 
         gameOverPanel = new JPanel();
         gameOverPanel.setLayout(new GridLayout(2, 1));
+        remove(menuBar);
+        remove(wrapper);
         add(gameOverPanel);
 
         gameOver = new JLabel();
@@ -233,7 +269,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
         switch (numero) {
 
         case 1:
-            hero = new Yo("Oscar", 2, 0, 1000, 50, 25, 5, false,
+            hero = new Yo("Oscar", 2, 0, 1000, 100000, 100000, 5, false,
                     new HealingFlask("Flask", 5, "This potion heals hp and ether."));
             icon = new ImageIcon("images/bossYo.png");
             icon = new ImageIcon(icon.getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
@@ -1317,6 +1353,11 @@ public class Window extends JFrame implements KeyListener, Serializable {
                     } else {
                         hero.setXp(hero.getXp() - (100 + ((hero.getLevel() - 1) * 25)));
                     }
+                }
+                if ((cells[2][5].getEnemy() == null) && (cells[17][17].getEnemy() == null)) {
+                    remove(wrapper);
+                    initWonPanel();
+                    add(wonPanel);
                 }
                 repaintMap();
                 repaintStats();
