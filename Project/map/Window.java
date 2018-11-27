@@ -44,7 +44,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
 
     // CONSTRUCTOR
     public Window() {
-        setSize(780, 730);
+        setSize(760, 730);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         initStartPanel();
         setVisible(true);
@@ -158,23 +158,23 @@ public class Window extends JFrame implements KeyListener, Serializable {
         startPanel.add(antorcha_dos);
 
         yo = new JLabel();
-        ImageIcon yoFoto = new ImageIcon("images/bossEllo.png");
+        ImageIcon yoFoto = new ImageIcon("images/bossYo.png");
         yo.setIcon(yoFoto);
-        yoFoto = new ImageIcon(yoFoto.getImage().getScaledInstance(200, 160, Image.SCALE_DEFAULT));
+        yoFoto = new ImageIcon(yoFoto.getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT));
         yo.setIcon(yoFoto);
         startPanel.add(yo);
 
         superYo = new JLabel();
         ImageIcon superYoFoto = new ImageIcon("images/bossSuperYo.png");
         superYo.setIcon(superYoFoto);
-        superYoFoto = new ImageIcon(superYoFoto.getImage().getScaledInstance(200, 160, Image.SCALE_DEFAULT));
+        superYoFoto = new ImageIcon(superYoFoto.getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT));
         superYo.setIcon(superYoFoto);
         startPanel.add(superYo);
 
         bestia = new JLabel();
         ImageIcon bestiaImage = new ImageIcon("images/bossEllo.png");
         bestia.setIcon(bestiaImage);
-        bestiaImage = new ImageIcon(bestiaImage.getImage().getScaledInstance(200, 160, Image.SCALE_DEFAULT));
+        bestiaImage = new ImageIcon(bestiaImage.getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT));
         bestia.setIcon(bestiaImage);
         startPanel.add(bestia);
 
@@ -190,17 +190,17 @@ public class Window extends JFrame implements KeyListener, Serializable {
         selectBestia.addActionListener(new SelectBestia());
         startPanel.add(selectBestia);
 
-        descriptionYo = new JLabel("El que se la come entera, akio");
+        descriptionYo = new JLabel("<html>Representation of the internal fight, between the other two entities, chaos and order, animial vs the greatest aspirations of the men.</html>");
         descriptionYo.setForeground(Color.WHITE);
         startPanel.add(descriptionYo);
 
-        descriptionBestia = new JLabel("El que medio se la come. itztani");
-        descriptionBestia.setForeground(Color.WHITE);
-        startPanel.add(descriptionBestia);
-
-        descriptionSuperYo = new JLabel("Dios Oscar");
+        descriptionSuperYo = new JLabel("<html>It has nothing to do with the other two, but it has to control them, it is it's duty, but he doesn't even know why.</html>");
         descriptionSuperYo.setForeground(Color.WHITE);
         startPanel.add(descriptionSuperYo);
+
+        descriptionBestia = new JLabel("<html>The lessers instincts, an animal, a savage, a man, a part hated and embarrasing of the others, they deny their true nature.</html>");
+        descriptionBestia.setForeground(Color.WHITE);
+        startPanel.add(descriptionBestia);
 
         spaceMagic = new JLabel();
         startPanel.add(spaceMagic);
@@ -228,19 +228,19 @@ public class Window extends JFrame implements KeyListener, Serializable {
         ImageIcon icon = new ImageIcon("images/pixil-frame-0 (2).png");
         icon = new ImageIcon(icon.getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
         wonLabels[0][0].setIcon(icon);
-        wonLabels[1][0].setText("Descripcion");
+        wonLabels[1][0].setText("<html>An avatar of death, a wendigo, or maybe just a dead deer, it is your own consciousness screaming at you your own past attrocities... don't you remember, hero?</html>");
         ImageIcon icon2 = new ImageIcon("images/pixil-frame-0 (1).png");
         icon2 = new ImageIcon(icon2.getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
         wonLabels[4][4].setIcon(icon2);
-        wonLabels[3][4].setText("Descripcion");
+        wonLabels[3][4].setText("<html>Ah, this is a good one, does this ring any bell? No, you disappoint me hero, it is you, or at least part of how you see yourself, an anonymous individual, another one in this endless sea of people.</html>");
         ImageIcon icon3 = new ImageIcon("images/2pixil-frame-0.png");
         icon3 = new ImageIcon(icon3.getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
         wonLabels[0][4].setIcon(icon3);
-        wonLabels[1][4].setText("Descripcion");
+        wonLabels[1][4].setText("<html>A memory of your childhood, it's a toy, not a real one, what do you feel? fatige, happiness, nostalgia, rubish, that's long gone isn't it? that's what you tell yourself everyday, you want to forget, even the good memories, that's why you came to us, that's why you are here.</html>");
         ImageIcon icon4 = new ImageIcon("images/pixil-frame-0.png");
         icon4 = new ImageIcon(icon4.getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
         wonLabels[4][0].setIcon(icon4);
-        wonLabels[3][0].setText("Descripcion");
+        wonLabels[3][0].setText("<html>Here we are, the final revelation, what we were trying to do was to erase your memories, clearly we failed or at least partially, you wont hear from us ever again, be sure of that, that's what you wanted, see that orb, it's a new universe, with infinite possibilities, your wish granted, be a unknown, on the inside and the outside, a personality reset.</html>");
     }
 
     public void initGameOverPanel() {
@@ -254,7 +254,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
         gameOver = new JLabel();
         ImageIcon fotoPerder = new ImageIcon("images/gameOver.jpg");
         gameOver.setIcon(fotoPerder);
-        fotoPerder = new ImageIcon(fotoPerder.getImage().getScaledInstance(650, 365, Image.SCALE_DEFAULT));
+        fotoPerder = new ImageIcon(fotoPerder.getImage().getScaledInstance(760, 365, Image.SCALE_DEFAULT));
         gameOver.setIcon(fotoPerder);
         gameOverPanel.add(gameOver);
 
@@ -269,12 +269,12 @@ public class Window extends JFrame implements KeyListener, Serializable {
         switch (numero) {
 
         case 1:
-            hero = new Yo("Oscar", 2, 0, 1000, 100000, 100000, 5, false,
-                    new HealingFlask("Flask", 5, "This potion heals hp and ether."));
+            hero = new Yo("Oscar", 1, 0, 100, 240, 15, 1, false,
+                    new HealingFlask("Flask", 55, "This potion heals hp and ether."));
             icon = new ImageIcon("images/bossYo.png");
             icon = new ImageIcon(icon.getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
-            hero.setHp(10);
-            hero.setEther(45);
+            hero.setHp(100);
+            hero.setEther(240);
             hero.setPosX(8);
             hero.setPosY(19);
             invalidate();
@@ -282,12 +282,12 @@ public class Window extends JFrame implements KeyListener, Serializable {
             repaint();
             break;
         case 2:
-            hero = new SuperYo("Akio", 1, 0, 1000, 50, 25, 5, false,
-                    new HealingFlask("Flask", 5, "This potion heals hp and ether."));
+            hero = new SuperYo("Akio", 1, 0, 150, 240, 15, 1, false,
+                    new HealingFlask("Flask", 55, "This potion heals hp and ether."));
             icon = new ImageIcon("images/bossSuperYo.png");
             icon = new ImageIcon(icon.getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
-            hero.setHp(600);
-            hero.setEther(45);
+            hero.setHp(150);
+            hero.setEther(260);
             hero.setPosX(8);
             hero.setPosY(19);
             invalidate();
@@ -295,12 +295,12 @@ public class Window extends JFrame implements KeyListener, Serializable {
             repaint();
             break;
         case 3:
-            hero = new Bestia("Itzani", 2, 0, 1000, 50, 25, 5, false,
-                    new HealingFlask("Flask", 5, "This potion heals hp and ether."));
+            hero = new Bestia("Itztani", 2, 0, 80, 220, 20, 1, false,
+                    new HealingFlask("Flask", 55, "This potion heals hp and ether."));
             icon = new ImageIcon("images/bossEllo.png");
             icon = new ImageIcon(icon.getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
-            hero.setHp(600);
-            hero.setEther(45);
+            hero.setHp(80);
+            hero.setEther(220);
             hero.setPosX(8);
             hero.setPosY(19);
             invalidate();
@@ -394,27 +394,27 @@ public class Window extends JFrame implements KeyListener, Serializable {
             }
         }
         // Cells with Items
-        EquipmentItem motherStone = new DefenseItem("Mother Stone", 7,
+        EquipmentItem motherStone = new DefenseItem("Mother Stone", 3,
                 "It's pink, it feels warm, like home... home, a mother, I didn't even remember having one.");
-        EquipmentItem deathStone = new AttackItem("Death", 23,
-                "I am cursed now, I feel a uncontrollable rage, I remember pain and anger, I killed a man, and I didn't feel a thing."); // Designed
+        EquipmentItem deathStone = new AttackItem("Death", 20,
+                "<html>I am cursed now, I feel a uncontrollable rage, I remember pain and anger, <br> I killed a man, and I didn't feel a thing.</html>"); // Designed
                                                                                                                                          // to
                                                                                                                                          // work
                                                                                                                                          // with
                                                                                                                                          // solitude
-        EquipmentItem solitudeStone = new DefenseItem("Solitude", 35,
-                "As I touched this artifact I got absorbed by a spiral of sadness, I remembered the lowest points of my life and they generated a profund rage."); // Complements
+        EquipmentItem solitudeStone = new DefenseItem("Solitude", 2,
+                "<html>As I touched this artifact I got absorbed by a spiral of sadness, <br> I remembered the lowest points of my life and they generated a profund rage.</html>"); // Complements
                                                                                                                                                                    // death
-        EquipmentItem reasonStone = new DefenseItem("Aporia", 12,
-                "I finally find peace, but not for long, quickly I get sorrounded by thoughts, questions, but most of it can be answered by just analising my envoriment, I find peace again, I like it, and I remember, I remember my work, my world, my name... this is not real, or is that life the fake one?"); // Last
+        EquipmentItem reasonStone = new AttackItem("Aporia", 50,
+                "<html>I finally find peace, but not for long, quickly I get sorrounded by thoughts, <br> questions, but most of it can be answered by just analising my envoriment, <br> I find peace again, I like it, and I remember, I remember my work, my world, my name... <br> this is not real, or is that life the fake one?</html>"); // Last
         // stone,
         // final
         // piece
         // of
         // the
         // puzzle
-        EquipmentItem animalStone = new AttackItem("Instinct", 10,
-                "I feel empty, I have hunger, but not just for eat, hunger for everything, I need a gal, I need to eat, I need to fight, I need violence, I need to scape, NO, I like it in here, here I can have it all."); // Drive
+        EquipmentItem animalStone = new AttackItem("Instinct", 35,
+                "<html>I feel empty, I have hunger, but not just for eat, hunger for everything, <br> I need a mate, I need to eat, I need to fight, I need violence, <br> I need to scape, NO, I like it in here, here I can have it all.</html>"); // Drive
                                                                                                                                                                                                                              // Theory
         cells[18][1].setItem(deathStone);
         cells[1][3].setItem(animalStone);
@@ -512,11 +512,20 @@ public class Window extends JFrame implements KeyListener, Serializable {
         cells[18][18].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
         cells[18][17].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
         cells[18][15].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
-        cells[19][15].setEnemy(new StrongOrderMinion(400, 200, 50, 6, false));
+        cells[19][15].setEnemy(new StrongOrderMinion(400, 200, 55, 6, false));
         // Cells with Bosses
-        cells[2][5].setEnemy(new AntiBestia(700, 780, 60, 10, false));
-        cells[17][17].setEnemy(new AntiSuperYo(900, 780, 60, 10, false));
-
+        if(hero instanceof Yo){
+            cells[2][5].setEnemy(new AntiBestia(700, 780, 80, 8, false));
+            cells[17][17].setEnemy(new AntiSuperYo(900, 780, 60, 12, false));
+        }
+        if(hero instanceof Bestia){
+            cells[2][5].setEnemy(new AntiYo(800, 780, 67, 9, false));
+            cells[17][17].setEnemy(new AntiSuperYo(900, 780, 60, 12, false));
+        }
+        if(hero instanceof SuperYo){
+            cells[2][5].setEnemy(new AntiBestia(700, 780, 80, 8, false));
+            cells[17][17].setEnemy(new AntiYo(800, 780, 67, 9, false));
+        }
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 if (cells[i][j].getEnemy() instanceof WildMinion) {
@@ -550,13 +559,6 @@ public class Window extends JFrame implements KeyListener, Serializable {
                 }
             }
         }
-        /*
-         * //Este codigo es para poner el antiYo donde sea que vaya dependiendo de la
-         * eleccion de personaje del jugador, si el jugador elige razon, el antiyo irá
-         * en la posición en la que iría este y lo mismo para el ello
-         * cells[2][5].setEnemy(new AntiYo(100, 10, 10, 10, false));
-         * cells[17][17].setEnemy(new AntiYo(100, 10, 10, 10, false));
-         */
         // Cells that restore
         cells[19][4].setRestore(true);
         cells[19][5].setRestore(true);
@@ -675,7 +677,10 @@ public class Window extends JFrame implements KeyListener, Serializable {
         equipPanelsB[0].setFocusable(false);
         equipPanels[0] = new ItemJPanel(hero.getHealingFlask(), equipPanelsB[0]);
         equipPanelsB[0].setActionCommand("4");
-        // equipPanelsB[0].setIcon(new ImageIcon("images/trump.png"));
+
+        ImageIcon flaskIcon = new ImageIcon("images/pixil-frame-0 (3).png");
+        flaskIcon = new ImageIcon(flaskIcon.getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT));
+        equipPanelsB[0].setIcon(flaskIcon);
         equipPanelsB[0].addActionListener(new EquipmentReadDescriptionListener());
         equipmentPanel.add(equipPanels[0]);
         for (int i = 0; i < hero.getEquipment().length; i++) {
@@ -798,6 +803,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
     }
 
     public void initBestiaryPanel() {
+        ImageIcon pic;
         bestiaryPanel = new JPanel();
         bestiaryPanel.setLayout(new BoxLayout(bestiaryPanel, BoxLayout.Y_AXIS));
         descripcionsPanel = new JPanel(new GridLayout(6, 3));
@@ -810,14 +816,38 @@ public class Window extends JFrame implements KeyListener, Serializable {
         for (int i = 0; i < bestiaryPics.length; i++) {
             bestiaryRows[i] = new JPanel();
             bestiaryPics[i] = new JLabel();
-            ImageIcon pic = new ImageIcon("images/bossEllo.png");
+            pic = new ImageIcon("images/bossEllo.png");
             pic = new ImageIcon(pic.getImage().getScaledInstance(90, 90, Image.SCALE_DEFAULT));
             bestiaryPics[i].setIcon(pic);
-            bestiaryDescriptions[i] = new JLabel("Lorem ipsum oscar se la come oscar se la come oscar se la come");
+            bestiaryDescriptions[i] = new JLabel("");
             bestiaryRows[i].add(bestiaryPics[i]);
             bestiaryRows[i].add(bestiaryDescriptions[i]);
             descripcionsPanel.add(bestiaryRows[i]);
         }
+        pic = new ImageIcon("images/bossEllo.png");
+        pic = new ImageIcon(pic.getImage().getScaledInstance(90, 90, Image.SCALE_DEFAULT));
+        bestiaryPics[0].setIcon(pic);
+        bestiaryDescriptions[0].setText("<html>This is a final boss, there are only two of them depending of your 'hero' class, <br> they are color black in the map, largest xp.</html>");
+        pic = new ImageIcon("images/strongEllo.png");
+        pic = new ImageIcon(pic.getImage().getScaledInstance(90, 90, Image.SCALE_DEFAULT));
+        bestiaryPics[1].setIcon(pic);
+        bestiaryDescriptions[1].setText("<html>A strong wild minion, it has high damge and defense, <br> not recommendable to attack on lower levels, color orange, gives large xp.</html>");
+        pic = new ImageIcon("images/weakEllo.png");
+        pic = new ImageIcon(pic.getImage().getScaledInstance(90, 90, Image.SCALE_DEFAULT));
+        bestiaryPics[2].setIcon(pic);
+        bestiaryDescriptions[2].setText("<html>A weak wild minon, low damage, low defense, low level required to fight it, <br> gives few xp points, color red.</html>");
+        pic = new ImageIcon("images/weakSuperYo.png");
+        pic = new ImageIcon(pic.getImage().getScaledInstance(90, 90, Image.SCALE_DEFAULT));
+        bestiaryPics[3].setIcon(pic);
+        bestiaryDescriptions[3].setText("<html>A weak order minon, very low damage, moderate defense, <br> low level required to fight it, gives few xp points, color dark grey.</html>");
+        pic = new ImageIcon("images/strongSuperYo.png");
+        pic = new ImageIcon(pic.getImage().getScaledInstance(90, 90, Image.SCALE_DEFAULT));
+        bestiaryPics[4].setIcon(pic);
+        bestiaryDescriptions[4].setText("<html>A strong order minion, it has high damge and defense (very), <br> not recommendable to attack on lower levels, color light grey, gives huge xp.</html>");
+        pic = new ImageIcon("images/pixil-frame-0.png");
+        pic = new ImageIcon(pic.getImage().getScaledInstance(90, 90, Image.SCALE_DEFAULT));
+        bestiaryPics[5].setIcon(pic);
+        bestiaryDescriptions[5].setText("<html>A stone or gem, it represents a memory or a part of the 'hero's' personality, <br> it gives attack or defense points when equiped, yellow color.</html>");
         goBackBtn = new JButton("Go back");
         goBackBtn.addActionListener(new GoBackButtonListener());
         bestiaryPanel.add(descripcionsPanel);
@@ -1381,10 +1411,10 @@ public class Window extends JFrame implements KeyListener, Serializable {
                     }
                     int heroHpAfter = (int) hero.getHp();
                     if (diceNum < 75) {
-                        enemyDmgL.setText(enemy.getClass().getSimpleName() + "made a normal attack and dealed "
+                        enemyDmgL.setText(enemy.getClass().getSimpleName() + " made a normal attack and dealed "
                                 + (heroHpBefore - heroHpAfter) + " damage.");
                     } else {
-                        enemyDmgL.setText(enemy.getClass().getSimpleName() + "made a heavy attack and dealed "
+                        enemyDmgL.setText(enemy.getClass().getSimpleName() + " made a heavy attack and dealed "
                                 + (heroHpBefore - heroHpAfter) + " damage.");
                     }
                     repaintFightPanel();

@@ -182,7 +182,19 @@ public abstract class Hero extends Character implements Serializable {
 	/// Add XP
 	public void addXp(Enemy enemy) {
 		if (enemy instanceof WildMinion) {
-			setXp(getXp() + 75);
+			setXp(getXp() + 45);
+		}
+		if (enemy instanceof StrongWildMinion) {
+			setXp(getXp() + 125);
+		}
+		if (enemy instanceof OrderMinion) {
+			setXp(getXp() + 65);
+		}
+		if (enemy instanceof StrongOrderMinion) {
+			setXp(getXp() + 160);
+		}
+		if (enemy instanceof Boss) {
+			setXp(getXp() + 250);
 		}
 	}
 
@@ -226,7 +238,7 @@ public abstract class Hero extends Character implements Serializable {
 
 	/// Attack enemy with ability.
 	public void attackEnemyWithAbility(Enemy enemy, Hero hero, int index) throws NotEnoughEtherException {
-		if (hero.getEther() >= 50 && hero.getEther() > 0) {
+		if (hero.getEther() >= 65 && hero.getEther() > 0) {
 			hero.getAbilities()[index].specialAbility(enemy, hero);
 		} // fin if
 

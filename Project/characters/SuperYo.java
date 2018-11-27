@@ -20,7 +20,7 @@ public class SuperYo extends Hero implements Serializable {
         setMaxHp(getMaxHp() + 65);
         setMaxEther(getMaxEther() + 60);
         setAttack(getAttack() + 5);
-        setDefense(getDefense() + 1);
+        setDefense(getDefense() + 1.25);
         setHp(getMaxHp());
         setEther(getMaxEther());
     }

@@ -17,9 +17,9 @@ public class Bestia extends Hero implements Serializable {
 
     public void levelUp() {
         setLevel(getLevel() + 1);
-        setMaxHp(getMaxHp() + 65);
+        setMaxHp(getMaxHp() + 50);
         setMaxEther(getMaxEther() + 60);
-        setAttack(getAttack() + 5);
+        setAttack(getAttack() + 7);
         setDefense(getDefense() + 1);
         setHp(getMaxHp());
         setEther(getMaxEther());
