@@ -44,7 +44,7 @@ public class Window extends JFrame implements KeyListener, Serializable {
 
     // CONSTRUCTOR
     public Window() {
-        setSize(650, 730);
+        setSize(780, 730);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         initStartPanel();
         setVisible(true);
